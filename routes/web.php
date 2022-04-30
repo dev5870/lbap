@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegistrationController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,12 +19,15 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/registration', function () {
-    return view('registration');
-});
-Route::get('/login', function () {
-    return view('login');
-});
-Route::get('/admin', function () {
-    return view('admin.dashboard');
+
+Route::get('/registration', [RegistrationController::class, 'create'])->name('registration.create');
+Route::post('/registration', [RegistrationController::class, 'store'])->name('registration.store');
+
+Route::get('/login', [LoginController::class, 'create'])->name('login.create');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+    Route::name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    });
 });

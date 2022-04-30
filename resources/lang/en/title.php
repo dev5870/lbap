@@ -14,6 +14,8 @@ return [
 
     'registration' => [
         'title' => 'Registration',
+        'success' => 'Success registration!',
+        'error' => 'Error registration!',
     ],
 
     'menu' => [
