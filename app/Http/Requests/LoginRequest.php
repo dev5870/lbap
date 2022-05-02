@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\UserUserAgent;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -54,6 +55,7 @@ class LoginRequest extends FormRequest
         }
 
         RateLimiter::clear($this->throttleKey());
+        $this->saveUserAgent();
     }
 
     /**
@@ -89,5 +91,14 @@ class LoginRequest extends FormRequest
     public function throttleKey()
     {
         return Str::lower($this->input('email')).'|'.$this->ip();
+    }
+
+    public function saveUserAgent()
+    {
+        UserUserAgent::create([
+            'user_id' => request()->user()->id,
+            'ip' => request()->ip(),
+            'user_agent' => request()->userAgent()
+        ]);
     }
 }
