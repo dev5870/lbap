@@ -54,14 +54,14 @@ class User extends Authenticatable
 
         self::creating(function ($model) {
             try {
-                Role::findByName(UserRole::ADMIN, 'web');
+                Role::findByName(UserRole::USER, 'web');
             } catch (\Exception $e) {
                 throw new NotFoundHttpException('Role not found');
             }
         });
 
         self::created(function ($model) {
-            $model->assignRole(UserRole::ADMIN);
+            $model->assignRole(UserRole::USER);
         });
     }
 }
