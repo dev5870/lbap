@@ -4,6 +4,18 @@ return [
 
     'site_name' => 'Online helpmate',
 
+    'welcome_back' => 'Welcome',
+    'id' => 'ID',
+    'email' => 'Email',
+    'created_at' => 'Created at',
+    'action' => 'Action',
+
+    'user' => [
+        'latest' => 'Latest user',
+        'role' => 'Role',
+        'many' => 'Users',
+    ],
+
     'main' => [
         'title' => 'Dashboard',
     ],
@@ -34,5 +46,6 @@ return [
 
     'btn' => [
         'submit' => 'Submit',
+        'logout' => 'Logout',
     ],
 ];

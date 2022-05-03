@@ -29,7 +29,7 @@
                 </li>
 
                 <li class="sidebar-item {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                    <a depth="0" activeclassname="active" class="sidebar-link" href="">
+                    <a depth="0" activeclassname="active" class="sidebar-link" href="{{ Route('admin.dashboard') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="feather align-middle">
@@ -43,7 +43,7 @@
 
                 <li class="sidebar-item {{ request()->routeIs('admin.user.*') ? 'active' : '' }}">
                     <a depth="0" activeclassname="active" class="sidebar-link"
-                       href="">
+                       href="{{ Route('admin.user.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="feather align-middle me-2">

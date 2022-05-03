@@ -6,7 +6,7 @@
                 <span class="d-none d-sm-inline-block">
                     <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" id="logout" data-bs-toggle="dropdown">
                         <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="username" class="avatar img-fluid rounded-circle me-1">
-                        <span class="text-dark">user_email</span>
+                        <span class="text-dark">{{ Auth::user()->email }}</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li>

@@ -33,10 +33,10 @@
                     <table class="mb-0 table users">
                         <thead>
                         <tr>
-                            <th></th>
-                            <th>@sortablelink('id', 'Id')</th>
-                            <th>@sortablelink('email', 'Email')</th>
-                            <th>@sortablelink('created_at', 'Created at')</th>
+{{--                            <th></th>--}}
+                            <th>@sortablelink('id', __('title.id'))</th>
+                            <th>@sortablelink('email', __('title.email'))</th>
+                            <th>@sortablelink('created_at', __('title.created_at'))</th>
                             <th>Role</th>
                             <th></th>
                         </tr>
@@ -44,7 +44,7 @@
                         <tbody>
                         @foreach ($users as $item)
                         <tr>
-                            <td><img src="{{ $item->files()->latest('created_at')->first()?->fileLink() ?? asset('assets/img/logo.png') }}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
+{{--                            <td><img src="{{ $item->files()->latest('created_at')->first()?->fileLink() ?? asset('assets/img/logo.png') }}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>--}}
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->email }}</td>
                             <td>{{ $item->created_at }}</td>

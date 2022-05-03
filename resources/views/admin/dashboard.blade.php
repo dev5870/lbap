@@ -12,7 +12,7 @@
                         <div class="col-12">
                             <div class="illustration-text p-3 m-1">
                                 <h4 class="illustration-text">{{ __('title.welcome_back') }}!</h4>
-                                <p class="mb-0">{{ __('title.description_title') }}</p>
+                                <p class="mb-0">{{ Auth::user()->email }}</p>
                             </div>
                         </div>
                     </div>
