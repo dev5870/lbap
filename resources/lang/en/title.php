@@ -6,6 +6,9 @@ return [
 
     'welcome_back' => 'Welcome',
     'id' => 'ID',
+    'user_id' => 'User ID',
+    'user_agent' => 'User agent',
+    'ip' => 'IP',
     'email' => 'Email',
     'created_at' => 'Created at',
     'action' => 'Action',
@@ -36,6 +39,7 @@ return [
         'settings' => 'Settings',
         'general' => 'General',
         'control_panel' => 'Control panel',
+        'user_logs' => 'User logs',
     ],
 
     'input' => [

@@ -30,6 +30,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/user/log', [UserController::class, 'log'])->name('user.log');
         Route::resource('/user', UserController::class);
     });
 });

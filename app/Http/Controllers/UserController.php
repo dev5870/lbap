@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\UserFilter;
 use App\Models\User;
+use App\Models\UserUserAgent;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 
@@ -87,5 +88,14 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function log(Request $request)
+    {
+        $filter = new UserFilter($request);
+
+        return view('admin.user.log.index', [
+            'logs' => UserUserAgent::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
+        ]);
     }
 }

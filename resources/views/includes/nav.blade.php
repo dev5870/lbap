@@ -41,7 +41,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('admin.user.*') ? 'active' : '' }}">
+                <li class="sidebar-item {{ request()->routeIs('admin.user.index') ? 'active' : '' }}">
                     <a depth="0" activeclassname="active" class="sidebar-link"
                        href="{{ Route('admin.user.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -51,6 +51,19 @@
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                         <span class="align-middle" depth="0">{{ __('title.menu.users') }}</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ request()->routeIs('admin.user.log') ? 'active' : '' }}">
+                    <a depth="0" activeclassname="active" class="sidebar-link"
+                       href="{{ Route('admin.user.log') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('title.menu.user_logs') }}</span>
                     </a>
                 </li>
 
