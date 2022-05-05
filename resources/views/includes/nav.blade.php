@@ -41,9 +41,9 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('admin.user.index') ? 'active' : '' }}">
-                    <a depth="0" activeclassname="active" class="sidebar-link"
-                       href="{{ Route('admin.user.index') }}">
+                <li class="sidebar-item {{ request()->routeIs('admin.user.*') ? 'active' : '' }}">
+                    <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
+                       href="#user">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="feather align-middle me-2">
@@ -51,20 +51,26 @@
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                         <span class="align-middle" depth="0">{{ __('title.menu.users') }}</span>
+                        <div></div>
                     </a>
-                </li>
 
-                <li class="sidebar-item {{ request()->routeIs('admin.user.log') ? 'active' : '' }}">
-                    <a depth="0" activeclassname="active" class="sidebar-link"
-                       href="{{ Route('admin.user.log') }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather align-middle me-2">
-                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="12" cy="7" r="4"></circle>
-                        </svg>
-                        <span class="align-middle" depth="0">{{ __('title.menu.user_logs') }}</span>
-                    </a>
+                    <ul id="user" class="sidebar-dropdown list-unstyled collapse">
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('admin.user.index') ? 'active' : '' }}"
+                               href="{{ Route('admin.user.index') }}">
+                                <span class="align-middle" depth="1">{{ __('title.menu.user_list') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('admin.user.log') ? 'active' : '' }}"
+                               href="{{ Route('admin.user.log') }}">
+                                <span class="align-middle" depth="1">{{ __('title.menu.user_logs') }}</span>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="sidebar-item {{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">

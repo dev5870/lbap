@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\LogFilter;
 use App\Http\Filters\UserFilter;
 use App\Models\User;
 use App\Models\UserUserAgent;
@@ -59,12 +60,14 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(User $user): View
     {
-        //
+        return view('admin.user.edit', [
+            'user' => $user
+        ]);
     }
 
     /**
@@ -90,9 +93,13 @@ class UserController extends Controller
         //
     }
 
-    public function log(Request $request)
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function log(Request $request): View
     {
-        $filter = new UserFilter($request);
+        $filter = new LogFilter($request);
 
         return view('admin.user.log.index', [
             'logs' => UserUserAgent::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -73,5 +74,10 @@ class User extends Authenticatable
         self::created(function ($model) {
             $model->assignRole(UserRole::USER);
         });
+    }
+
+    public function logs(): HasMany
+    {
+        return $this->hasMany(UserUserAgent::class, 'user_id', 'id');
     }
 }

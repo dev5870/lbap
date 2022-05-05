@@ -33,18 +33,16 @@
                     <table class="mb-0 table users">
                         <thead>
                         <tr>
-                            <th>@sortablelink('id', __('title.id'))</th>
                             <th>@sortablelink('user_id', __('title.user_id'))</th>
-                            <th>@sortablelink('ip', __('title.ip'))</th>
-                            <th>@sortablelink('user_agent', __('title.user_agent'))</th>
+                            <th>{{ __('title.ip') }}</th>
+                            <th>{{ __('title.user_agent') }}</th>
                             <th>@sortablelink('created_at', __('title.created_at'))</th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach ($logs as $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
-                            <td>{{ $item->user_id }}</td>
+                            <td><a href="{{ Route('admin.user.edit', $item->user_id) }}">{{ $item->user->email }}</a></td>
                             <td>{{ $item->ip }}</td>
                             <td>{{ $item->user_agent }}</td>
                             <td>{{ $item->created_at }}</td>

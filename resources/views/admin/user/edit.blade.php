@@ -35,18 +35,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('title.lang') }}</label>
-                                            <select name="language" class="form-select" required>
-                                                @foreach(__('title.language.all') as $key => $language)
-                                                    <option value="{{ $key }}" {{ $user->language === $key ? 'selected' : '' }}>{{ $language }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">

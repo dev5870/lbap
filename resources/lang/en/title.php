@@ -14,9 +14,11 @@ return [
     'action' => 'Action',
 
     'user' => [
+        'title' => 'Edit',
         'latest' => 'Latest user',
         'role' => 'Role',
         'many' => 'Users',
+        'update' => 'Update user form',
     ],
 
     'main' => [
@@ -40,6 +42,7 @@ return [
         'general' => 'General',
         'control_panel' => 'Control panel',
         'user_logs' => 'User logs',
+        'user_list' => 'User list',
     ],
 
     'input' => [
@@ -51,5 +54,6 @@ return [
     'btn' => [
         'submit' => 'Submit',
         'logout' => 'Logout',
+        'update' => 'Update',
     ],
 ];
