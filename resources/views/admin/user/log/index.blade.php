@@ -47,7 +47,6 @@
                             <td>{{ $item->user_agent }}</td>
                             <td>{{ $item->created_at }}</td>
                         </tr>
-                        @include('includes.delete-modal', ['id' => 'deleteModal_'.$item->id, 'action' => Route('admin.user.destroy', $item)])
                         @endforeach
                         </tbody>
                     </table>

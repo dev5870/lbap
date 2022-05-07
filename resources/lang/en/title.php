@@ -12,9 +12,10 @@ return [
     'email' => 'Email',
     'created_at' => 'Created at',
     'action' => 'Action',
+    'status' => 'Status',
 
     'user' => [
-        'title' => 'Edit',
+        'title' => 'Information about user',
         'latest' => 'Latest user',
         'role' => 'Role',
         'many' => 'Users',

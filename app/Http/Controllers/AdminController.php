@@ -13,7 +13,7 @@ class AdminController extends Controller
      */
     public function dashboard(): View
     {
-        $users = User::all();
+        $users = User::orderBy('id', 'desc')->take(5)->get();
 
         return view('admin.dashboard', [
             'users' => $users

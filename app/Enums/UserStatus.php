@@ -8,7 +8,7 @@ class UserStatus
     public const BLOCKED = 20;
 
     public static array $list = [
-        'active' => self::ACTIVE,
-        'blocked' => self::BLOCKED,
+        self::ACTIVE => 'active',
+        self::BLOCKED => 'blocked',
     ];
 }
