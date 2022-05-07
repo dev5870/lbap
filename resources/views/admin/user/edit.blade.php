@@ -35,7 +35,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.status') }}</label>
-                                            {!! Form::select('status', \App\Enums\UserStatus::$list, \App\Enums\UserStatus::$list[$user->status], ['class' => 'form-control']) !!}
+                                            {!! Form::select('status', \App\Enums\UserStatus::$list, $user->status, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                     <div class="col-md-6">

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\LogFilter;
 use App\Http\Filters\UserFilter;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use App\Models\UserUserAgent;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,6 +16,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
     public function index(Request $request): View
@@ -28,7 +31,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $id
+     * @param User $user
      * @return View
      */
     public function edit(User $user): View
@@ -42,13 +45,19 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UserUpdateRequest $request
+     * @param User $user
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
-        //
+        $user->status = $request->get('status');
+        $user->roles()->sync($request->get('roles'));
+        $user->save();
+
+        return redirect()->route('admin.user.edit', $user)->with([
+            'success-message' => __('title.success')
+        ]);
     }
 
     /**

@@ -13,6 +13,7 @@ return [
     'created_at' => 'Created at',
     'action' => 'Action',
     'status' => 'Status',
+    'success' => 'Success!',
 
     'user' => [
         'title' => 'Information about user',
