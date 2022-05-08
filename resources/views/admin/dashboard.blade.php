@@ -101,6 +101,14 @@
     </div>
     <div class="flex-fill w-100 card">
         <div class="card-header">
+            <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.last_logins') }}</div>
+        </div>
+        <div class="flex-fill w-100 card">
+            @include('admin.user.log.table')
+        </div>
+    </div>
+    <div class="flex-fill w-100 card">
+        <div class="card-header">
             <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.latest') }}</div>
         </div>
         <div class="flex-fill w-100 card">
