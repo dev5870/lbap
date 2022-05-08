@@ -97,38 +97,6 @@
                         </li>
                     </ul>
                 </li>
-
-                <li class="sidebar-item {{ request()->routeIs('admin.control_panel.*') ? 'active' : '' }}">
-                    <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
-                       href="#control_panel">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                             class="feather align-middle me-2">
-                            <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
-                            <rect x="9" y="9" width="6" height="6"></rect>
-                            <line x1="9" y1="1" x2="9" y2="4"></line>
-                            <line x1="15" y1="1" x2="15" y2="4"></line>
-                            <line x1="9" y1="20" x2="9" y2="23"></line>
-                            <line x1="15" y1="20" x2="15" y2="23"></line>
-                            <line x1="20" y1="9" x2="23" y2="9"></line>
-                            <line x1="20" y1="14" x2="23" y2="14"></line>
-                            <line x1="1" y1="9" x2="4" y2="9"></line>
-                            <line x1="1" y1="14" x2="4" y2="14"></line>
-                        </svg>
-                        <span class="align-middle" depth="0">{{ __('title.menu.control_panel') }}</span>
-                        <div></div>
-                    </a>
-
-                    <ul id="control_panel" class="sidebar-dropdown list-unstyled collapse">
-                        <li class="sidebar-item">
-                            <a depth="1" activeclassname="active"
-                               class="sidebar-link {{ request()->routeIs('admin.control_panel.general.*') ? 'active' : '' }}"
-                               href="">
-                                <span class="align-middle" depth="1">{{ __('title.menu.users') }}</span>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
             </ul>
         </div>
     </div>

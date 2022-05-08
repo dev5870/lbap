@@ -21,6 +21,8 @@ return [
         'role' => 'Role',
         'many' => 'Users',
         'update' => 'Update user form',
+        'total_users' => 'Total users',
+        'last_day' => 'Since last 24 hour'
     ],
 
     'main' => [

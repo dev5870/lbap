@@ -24,17 +24,24 @@
                 <div class=" py-4 card-body">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">$ 24.300</h3>
-                            <p class="mb-2">Total Earnings</p>
+                            <h3 class="mb-2">{{ $allUser }}</h3>
+                            <p class="mb-2">{{ __('title.user.total_users') }}</p>
                             <div class="mb-0">
-                                <span class="badge-soft-success me-2 badge">+5.35%</span>
-                                <span class="text-muted">Since last week</span>
+                                @if($lastDay)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDay }}</span>
+                                @else
+                                    <span>{{ $lastDay }}</span>
+                                @endif
+                                <span class="text-muted">{{ __('title.user.last_day') }}</span>
                             </div>
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-success">
-                                    <line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                     class="feather align-middle me-2">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
                                 </svg>
                             </div>
                         </div>
@@ -48,7 +55,7 @@
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
                             <h3 class="mb-2">43</h3>
-                            <p class="mb-2">Pending Orders</p>
+                            <p class="mb-2">Title example</p>
                             <div class="mb-0">
                                 <span class="badge-soft-danger me-2 badge">-4.25%</span>
                                 <span class="text-muted">Since last week</span>
@@ -73,7 +80,7 @@
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
                             <h3 class="mb-2">$ 18.700</h3>
-                            <p class="mb-2">Total Revenue</p>
+                            <p class="mb-2">Title example</p>
                             <div class="mb-0">
                                 <span class="badge-soft-success me-2 badge">+8.65%</span>
                                 <span class="text-muted">Since last week</span>

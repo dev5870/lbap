@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class AdminController extends Controller
 {
@@ -13,10 +14,12 @@ class AdminController extends Controller
      */
     public function dashboard(): View
     {
-        $users = User::orderBy('id', 'desc')->take(5)->get();
+        $users = User::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
-            'users' => $users
+            'users' => $users->take(5)->get(),
+            'allUser' => $users->count(),
+            'lastDay' => $users->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
         ]);
     }
 }
