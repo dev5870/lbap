@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserUserAgent;
@@ -18,8 +19,11 @@ class AdminController extends Controller
     public function dashboard(): View
     {
         $users = User::orderBy('id', 'desc');
+        $contents = Content::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
+            'allContents' => $contents->count(),
+            'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'settings' => Setting::first(),
             'users' => $users->take(5)->get(),
             'allUser' => $users->count(),

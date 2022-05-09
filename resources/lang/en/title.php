@@ -64,6 +64,7 @@ return [
         'add' => 'Add new content',
         'preview' => 'Preview',
         'update' => 'Update content',
+        'total' => 'Total contents',
     ],
 
     'input' => [

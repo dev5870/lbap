@@ -54,19 +54,24 @@
                 <div class=" py-4 card-body">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">43</h3>
-                            <p class="mb-2">Title example</p>
+                            <h3 class="mb-2">{{ $allContents }}</h3>
+                            <p class="mb-2">{{ __('title.content.total') }}</p>
                             <div class="mb-0">
-                                <span class="badge-soft-danger me-2 badge">-4.25%</span>
-                                <span class="text-muted">Since last week</span>
+                                @if($lastDayContents)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayContents }}</span>
+                                @else
+                                    <span>{{ $lastDayContents }}</span>
+                                @endif
+                                <span class="text-muted">{{ __('title.user.last_day') }}</span>
                             </div>
                         </div>
                         <div class="d-inline-block ms-3">
                             <div class="stat">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-success">
-                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                                    <path d="M16 10a4 4 0 0 1-8 0"></path>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                     class="feather align-middle me-2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                 </svg>
                             </div>
                         </div>
