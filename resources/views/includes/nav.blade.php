@@ -12,7 +12,7 @@
                     <path
                         d="M10,20c-0.1,0-0.3,0-0.4-0.1l-9-4c-0.5-0.2-0.7-0.8-0.5-1.3c0.2-0.5,0.8-0.7,1.3-0.5l8.6,3.8l8.6-3.8c0.5-0.2,1.1,0,1.3,0.5     c0.2,0.5,0,1.1-0.5,1.3l-9,4C10.3,20,10.1,20,10,20z"></path>
             </svg>
-                <span class="align-middle">{{ __('title.site_name') }}</span>
+                <span class="align-middle">{{ $settings->site_name }}</span>
             </a>
             <ul class="sidebar-nav">
                 <li class="sidebar-item" id="hamburger">

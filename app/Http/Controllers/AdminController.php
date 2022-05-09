@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserUserAgent;
 use Illuminate\Contracts\View\View;
@@ -19,6 +20,7 @@ class AdminController extends Controller
         $users = User::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
+            'settings' => Setting::first(),
             'users' => $users->take(5)->get(),
             'allUser' => $users->count(),
             'lastDay' => $users->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
