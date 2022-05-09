@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,5 +36,7 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/user/log', [UserController::class, 'log'])->name('user.log');
         Route::resource('/user', UserController::class)->only(['index', 'edit', 'update']);
+        Route::get('/settings/general', [SettingController::class, 'index'])->name('settings.index');
+        Route::post('/settings/general', [SettingController::class, 'general'])->name('settings.general');
     });
 });

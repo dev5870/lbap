@@ -2,7 +2,7 @@
 
 return [
 
-    'site_name' => 'Online helpmate',
+    'site_name' => 'Site name',
 
     'welcome_back' => 'Welcome',
     'id' => 'ID',
@@ -48,6 +48,10 @@ return [
         'control_panel' => 'Control panel',
         'user_logs' => 'User logs',
         'user_list' => 'User list',
+    ],
+
+    'settings' => [
+        'site' => 'Site settings',
     ],
 
     'input' => [

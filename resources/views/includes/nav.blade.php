@@ -91,7 +91,7 @@
                         <li class="sidebar-item">
                             <a depth="1" activeclassname="active"
                                class="sidebar-link {{ request()->routeIs('admin.settings.general.*') ? 'active' : '' }}"
-                               href="">
+                               href="{{ Route('admin.settings.index') }}">
                                 <span class="align-middle" depth="1">{{ __('title.menu.general') }}</span>
                             </a>
                         </li>
