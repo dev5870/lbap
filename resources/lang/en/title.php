@@ -48,10 +48,19 @@ return [
         'control_panel' => 'Control panel',
         'user_logs' => 'User logs',
         'user_list' => 'User list',
+        'content' => 'Content',
     ],
 
     'settings' => [
         'site' => 'Site settings',
+    ],
+
+    'content' => [
+        'title' => 'Title',
+        'text' => 'Text',
+        'status' => 'Status',
+        'delayed_publication' => 'Delayed publication',
+        'many' => 'Contents',
     ],
 
     'input' => [
@@ -64,5 +73,6 @@ return [
         'submit' => 'Submit',
         'logout' => 'Logout',
         'update' => 'Update',
+        'create' => 'Create',
     ],
 ];

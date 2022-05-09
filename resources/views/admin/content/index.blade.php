@@ -2,7 +2,7 @@
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.title') }}</h3>
+            <h3>{{ __('title.content.many') }}</h3>
         </div>
         <div class="topButton">
             <a href="{{ Route('admin.content.create') }}">
@@ -27,8 +27,8 @@
                     name="title"
                     value="{{ request('title') }}"
                     class="form-control"
-                    placeholder="{{ __('title.title') }}"
-                    aria-label="{{ __('title.title') }}"
+                    placeholder="{{ __('title.content.title') }}"
+                    aria-label="{{ __('title.content.title') }}"
                 >
                 <button class="btn" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -46,22 +46,22 @@
         <table class="my-0 table table-striped users">
             <thead>
             <tr>
-                <th></th>
-                <th>{{ __('title.id') }}</th>
-                <th>@sortablelink('title',  __('title.title'))</th>
-                <th>@sortablelink('anons',  __('title.anons'))</th>
-                <th>@sortablelink('published_at', __('title.published_at'))</th>
+                <th>@sortablelink('title',  __('title.id'))</th>
+                <th>{{ __('title.content.title') }}</th>
+                <th>{{ __('title.content.status') }}</th>
+                <th>@sortablelink('title',  __('title.content.delayed_publication'))</th>
+                <th>@sortablelink('title',  __('title.created_at'))</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
                 @foreach ($contents as $item)
                 <tr>
-                    <td><img src="{{ $item->files()->latest('created_at')->first()?->fileLink() ?? asset('assets/img/logo.png') }}" width="32" height="32" class="rounded-circle my-n1" alt="Avatar"></td>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->title }}</td>
-                    <td>{{ $item->anons }}</td>
-                    <td>{{ $item->published_at }}</td>
+                    <td>{{ $item->status }}</td>
+                    <td>{{ $item->delayed_publication }}</td>
+                    <td>{{ $item->created_at }}</td>
                     <td class="text-center">
                         <a href="{{ Route('admin.content.edit', $item) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>
                         <a data-bs-toggle="modal" data-bs-target="#deleteModal_{{ $item->id }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather align-middle me-2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></a>
