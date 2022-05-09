@@ -5,11 +5,13 @@ namespace App\Models;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 
 class Content extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     use Sortable;
     use Filterable;
 
@@ -22,12 +24,12 @@ class Content extends Model
         'title',
         'text',
         'status',
-        'delayed_publication',
+        'delayed_date_publication',
+        'delayed_time_publication',
     ];
 
     public $sortable = [
         'id',
-        'delayed_publication',
         'created_at',
     ];
 }

@@ -17,6 +17,7 @@ class ContentSeeder extends Seeder
     {
         Content::create([
             'title' => 'Example title',
+            'preview' => 'Preview test',
             'text' => 'Example text, text, text, text, text, text, text, text, text, text.'
         ]);
     }

@@ -61,6 +61,9 @@ return [
         'status' => 'Status',
         'delayed_publication' => 'Delayed publication',
         'many' => 'Contents',
+        'add' => 'Add new content',
+        'preview' => 'Preview',
+        'update' => 'Update content',
     ],
 
     'input' => [
@@ -74,5 +77,12 @@ return [
         'logout' => 'Logout',
         'update' => 'Update',
         'create' => 'Create',
+        'close' => 'Close',
+        'delete' => 'Delete',
+        'return' => 'Return',
+    ],
+
+    'headers' => [
+        'sure' => 'Are you sure?',
     ],
 ];

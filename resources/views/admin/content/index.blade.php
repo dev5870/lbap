@@ -48,8 +48,8 @@
             <tr>
                 <th>@sortablelink('title',  __('title.id'))</th>
                 <th>{{ __('title.content.title') }}</th>
-                <th>{{ __('title.content.status') }}</th>
-                <th>@sortablelink('title',  __('title.content.delayed_publication'))</th>
+                <th>{{ __('title.content.preview') }}</th>
+                <th>{{ __('title.content.delayed_publication') }}</th>
                 <th>@sortablelink('title',  __('title.created_at'))</th>
                 <th></th>
             </tr>
@@ -59,8 +59,12 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td>{{ $item->title }}</td>
-                    <td>{{ $item->status }}</td>
-                    <td>{{ $item->delayed_publication }}</td>
+                    <td>{{ $item->preview }}</td>
+                    @if($item->delayed_date_publication)
+                        <td>{{ $item->delayed_date_publication . ' ' . $item->delayed_time_publication }}</td>
+                    @else
+                        <td></td>
+                    @endif
                     <td>{{ $item->created_at }}</td>
                     <td class="text-center">
                         <a href="{{ Route('admin.content.edit', $item) }}"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather align-middle me-2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg></a>

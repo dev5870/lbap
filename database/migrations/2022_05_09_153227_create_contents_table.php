@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('preview');
             $table->string('text');
-            $table->integer('status')->default(\App\Enums\ContentStatus::PUBLISHED);
-            $table->timestamp('delayed_publication')->nullable();
+            $table->date('delayed_date_publication')->nullable();
+            $table->time('delayed_time_publication')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
