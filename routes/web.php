@@ -5,6 +5,7 @@ use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\LogoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,8 @@ Route::post('/registration', [RegistrationController::class, 'store'])->name('re
 
 Route::get('/login', [LoginController::class, 'create'])->name('login.create');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+
+Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('user.logout');
 
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
