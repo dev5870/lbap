@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ContentController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,5 +41,6 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::get('/settings/general', [SettingController::class, 'index'])->name('settings.index');
         Route::post('/settings/general', [SettingController::class, 'general'])->name('settings.general');
         Route::resource('/content', ContentController::class);
+        Route::resource('/notification', NotificationController::class);
     });
 });

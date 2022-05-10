@@ -49,6 +49,14 @@ return [
         'user_logs' => 'User logs',
         'user_list' => 'User list',
         'content' => 'Content',
+        'notification' => 'Notification',
+    ],
+
+    'notification' => [
+        'many' => 'Notifications',
+        'text' => 'Message',
+        'add' => 'Add new notification',
+        'update' => 'Update notification',
     ],
 
     'settings' => [

@@ -108,6 +108,14 @@
                                 <span class="align-middle" depth="1">{{ __('title.menu.general') }}</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('admin.notification.*') ? 'active' : '' }}"
+                               href="{{ Route('admin.notification.index') }}">
+                                <span class="align-middle" depth="1">{{ __('title.menu.notification') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
             </ul>
