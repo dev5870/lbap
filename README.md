@@ -1,3 +1,5 @@
+# Laravel based administration panel
+
 ### Install
 
 1. composer install
