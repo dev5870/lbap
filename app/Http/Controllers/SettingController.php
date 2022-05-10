@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Setting;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
@@ -15,6 +16,7 @@ class SettingController extends Controller
     public function index(): View
     {
         return view('admin.settings.index', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
         ]);
     }

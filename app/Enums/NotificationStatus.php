@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-class NotifacationStatus
+class NotificationStatus
 {
     public const ACTIVE = 10;
     public const INACTIVE = 20;

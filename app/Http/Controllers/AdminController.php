@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserUserAgent;
@@ -22,6 +23,7 @@ class AdminController extends Controller
         $contents = Content::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
+            'notifications' => Notification::all(),
             'allContents' => $contents->count(),
             'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'settings' => Setting::first(),

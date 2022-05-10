@@ -31,6 +31,7 @@ class NotificationController extends Controller
     public function create(): View
     {
         return view('admin.notification.create', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
         ]);
     }
@@ -46,6 +47,7 @@ class NotificationController extends Controller
         $notification = new Notification();
         $notification->text = $request->get('text');
         $notification->status = $request->get('status');
+        $notification->type = $request->get('type');
         $notification->save();
 
         return redirect()->route('admin.notification.index')->with([
@@ -62,6 +64,7 @@ class NotificationController extends Controller
     public function edit(Notification $notification): View
     {
         return view('admin.notification.edit', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'notification' => $notification,
         ]);
@@ -78,6 +81,7 @@ class NotificationController extends Controller
     {
         $notification->text = $request->get('text');
         $notification->status = $request->get('status');
+        $notification->type = $request->get('type');
         $notification->save();
 
         return redirect()->route('admin.notification.edit', $notification)->with([

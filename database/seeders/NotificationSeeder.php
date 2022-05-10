@@ -16,7 +16,9 @@ class NotificationSeeder extends Seeder
     public function run()
     {
         Notification::create([
-            'text' => 'Example notification',
+            'text' => 'Example notification Example notification Example notification Example notification Example notification Example notification',
+            'type' => \App\Enums\NotificationType::PRIMARY,
+            'status' => \App\Enums\NotificationStatus::ACTIVE,
         ]);
     }
 }

@@ -44,7 +44,15 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.status') }}</label>
-                                            {!! Form::select('status', \App\Enums\NotifacationStatus::$list, $notification->status, ['class' => 'form-control']) !!}
+                                            {!! Form::select('status', \App\Enums\NotificationStatus::$list, $notification->status, ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.notification.type') }}</label>
+                                            {!! Form::select('type', \App\Enums\NotificationType::$list, $notification->type, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>

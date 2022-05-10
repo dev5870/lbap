@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\LogFilter;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserUserAgent;
@@ -25,6 +26,7 @@ class UserController extends Controller
         $filter = new UserFilter($request);
 
         return view('admin.user.index', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'users' => User::sortable(['id' => 'desc'])->with('roles')->filter($filter)->paginate(config('view.per_page')),
         ]);
@@ -39,6 +41,7 @@ class UserController extends Controller
     public function edit(User $user): View
     {
         return view('admin.user.edit', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'logs' => UserUserAgent::where('user_id', '=', $user->id)->sortable(['created_at' => 'desc'])->paginate(config('view.per_page')),
             'user' => $user
@@ -72,6 +75,7 @@ class UserController extends Controller
         $filter = new LogFilter($request);
 
         return view('admin.user.log.index', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'logs' => UserUserAgent::sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);

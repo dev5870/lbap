@@ -1,5 +1,12 @@
 <nav class="navbar-bg navbar navbar-expand navbar-light">
     <span class="sidebar-toggle d-flex"><i class="hamburger align-self-center"></i></span>
+    @foreach($notifications as $notification)
+        @if($notification->status === \App\Enums\NotificationStatus::ACTIVE)
+            <div class="alert alert-{{ \App\Enums\NotificationType::$list[$notification->type] }}" style="margin-bottom: 0px; padding: 5px;" role="alert">
+                <span>{{ $notification->text }}</span>
+            </div>
+        @endif
+    @endforeach
     <div class="navbar-collapse collapse">
         <div class="navbar-align navbar-nav">
             <div class="nav-item dropdown">

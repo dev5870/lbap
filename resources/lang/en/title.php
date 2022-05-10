@@ -57,6 +57,7 @@ return [
         'text' => 'Message',
         'add' => 'Add new notification',
         'update' => 'Update notification',
+        'type' => 'Type',
     ],
 
     'settings' => [

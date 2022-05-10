@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\ContentFilter;
 use App\Models\Content;
+use App\Models\Notification;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -22,6 +23,7 @@ class ContentController extends Controller
         $filter = new ContentFilter($request);
 
         return view('admin.content.index', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'contents' => Content::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
@@ -35,6 +37,7 @@ class ContentController extends Controller
     public function create(): View
     {
         return view('admin.content.create', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
         ]);
     }
@@ -69,6 +72,7 @@ class ContentController extends Controller
     public function edit(Content $content): View
     {
         return view('admin.content.edit', [
+            'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'content' => $content,
         ]);

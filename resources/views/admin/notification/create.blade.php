@@ -33,7 +33,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.notification.text') }}</label>
-                                            <textarea name="text" placeholder="{{ __('title.notification.text') }}"
+                                            <textarea name="text" maxlength="125" placeholder="{{ __('title.notification.text') }}"
                                                       class="form-control" rows="5">{{ old('preview') }}</textarea>
                                         </div>
                                     </div>
@@ -42,7 +42,15 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.status') }}</label>
-                                            {!! Form::select('status', \App\Enums\NotifacationStatus::$list, \App\Enums\NotifacationStatus::INACTIVE, ['class' => 'form-control']) !!}
+                                            {!! Form::select('status', \App\Enums\NotificationStatus::$list, \App\Enums\NotificationStatus::INACTIVE, ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.notification.type') }}</label>
+                                            {!! Form::select('type', \App\Enums\NotificationType::$list, \App\Enums\NotificationType::INFO, ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>

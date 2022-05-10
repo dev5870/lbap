@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('text');
-            $table->integer('status')->default(\App\Enums\NotifacationStatus::INACTIVE);
+            $table->integer('status')->default(\App\Enums\NotificationStatus::INACTIVE);
+            $table->integer('type')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
