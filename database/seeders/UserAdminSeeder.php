@@ -20,6 +20,7 @@ class UserAdminSeeder extends Seeder
         $user = User::create([
             'email' => 'admin@site.com',
             'name' => 'admin',
+            'telegram' => 'tg_user',
             'password' => Hash::make('password')
         ]);
         $user->assignRole(UserRole::ADMIN);

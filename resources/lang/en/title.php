@@ -14,6 +14,7 @@ return [
     'action' => 'Action',
     'status' => 'Status',
     'success' => 'Success!',
+    'tg' => 'Telegram',
 
     'user' => [
         'title' => 'Information about user',

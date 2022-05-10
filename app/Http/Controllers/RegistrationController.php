@@ -26,6 +26,7 @@ class RegistrationController extends Controller
     {
         $user = User::create([
             'email' => $request->get('email'),
+            'telegram' => $request->get('telegram'),
             'password' => Hash::make($request->get('password'))
         ]);
 

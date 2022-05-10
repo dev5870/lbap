@@ -34,6 +34,14 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
+                                            <label class="form-label">{{ __('title.tg') }}</label>
+                                            <input name="telegram" class="form-control" value="{{ $user->telegram }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
                                             <label class="form-label">{{ __('title.status') }}</label>
                                             {!! Form::select('status', \App\Enums\UserStatus::$list, $user->status, ['class' => 'form-control']) !!}
                                         </div>
