@@ -33,6 +33,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('user.logout');
 
+// todo: role admin
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');

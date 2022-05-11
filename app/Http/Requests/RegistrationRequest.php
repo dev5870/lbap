@@ -16,6 +16,8 @@ class RegistrationRequest extends FormRequest
         return [
             'email' => ['required', 'email', 'unique:users', 'max:100'],
             'telegram' => ['required', 'string'],
+            'referrer' => ['int', 'nullable'],
+            'balance' => ['string', 'nullable'],
             'password' => ['required', 'min:6', 'max:100'],
         ];
     }
