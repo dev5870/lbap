@@ -5,16 +5,17 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title h5" tag="h5">{{ __('title.registration.title') }}</div>
-
+                    @include('includes.alerts')
                     <form method="POST" action="{{ Route('registration.store') }}" class="">
                         @csrf
+                        <input name="referrer" type="text" class="form-control" value="{{ request('referrer') }}" hidden>
                         <div class="mb-3">
                             <label class="form-label">{{ __('title.input.email') }}</label>
-                            <input name="email" placeholder="{{ __('title.input.email') }}" type="email" class="form-control">
+                            <input name="email" placeholder="{{ __('title.input.email') }}" type="email" value="{{ old('email') }}" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ __('title.tg') }}</label>
-                            <input name="telegram" placeholder="{{ __('title.tg') }}" type="text" class="form-control">
+                            <input name="telegram" placeholder="{{ __('title.tg') }}" type="text" value="{{ old('telegram') }}" class="form-control">
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ __('title.input.password') }}</label>

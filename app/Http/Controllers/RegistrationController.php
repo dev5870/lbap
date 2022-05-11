@@ -25,6 +25,7 @@ class RegistrationController extends Controller
     public function store(RegistrationRequest $request): RedirectResponse
     {
         $user = User::create([
+            'referrer' => $request->get('referrer'),
             'email' => $request->get('email'),
             'telegram' => $request->get('telegram'),
             'password' => Hash::make($request->get('password'))
