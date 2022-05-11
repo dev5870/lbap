@@ -2,8 +2,10 @@
 
 ### Install
 
-1. composer install
-2. php artisan migrate --seed
+1. cp .env.example .env
+2. php artisan key:generate
+3. composer install
+4. php artisan migrate --seed
 - creating user role and user admin
 
 ### Admin panel
