@@ -25,6 +25,8 @@ return [
         'total_users' => 'Total users',
         'last_day' => 'Since last 24 hour',
         'last_logins' => 'Last logins',
+        'referrer' => 'Referrer',
+        'referrals' => 'Referrals',
     ],
 
     'main' => [

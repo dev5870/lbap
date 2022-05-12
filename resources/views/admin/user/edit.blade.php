@@ -38,6 +38,14 @@
                                             <input name="telegram" class="form-control" value="{{ $user->telegram }}" readonly>
                                         </div>
                                     </div>
+                                    @if($user->referrer)
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('title.user.referrer') }}</label>
+                                                <input name="referrer" class="form-control" value="{{ $user->referrer }}" readonly>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -76,6 +84,19 @@
                 </div>
                 <div class="card-body">
                     @include('admin.user.log.table')
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.referrals') }}</div>
+                </div>
+                <div class="card-body">
+                    @include('admin.user.referral.table')
                 </div>
             </div>
         </div>
