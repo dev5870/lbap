@@ -15,6 +15,7 @@ return [
     'status' => 'Status',
     'success' => 'Success!',
     'tg' => 'Telegram',
+    'referrer_email' => 'Referrer email',
 
     'user' => [
         'title' => 'Information about user',
@@ -27,6 +28,7 @@ return [
         'last_logins' => 'Last logins',
         'referrer' => 'Referrer',
         'referrals' => 'Referrals',
+        'referral' => 'Referral',
     ],
 
     'main' => [
@@ -51,6 +53,7 @@ return [
         'control_panel' => 'Control panel',
         'user_logs' => 'User logs',
         'user_list' => 'User list',
+        'user_referrals' => 'User referrals',
         'content' => 'Content',
         'notification' => 'Notification',
     ],

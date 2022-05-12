@@ -25,7 +25,13 @@ class UserReferral extends Model
     ];
 
     public $sortable = [
+        'id',
         'user_id',
         'referral_id',
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

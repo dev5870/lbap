@@ -83,6 +83,14 @@
                                 <span class="align-middle" depth="1">{{ __('title.menu.user_logs') }}</span>
                             </a>
                         </li>
+
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('admin.referral') ? 'active' : '' }}"
+                               href="{{ Route('admin.referral') }}">
+                                <span class="align-middle" depth="1">{{ __('title.menu.user_referrals') }}</span>
+                            </a>
+                        </li>
                     </ul>
                 </li>
 

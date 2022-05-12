@@ -37,6 +37,7 @@ Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/user/referral', [AdminController::class, 'referral'])->name('referral');
         Route::get('/user/log', [UserController::class, 'log'])->name('user.log');
         Route::resource('/user', UserController::class)->only(['index', 'edit', 'update']);
         Route::get('/settings/general', [SettingController::class, 'index'])->name('settings.index');
