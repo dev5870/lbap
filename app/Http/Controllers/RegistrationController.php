@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RegistrationRequest;
 use App\Models\User;
+use App\Models\UserReferral;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -31,8 +32,15 @@ class RegistrationController extends Controller
             'password' => Hash::make($request->get('password'))
         ]);
 
+        if ($user->referrer) {
+            UserReferral::create([
+                'user_id' => $user->referrer,
+                'referral_id' => $user->id,
+            ]);
+        }
+
         if ($user) {
-            return redirect()->route('admin.dashboard')->with([
+            return redirect()->route('login.create')->with([
                 'success-message' => __('title.registration.success')
             ]);
         }

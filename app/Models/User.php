@@ -82,4 +82,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserUserAgent::class, 'user_id', 'id');
     }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(UserReferral::class, 'user_id', 'id');
+    }
 }

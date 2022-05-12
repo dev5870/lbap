@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="card-title h5" tag="h5">{{ __('title.login.title') }}</div>
-
+                    @include('includes.alerts')
                     <form method="POST" action="{{ Route('login.store') }}" class="">
                         @csrf
                         <div class="mb-3">
