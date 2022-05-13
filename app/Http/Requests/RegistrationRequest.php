@@ -18,7 +18,7 @@ class RegistrationRequest extends FormRequest
             'telegram' => ['required', 'string'],
             'referrer' => ['int', 'exists:users,id', 'nullable'],
             'balance' => ['string', 'nullable'],
-            'password' => ['required', 'min:6', 'max:100'],
+            'password' => ['required', 'confirmed', 'min:6', 'max:100'],
         ];
     }
 }

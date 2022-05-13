@@ -23,7 +23,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">{{ __('title.input.repeat_password') }}</label>
-                            <input name="repeat_password" placeholder="{{ __('title.input.repeat_password') }}" type="password" class="form-control">
+                            <input name="password_confirmation" placeholder="{{ __('title.input.repeat_password') }}" type="password" class="form-control">
                         </div>
                         <button type="submit" class="btn btn-primary">{{ __('title.btn.submit') }}</button>
                     </form>

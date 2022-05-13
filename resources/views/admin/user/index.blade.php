@@ -4,7 +4,23 @@
         <div class="">
             <h3>{{ __('title.user.many') }}</h3>
         </div>
-        <div class="topButton withSearch">
+        <div class="topButton">
+            <a href="{{ Route('admin.user.create') }}">
+                <button type="submit" class="btn btn-sm btn-outline-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                         class="feather feather-plus align-middle me-2"
+                    >
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    {{ __('title.btn.create') }}
+                </button>
+            </a>
+        </div>
+    </div>
+    <div class="filters row">
+        <div class="col-12 col-md-6 col-xl-4 col-xxl-3">
             <form class="input-group shadow-sm search input-group-navbar" action="" method="get">
                 <input
                     type="text"

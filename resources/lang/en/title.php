@@ -30,6 +30,8 @@ return [
         'referrer' => 'Referrer',
         'referrals' => 'Referrals',
         'referral' => 'Referral',
+        'create' => 'Creating new user',
+        'add' => 'Add new user',
     ],
 
     'main' => [
