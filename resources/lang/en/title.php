@@ -16,6 +16,7 @@ return [
     'success' => 'Success!',
     'tg' => 'Telegram',
     'referrer_email' => 'Referrer email',
+    'commission_amount' => 'Commission amount (%)',
 
     'user' => [
         'title' => 'Information about user',

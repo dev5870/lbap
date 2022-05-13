@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('site_name')->unique();
+            $table->string('commission_amount')->default('1');
             $table->timestamps();
         });
     }

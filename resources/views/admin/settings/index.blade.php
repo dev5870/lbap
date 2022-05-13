@@ -12,18 +12,25 @@
                         <form class="" method="POST" action="{{ Route('admin.settings.general') }}" enctype="multipart/form-data">
                             @csrf
                             @method('POST')
+                            <dt class="">{{ __('title.settings.site') }}</dt>
+
                             <div class="row">
-                                <dt class="">{{ __('title.settings.site') }}</dt>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">{{ __('title.site_name') }}</label>
                                         <input name="site_name" class="form-control" value="{{ $settings->site_name }}">
                                     </div>
-                                    <button type="submit" class="btn btn-primary">
-                                        {{ __('title.btn.update') }}
-                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('title.commission_amount') }}</label>
+                                        <input name="commission_amount" class="form-control" value="{{ $settings->commission_amount }}">
+                                    </div>
                                 </div>
                             </div>
+                            <button type="submit" class="btn btn-primary">
+                                {{ __('title.btn.update') }}
+                            </button>
                         </form>
                 </div>
             </div>
