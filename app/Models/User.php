@@ -87,4 +87,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserReferral::class, 'user_id', 'id');
     }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(File::class, 'fileable_id', 'id')->where('fileable_type', '=', 'App\Models\User');
+    }
 }

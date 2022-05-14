@@ -25,7 +25,8 @@
                     <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.update') }}</div>
                 </div>
                 <div class="card-body">
-                    <form class="" method="POST" action="{{ Route('admin.user.update', $user) }}" enctype="multipart/form-data">
+                    <form class="" method="POST" action="{{ Route('admin.user.update', $user) }}"
+                          enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div class="row">
@@ -34,13 +35,15 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.email') }}</label>
-                                            <input name="email" placeholder="Email" type="email" class="form-control" value="{{ $user->email }}" readonly>
+                                            <input name="email" placeholder="Email" type="email" class="form-control"
+                                                   value="{{ $user->email }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.created_at') }}</label>
-                                            <input name="created_at" class="form-control" value="{{ $user->created_at }}" readonly>
+                                            <input name="created_at" class="form-control"
+                                                   value="{{ $user->created_at }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -48,14 +51,16 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.tg') }}</label>
-                                            <input name="telegram" class="form-control" value="{{ $user->telegram }}" readonly>
+                                            <input name="telegram" class="form-control" value="{{ $user->telegram }}"
+                                                   readonly>
                                         </div>
                                     </div>
                                     @if($user->referrer)
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">{{ __('title.user.referrer') }}</label>
-                                                <input name="referrer" class="form-control" value="{{ $user->referrer }}" readonly>
+                                                <input name="referrer" class="form-control"
+                                                       value="{{ $user->referrer }}" readonly>
                                             </div>
                                         </div>
                                     @endif
@@ -72,7 +77,8 @@
                                             <label class="form-label">{{ __('title.user.role') }}</label>
                                             <select class="roles form-control" multiple="multiple" name="roles[]">
                                                 @foreach(\Spatie\Permission\Models\Role::all() as $role)
-                                                    <option class="form-control" value="{{ $role->id }}" {{ $user->roles->contains($role) ? 'selected' : '' }}>{{ $role->name }}</option>
+                                                    <option class="form-control"
+                                                            value="{{ $role->id }}" {{ $user->roles->contains($role) ? 'selected' : '' }}>{{ $role->name }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -92,6 +98,19 @@
                             {{ __('title.btn.update') }}
                         </button>
                     </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.menu.files') }}</div>
+                </div>
+                <div class="card-body">
+                    @include('admin.file.table')
                 </div>
             </div>
         </div>

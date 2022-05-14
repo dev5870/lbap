@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\FileFilter;
 use App\Http\Filters\LogFilter;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\RegistrationRequest;
@@ -142,6 +143,40 @@ class UserController extends Controller
 
         return redirect()->route('admin.user.create')->with([
             'error-message' => __('title.registration.error')
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return View
+     */
+    public function file(Request $request): View
+    {
+        $filter = new FileFilter($request);
+
+        return view('admin.file.index', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'files' => File::sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param File $file
+     * @return RedirectResponse
+     */
+    public function removeFile(File $file): RedirectResponse
+    {
+        if ((Storage::delete('public/' . $file->file_name) && $file->delete())) {
+            return redirect()->route('admin.user.file')->with([
+                'success-message' => __('title.success')
+            ]);
+        }
+
+        return redirect()->route('admin.user.file')->with([
+            'error-message' => __('title.file_not_deleted')
         ]);
     }
 }

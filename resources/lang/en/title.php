@@ -18,6 +18,7 @@ return [
     'referrer_email' => 'Referrer email',
     'commission_amount' => 'Commission amount (%)',
     'file_not_upload' => 'File not upload!',
+    'file_not_deleted' => 'File not deleted!',
 
     'user' => [
         'title' => 'Information about user',
@@ -61,6 +62,13 @@ return [
         'user_referrals' => 'User referrals',
         'content' => 'Content',
         'notification' => 'Notification',
+        'files' => 'Files',
+    ],
+
+    'file' => [
+        'name' => 'Name',
+        'fileable_id' => 'Fileable id',
+        'fileable_type' => 'Fileable type',
     ],
 
     'notification' => [
