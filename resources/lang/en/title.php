@@ -17,6 +17,7 @@ return [
     'tg' => 'Telegram',
     'referrer_email' => 'Referrer email',
     'commission_amount' => 'Commission amount (%)',
+    'file_not_upload' => 'File not upload!',
 
     'user' => [
         'title' => 'Information about user',
@@ -32,6 +33,7 @@ return [
         'referral' => 'Referral',
         'create' => 'Creating new user',
         'add' => 'Add new user',
+        'file' => 'File',
     ],
 
     'main' => [

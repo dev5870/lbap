@@ -194,4 +194,7 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+    'path' => [
+        'storage' => 'public',
+    ],
 ];

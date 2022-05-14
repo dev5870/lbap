@@ -6,15 +6,18 @@ use App\Http\Filters\LogFilter;
 use App\Http\Filters\UserFilter;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\File;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
+use App\Services\FileUploadService;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -64,6 +67,17 @@ class UserController extends Controller
         $user->telegram = $request->get('telegram');
         $user->roles()->sync($request->get('roles'));
         $user->save();
+        $user->refresh();
+
+        if ((
+            $request->file('file') &&
+            (new FileUploadService())->handle($request->file('file'), $user) === false
+        )) {
+            return redirect()->route('admin.user.edit', $user)->with([
+                'error-message' => __('title.file_not_upload')
+            ]);
+
+        }
 
         return redirect()->route('admin.user.edit', $user)->with([
             'success-message' => __('title.success')

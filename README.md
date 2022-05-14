@@ -7,6 +7,8 @@
 3. composer install
 4. php artisan migrate --seed
 - creating user role and user admin
+5. maybe, need create storage link:
+- php artisan storage:link
 
 ### Admin panel
 
