@@ -39,7 +39,7 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/user/referral', [AdminController::class, 'referral'])->name('referral');
         Route::get('/user/log', [UserController::class, 'log'])->name('user.log');
-        Route::get('/user/file', [UserController::class, 'file'])->name('user.file');
+        Route::get('/file', [UserController::class, 'file'])->name('file');
         Route::delete('/user/removeFile/{file}', [UserController::class, 'removeFile'])->name('user.removeFile');
         Route::resource('/user', UserController::class)->only(['index', 'edit', 'update', 'create', 'store']);
         Route::get('/settings/general', [SettingController::class, 'index'])->name('settings.index');

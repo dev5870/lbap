@@ -87,6 +87,15 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
+                                            <label class="form-label">{{ __('title.user.comment') }}</label>
+                                            <textarea name="comment" placeholder="{{ __('title.user.comment') }}"
+                                                      class="form-control" rows="5">{{ $user->comment }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
                                             <label class="form-label">{{ __('title.user.file') }}</label>
                                             <input name="file" type="file" class="form-control">
                                         </div>

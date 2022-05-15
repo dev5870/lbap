@@ -34,7 +34,7 @@
                                         <div class="mb-3">
                                             <label class="form-label"
                                                    for="inputName">{{ __('title.input.email') }}</label>
-                                            <input name="email" placeholder="{{ __('title.content.title') }}"
+                                            <input name="email" placeholder="{{ __('title.input.email') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ old('email') }}" required>
                                         </div>
@@ -56,7 +56,7 @@
                                         <div class="mb-3">
                                             <label class="form-label"
                                                    for="inputName">{{ __('title.input.repeat_password') }}</label>
-                                            <input name="repeat_password" placeholder="{{ __('title.input.repeat_password') }}"
+                                            <input name="password_confirmation" placeholder="{{ __('title.input.repeat_password') }}"
                                                    type="password" id="inputName" class="form-control"
                                                    value="{{ old('repeat_password') }}" required>
                                         </div>
@@ -81,6 +81,15 @@
                                             <input name="referrer" placeholder="{{ __('title.user.referrer') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ old('referrer') }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.user.comment') }}</label>
+                                            <textarea name="comment" placeholder="{{ __('title.user.comment') }}"
+                                                      class="form-control" rows="5">{{ old('comment') }}</textarea>
                                         </div>
                                     </div>
                                 </div>

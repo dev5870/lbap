@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             ContentSeeder::class,
             UserRoleSeeder::class,
             UserAdminSeeder::class,
+            UserSeeder::class,
             NotificationSeeder::class,
         ]);
     }

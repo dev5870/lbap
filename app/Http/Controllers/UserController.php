@@ -125,6 +125,7 @@ class UserController extends Controller
             'referrer' => $request->get('referrer'),
             'email' => $request->get('email'),
             'telegram' => $request->get('telegram'),
+            'comment' => $request->get('comment'),
             'password' => Hash::make($request->get('password'))
         ]);
 
@@ -170,12 +171,12 @@ class UserController extends Controller
     public function removeFile(File $file): RedirectResponse
     {
         if ((Storage::delete('public/' . $file->file_name) && $file->delete())) {
-            return redirect()->route('admin.user.file')->with([
+            return redirect()->route('admin.file')->with([
                 'success-message' => __('title.success')
             ]);
         }
 
-        return redirect()->route('admin.user.file')->with([
+        return redirect()->route('admin.file')->with([
             'error-message' => __('title.file_not_deleted')
         ]);
     }

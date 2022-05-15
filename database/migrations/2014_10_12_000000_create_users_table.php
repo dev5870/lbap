@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('telegram');
             $table->string('balance')->nullable();
             $table->unsignedBigInteger('referrer')->nullable();
+            $table->string('comment')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('status')->default(\App\Enums\UserStatus::ACTIVE);
