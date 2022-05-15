@@ -70,6 +70,7 @@ return [
         'name' => 'Name',
         'fileable_id' => 'Fileable id',
         'fileable_type' => 'Fileable type',
+        'description' => 'File description',
     ],
 
     'notification' => [

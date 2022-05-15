@@ -100,6 +100,13 @@
                                             <input name="file" type="file" class="form-control">
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.file.description') }}</label>
+                                            <textarea name="description" placeholder="{{ __('title.file.description') }}"
+                                                      class="form-control" rows="3">{{ $user->file->description ?? '' }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

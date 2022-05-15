@@ -27,6 +27,7 @@ class UserUpdateRequest extends FormRequest
             'status' => ['required', 'numeric'],
             'roles' => ['required', 'exists:roles,id'],
             'file' => ['image', 'nullable', 'max:2400'],
+            'description' => ['nullable', 'string', 'max:500'],
         ];
     }
 }

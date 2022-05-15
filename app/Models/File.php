@@ -25,6 +25,7 @@ class File extends Model
         'file_name',
         'fileable_id',
         'fileable_type',
+        'description',
     ];
 
     public $sortable = [

@@ -12,13 +12,13 @@ class FileUploadService
      * @param $model
      * @return bool
      */
-    public function handle($file, $model): bool
+    public function handle($file, $model, $description): bool
     {
         if (!$path = self::put($file)) {
             return false;
         }
 
-        if (self::save($path, $model)) {
+        if (self::save($path, $model, $description)) {
             return true;
         }
 
@@ -41,12 +41,13 @@ class FileUploadService
      * @param $model
      * @return bool
      */
-    private static function save($url, $model): bool
+    private static function save($url, $model, $description): bool
     {
         $file = File::create([
             'file_name' => $url,
             'fileable_id' => $model->id,
             'fileable_type' => get_class($model),
+            'description' => $description,
         ]);
 
         return (bool)$file->exists;

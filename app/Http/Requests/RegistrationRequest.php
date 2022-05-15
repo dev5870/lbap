@@ -17,6 +17,7 @@ class RegistrationRequest extends FormRequest
             'email' => ['required', 'email', 'unique:users', 'max:100'],
             'telegram' => ['required', 'string'],
             'referrer' => ['int', 'exists:users,id', 'nullable'],
+            'comment' => ['nullable', 'string', 'max:700'],
             'balance' => ['string', 'nullable'],
             'password' => ['required', 'confirmed', 'min:6', 'max:100'],
         ];
