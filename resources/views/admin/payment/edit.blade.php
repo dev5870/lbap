@@ -22,11 +22,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.content.add') }}</div>
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.content.update') }}</div>
                 </div>
                 <div class="card-body">
-                    <form class="" method="POST" action="{{ Route('admin.content.store') }}" enctype="multipart/form-data">
+                    <form class="" method="POST" action="{{ Route('admin.content.update', $content) }}"
+                          enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
@@ -36,7 +38,7 @@
                                                    for="inputName">{{ __('title.content.title') }}</label>
                                             <input name="title" placeholder="{{ __('title.content.title') }}"
                                                    type="text" id="inputName" class="form-control"
-                                                   value="{{ old('title') }}">
+                                                   value="{{ $content->title }}">
                                         </div>
                                     </div>
                                 </div>
@@ -45,7 +47,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.preview') }}</label>
                                             <textarea name="preview" placeholder="{{ __('title.content.preview') }}"
-                                                      class="form-control" rows="5">{{ old('preview') }}</textarea>
+                                                      class="form-control" rows="5">{{ $content->preview }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +56,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.text') }}</label>
                                             <textarea name="text" placeholder="{{ __('title.content.text') }}"
-                                                      class="form-control" rows="5">{{ old('text') }}</textarea>
+                                                      class="form-control" rows="5">{{ $content->text }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -62,15 +64,15 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.delayed_publication') }}</label>
-                                            <input type="date" name="delayed_date_publication" class="form-control">
-                                            <input type="time" name="delayed_time_publication" class="form-control">
+                                            <input type="date" name="delayed_date_publication" class="form-control" value="{{ $content->delayed_date_publication }}">
+                                            <input type="time" name="delayed_time_publication" class="form-control" value="{{ $content->delayed_time_publication }}">
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">
-                            {{ __('title.btn.create') }}
+                            {{ __('title.btn.update') }}
                         </button>
                     </form>
                 </div>

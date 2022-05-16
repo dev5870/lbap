@@ -11,6 +11,7 @@ return [
     'ip' => 'IP',
     'email' => 'Email',
     'created_at' => 'Created at',
+    'paid_at' => 'Paid at',
     'action' => 'Action',
     'status' => 'Status',
     'success' => 'Success!',
@@ -64,6 +65,15 @@ return [
         'content' => 'Content',
         'notification' => 'Notification',
         'files' => 'Files',
+        'payments' => 'Payments',
+    ],
+
+    'payment' => [
+        'payment' => 'Payment',
+        'full_amount' => 'Full amount',
+        'amount' => 'Amount',
+        'commission_amount' => 'Commission amount',
+        'create_new' => 'Create new payment',
     ],
 
     'file' => [
