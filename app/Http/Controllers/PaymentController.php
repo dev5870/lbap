@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\PaymentFilter;
+use App\Http\Requests\PaymentCreateRequest;
 use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Setting;
+use App\Services\PaymentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
@@ -45,12 +48,20 @@ class PaymentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return Response
+     * @param PaymentCreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PaymentCreateRequest $request): RedirectResponse
     {
-        //
+        if ((new PaymentService())->handle($request)) {
+            return redirect()->route('admin.payment.index')->with([
+                'success-message' => __('title.success')
+            ]);
+        }
+
+        return redirect()->route('admin.payment.create')->with([
+            'error-message' => __('title.error')
+        ]);
     }
 
     /**

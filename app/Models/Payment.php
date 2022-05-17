@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -27,4 +28,14 @@ class Payment extends Model
         'created_at',
         'paid_at',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+            $model->status = PaymentStatus::CREATE;
+            $model->save();
+        });
+    }
 }
