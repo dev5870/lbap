@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\PaymentFilter;
 use App\Http\Requests\PaymentCreateRequest;
+use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Services\PaymentService;
+use App\Services\PaymentUpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -65,37 +67,38 @@ class PaymentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param Payment $payment
+     * @return View
      */
-    public function edit($id)
+    public function edit(Payment $payment): View
     {
-        //
+        return view('admin.payment.edit', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'payment' => $payment,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return Response
+     * @param PaymentUpdateRequest $request
+     * @param Payment $payment
+     * @return RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(PaymentUpdateRequest $request, Payment $payment): RedirectResponse
     {
-        //
+        if ((new PaymentUpdateService())->handle($request, $payment)) {
+            return redirect()->route('admin.payment.edit', $payment)->with([
+                'success-message' => __('title.success')
+            ]);
+        }
+
+        return redirect()->route('admin.payment.edit', $payment)->with([
+            'error-message' => __('title.error')
+        ]);
     }
 
     /**

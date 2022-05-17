@@ -2,10 +2,10 @@
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.menu.content') }}</h3>
+            <h3>{{ __('title.menu.payments') }}</h3>
         </div>
         <div class="topButton">
-            <a href="{{ Route('admin.content.index') }}">
+            <a href="{{ Route('admin.payment.index') }}">
                 <button type="submit" class="btn btn-sm btn-outline-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -22,10 +22,10 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.content.update') }}</div>
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.payment.update') }}</div>
                 </div>
                 <div class="card-body">
-                    <form class="" method="POST" action="{{ Route('admin.content.update', $content) }}"
+                    <form class="" method="POST" action="{{ Route('admin.payment.update', $payment) }}"
                           enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -35,45 +35,71 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label"
-                                                   for="inputName">{{ __('title.content.title') }}</label>
-                                            <input name="title" placeholder="{{ __('title.content.title') }}"
+                                                   for="inputName">{{ __('title.user_id') }}</label>
+                                            <input name="user_id" placeholder="{{ __('title.user_id') }}"
                                                    type="text" id="inputName" class="form-control"
-                                                   value="{{ $content->title }}">
+                                                   value="{{ $payment->user_id }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('title.content.preview') }}</label>
-                                            <textarea name="preview" placeholder="{{ __('title.content.preview') }}"
-                                                      class="form-control" rows="5">{{ $content->preview }}</textarea>
+                                            <label class="form-label">{{ __('title.payment.full_amount') }}</label>
+                                            <input name="full_amount" placeholder="{{ __('title.payment.full_amount') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $payment->full_amount }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('title.content.text') }}</label>
-                                            <textarea name="text" placeholder="{{ __('title.content.text') }}"
-                                                      class="form-control" rows="5">{{ $content->text }}</textarea>
+                                            <label class="form-label">{{ __('title.payment.amount') }}</label>
+                                            <input name="amount" placeholder="{{ __('title.payment.amount') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $payment->amount }}" readonly>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('title.content.delayed_publication') }}</label>
-                                            <input type="date" name="delayed_date_publication" class="form-control" value="{{ $content->delayed_date_publication }}">
-                                            <input type="time" name="delayed_time_publication" class="form-control" value="{{ $content->delayed_time_publication }}">
+                                            <label class="form-label">{{ __('title.payment.commission_amount') }}</label>
+                                            <input name="commission_amount" placeholder="{{ __('title.payment.commission_amount') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $payment->commission_amount }}" readonly>
                                         </div>
                                     </div>
                                 </div>
+                                @if($payment->status === \App\Enums\PaymentStatus::CREATE)
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('title.status') }}</label>
+                                                {!! Form::select('status', \App\Enums\PaymentStatus::$list, $payment->status, ['class' => 'form-control']) !!}
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">{{ __('title.status') }}</label>
+                                                <input name="status" placeholder="{{ __('title.status') }}"
+                                                       type="text" id="inputName" class="form-control"
+                                                       value="{{ \App\Enums\PaymentStatus::$list[$payment->status] }}" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
+                        @if($payment->status === \App\Enums\PaymentStatus::CREATE)
                         <button type="submit" class="btn btn-primary">
                             {{ __('title.btn.update') }}
                         </button>
+                        @endif
                     </form>
                 </div>
             </div>
