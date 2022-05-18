@@ -122,6 +122,8 @@ return [
         'close' => 'Close',
         'delete' => 'Delete',
         'return' => 'Return',
+        'confirm' => 'Confirm',
+        'cancel' => 'Cancel',
     ],
 
     'headers' => [

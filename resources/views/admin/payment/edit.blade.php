@@ -46,7 +46,8 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.payment.full_amount') }}</label>
-                                            <input name="full_amount" placeholder="{{ __('title.payment.full_amount') }}"
+                                            <input name="full_amount"
+                                                   placeholder="{{ __('title.payment.full_amount') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ $payment->full_amount }}" readonly>
                                         </div>
@@ -65,30 +66,24 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('title.payment.commission_amount') }}</label>
-                                            <input name="commission_amount" placeholder="{{ __('title.payment.commission_amount') }}"
+                                            <label
+                                                class="form-label">{{ __('title.payment.commission_amount') }}</label>
+                                            <input name="commission_amount"
+                                                   placeholder="{{ __('title.payment.commission_amount') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ $payment->commission_amount }}" readonly>
                                         </div>
                                     </div>
                                 </div>
-                                @if($payment->status === \App\Enums\PaymentStatus::CREATE)
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="mb-3">
-                                                <label class="form-label">{{ __('title.status') }}</label>
-                                                {!! Form::select('status', \App\Enums\PaymentStatus::$list, $payment->status, ['class' => 'form-control']) !!}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @else
+                                @if($payment->status !== \App\Enums\PaymentStatus::CREATE)
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="mb-3">
                                                 <label class="form-label">{{ __('title.status') }}</label>
                                                 <input name="status" placeholder="{{ __('title.status') }}"
                                                        type="text" id="inputName" class="form-control"
-                                                       value="{{ \App\Enums\PaymentStatus::$list[$payment->status] }}" readonly>
+                                                       value="{{ \App\Enums\PaymentStatus::$list[$payment->status] }}"
+                                                       readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -96,9 +91,8 @@
                             </div>
                         </div>
                         @if($payment->status === \App\Enums\PaymentStatus::CREATE)
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('title.btn.update') }}
-                        </button>
+                            <input type="submit" name="confirm" class="me-1 mb-1 btn btn-success" value="{{ __('title.btn.confirm') }}">
+                            <input type="submit" name="cancel" class="me-1 mb-1 btn btn-danger" value="{{ __('title.btn.cancel') }}">
                         @endif
                     </form>
                 </div>

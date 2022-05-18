@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Enums\PaymentStatus;
-use App\Http\Requests\PaymentCreateRequest;
 use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Payment;
 
@@ -19,11 +18,11 @@ class PaymentUpdateService
             return false;
         }
 
-        if (($request->get('status') == PaymentStatus::CANCEL && self::closePayment($payment))) {
+        if (($request->has('cancel') && self::closePayment($payment))) {
             return true;
         }
 
-        if (($request->get('status') == PaymentStatus::PAID && self::paidPayment($payment))) {
+        if (($request->has('confirm') && self::paidPayment($payment))) {
             return true;
         }
 
@@ -56,8 +55,18 @@ class PaymentUpdateService
         return false;
     }
 
+    /**
+     * @param $payment
+     * @return bool
+     */
     private static function paidPayment($payment): bool
     {
-        //
+        $payment->status = PaymentStatus::PAID;
+
+        if ($payment->save()) {
+            return true;
+        }
+
+        return false;
     }
 }

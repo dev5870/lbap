@@ -23,8 +23,10 @@ class PaymentUpdateRequest extends FormRequest
      */
     public function rules()
     {
+        // todo: check correct
         return [
-            'status' => ['required', 'numeric'],
+            'cancel' => ['nullable', 'string'],
+            'confirm' => ['nullable', 'string'],
         ];
     }
 }
