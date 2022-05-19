@@ -10,6 +10,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\AddressController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,5 +49,6 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::resource('/content', ContentController::class);
         Route::resource('/notification', NotificationController::class);
         Route::resource('/payment', PaymentController::class);
+        Route::resource('/address', AddressController::class);
     });
 });

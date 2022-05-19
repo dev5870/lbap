@@ -66,6 +66,7 @@ return [
         'notification' => 'Notification',
         'files' => 'Files',
         'payments' => 'Payments',
+        'addresses' => 'Addresses',
     ],
 
     'payment' => [
@@ -90,6 +91,14 @@ return [
         'add' => 'Add new notification',
         'update' => 'Update notification',
         'type' => 'Type',
+    ],
+
+    'address' => [
+        'title' => 'Address',
+    ],
+
+    'payment_system' => [
+        'title' => 'Payment system',
     ],
 
     'settings' => [
