@@ -6,7 +6,6 @@ use App\Enums\PaymentStatus;
 use App\Enums\PaymentType;
 use App\Models\Payment;
 use Carbon\Carbon;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class PaymentSeeder extends Seeder

@@ -2,10 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\PaymentSystem;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Notifications\NotificationSender;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserRoleSeeder::class,
             UserAdminSeeder::class,
             UserSeeder::class,
+            AddressSeeder::class,
             PaymentSeeder::class,
             NotificationSeeder::class,
         ]);
