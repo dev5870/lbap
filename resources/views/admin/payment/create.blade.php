@@ -51,6 +51,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.notification.type') }}</label>
+                                            {!! Form::select('type', \App\Enums\PaymentType::$list, old('type'), ['class' => 'form-control']) !!}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">

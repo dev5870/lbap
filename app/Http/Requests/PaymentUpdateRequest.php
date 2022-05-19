@@ -25,8 +25,8 @@ class PaymentUpdateRequest extends FormRequest
     {
         // todo: check correct
         return [
-            'cancel' => ['nullable', 'string'],
-            'confirm' => ['nullable', 'string'],
+            'cancel' => ['exclude_if:confirm,confirm', 'string'],
+            'confirm' => ['exclude_if:cancel,cancel', 'string'],
         ];
     }
 }

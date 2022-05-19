@@ -45,6 +45,7 @@ class PaymentService
             'full_amount' => $request->get('full_amount'),
             'amount' => round($request->get('full_amount') - $commissionAmount),
             'commission_amount' => $commissionAmount,
+            'type' => $request->get('type'),
         ]);
 
         if ($payment->exists()) {

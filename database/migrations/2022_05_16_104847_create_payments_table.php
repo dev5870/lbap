@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedTinyInteger('status')->default(\App\Enums\PaymentStatus::CREATE);
+            $table->unsignedTinyInteger('type');
             $table->string('full_amount');
             $table->string('amount');
             $table->string('commission_amount');
