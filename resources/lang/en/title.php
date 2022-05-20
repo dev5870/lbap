@@ -95,6 +95,7 @@ return [
 
     'address' => [
         'title' => 'Address',
+        'add' => 'Add new address',
     ],
 
     'payment_system' => [

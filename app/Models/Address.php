@@ -12,6 +12,11 @@ class Address extends Model
     use HasFactory;
     use Sortable;
 
+    protected $fillable = [
+        'address',
+        'payment_system_id',
+    ];
+
     public $sortable = [
         'id',
         'created_at',
