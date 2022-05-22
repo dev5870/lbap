@@ -84,11 +84,15 @@
                 <div class=" py-4 card-body">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">$ 18.700</h3>
-                            <p class="mb-2">Title example</p>
+                            <h3 class="mb-2">{{ $allPayment }}</h3>
+                            <p class="mb-2">{{ __('title.payment.total') }}</p>
                             <div class="mb-0">
-                                <span class="badge-soft-success me-2 badge">+8.65%</span>
-                                <span class="text-muted">Since last week</span>
+                                @if($lastDayContents)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayContents }}</span>
+                                @else
+                                    <span>{{ $lastDayContents }}</span>
+                                @endif
+                                <span class="text-muted">{{ __('title.user.last_day') }}</span>
                             </div>
                         </div>
                         <div class="d-inline-block ms-3">
