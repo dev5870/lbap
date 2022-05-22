@@ -9,6 +9,39 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
+/**
+ * App\Models\Payment
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $address_id
+ * @property int $status
+ * @property int $type
+ * @property string $full_amount
+ * @property string $amount
+ * @property string $commission_amount
+ * @property string|null $paid_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Address|null $address
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment filter(\App\Http\Filters\QueryFilter $filter)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment sortable($defaultParameters = null)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAddressId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCommissionAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereFullAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaidAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Payment extends Model
 {
     use HasFactory;
