@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Http\Requests\PaymentCreateRequest;
+use App\Models\Address;
 use App\Models\Payment;
 
 class PaymentService
@@ -53,5 +54,13 @@ class PaymentService
         }
 
         return false;
+    }
+
+    /**
+     * @return Address|bool
+     */
+    public static function getAddress(): Address|bool
+    {
+        return Address::whereNull('user_id')->first() ?? false;
     }
 }

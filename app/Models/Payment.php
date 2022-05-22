@@ -3,11 +3,15 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use App\Enums\PaymentType;
 use App\Models\Traits\Filterable;
+use App\Services\PaymentService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
+use function Sodium\add;
 
 /**
  * App\Models\Payment
@@ -50,6 +54,7 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id',
+        'address_id',
         'status',
         'type',
         'full_amount',
@@ -69,6 +74,26 @@ class Payment extends Model
         parent::boot();
 
         self::created(function ($model) {
+
+            if ((
+                $model->type == PaymentType::TOP_UP &&
+                !$model->address &&
+                PaymentService::getAddress()
+            )) {
+
+                DB::beginTransaction();
+
+                $address = PaymentService::getAddress();
+                $address->user_id = $model->user_id;
+
+                if ($address->save()) {
+                    $model->address_id = $address->id;
+                    DB::commit();
+                } else {
+                    DB::rollBack();
+                }
+
+            }
             $model->status = PaymentStatus::CREATE;
             $model->save();
         });
