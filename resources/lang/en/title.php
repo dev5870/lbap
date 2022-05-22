@@ -100,6 +100,7 @@ return [
 
     'payment_system' => [
         'title' => 'Payment system',
+        'info' => 'Payment information',
     ],
 
     'settings' => [

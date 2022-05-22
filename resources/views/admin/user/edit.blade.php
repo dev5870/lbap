@@ -18,6 +18,43 @@
             </a>
         </div>
     </div>
+    @if($user->address)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="mb-0 card-title h5" tag="h5">{{ __('title.payment_system.info') }}</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                   for="inputName">{{ __('title.payment_system.title') }}</label>
+                                            <input name="user_id" placeholder="{{ __('title.payment_system.title') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $user->address->paymentSystem->name }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                   for="inputName">{{ __('title.address.title') }}</label>
+                                            <input name="user_id" placeholder="{{ __('title.address.title') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $user->address->address }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-12">
             <div class="card">

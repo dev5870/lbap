@@ -6,6 +6,7 @@ use App\Enums\PaymentStatus;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
 
 class Payment extends Model
@@ -38,5 +39,10 @@ class Payment extends Model
             $model->status = PaymentStatus::CREATE;
             $model->save();
         });
+    }
+
+    public function address(): HasOne
+    {
+        return $this->hasOne(Address::class, 'id', 'address_id');
     }
 }

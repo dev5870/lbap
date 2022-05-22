@@ -22,6 +22,7 @@ class AddressSeeder extends Seeder
 
         Address::create([
             'address' => '22iuy87t6745yff54e75ui68',
+            'user_id' => 858,
             'payment_system_id' => 1,
         ]);
 

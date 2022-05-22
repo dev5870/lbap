@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Kyslik\ColumnSortable\Sortable;
@@ -92,5 +93,15 @@ class User extends Authenticatable
     public function files(): HasMany
     {
         return $this->hasMany(File::class, 'fileable_id', 'id')->where('fileable_type', '=', 'App\Models\User');
+    }
+
+    public function address(): HasOne
+    {
+        return $this->hasOne(Address::class, 'user_id');
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'user_id');
     }
 }

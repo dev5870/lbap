@@ -5,7 +5,6 @@ namespace Database\Seeders;
 use App\Enums\PaymentStatus;
 use App\Enums\PaymentType;
 use App\Models\Payment;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class PaymentSeeder extends Seeder
@@ -19,6 +18,7 @@ class PaymentSeeder extends Seeder
     {
         Payment::create([
             'user_id' => 857,
+            'address_id' => 1,
             'status' => PaymentStatus::CREATE,
             'type' => PaymentType::TOP_UP,
             'full_amount' => 150,
@@ -28,16 +28,17 @@ class PaymentSeeder extends Seeder
 
         Payment::create([
             'user_id' => 857,
-            'status' => PaymentStatus::PAID,
+            'address_id' => 1,
+            'status' => PaymentStatus::CREATE,
             'type' => PaymentType::TOP_UP,
             'full_amount' => 200,
             'amount' => 180,
             'commission_amount' => 20,
-            'paid_at' => Carbon::now(),
         ]);
 
         Payment::create([
             'user_id' => 858,
+            'address_id' => 2,
             'status' => PaymentStatus::CREATE,
             'type' => PaymentType::MINUS,
             'full_amount' => 90,
