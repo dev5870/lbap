@@ -7,6 +7,7 @@ use App\Models\Content;
 use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Setting;
+use App\Models\SystemNotice;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
@@ -52,6 +53,15 @@ class AdminController extends Controller
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'referrals' => UserReferral::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
+        ]);
+    }
+
+    public function systemNotice(): View
+    {
+        return view('admin.notice.index', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'notices' => SystemNotice::paginate(config('view.per_page')),
         ]);
     }
 }

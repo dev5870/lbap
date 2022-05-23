@@ -40,6 +40,7 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/user/referral', [AdminController::class, 'referral'])->name('referral');
+        Route::get('/notice', [AdminController::class, 'systemNotice'])->name('notice');
         Route::get('/user/log', [UserController::class, 'log'])->name('user.log');
         Route::get('/file', [UserController::class, 'file'])->name('file');
         Route::delete('/user/removeFile/{file}', [UserController::class, 'removeFile'])->name('user.removeFile');

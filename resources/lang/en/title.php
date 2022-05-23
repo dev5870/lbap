@@ -67,6 +67,7 @@ return [
         'files' => 'Files',
         'payments' => 'Payments',
         'addresses' => 'Addresses',
+        'notices' => 'System notices',
     ],
 
     'payment' => [
@@ -77,6 +78,11 @@ return [
         'create_new' => 'Create new payment',
         'update' => 'Update payment',
         'total' => 'Total payments',
+    ],
+
+    'notice' => [
+        'title' => 'System notice',
+        'description' => 'Description',
     ],
 
     'file' => [
