@@ -9,7 +9,7 @@
         <table class="my-0 table table-striped users">
             <thead>
             <tr>
-                <th>{{ __('title.id') }}</th>
+                <th>@sortablelink('id', __('title.id'))</th>
                 <th>{{ __('title.content.title') }}</th>
                 <th>{{ __('title.notice.description') }}</th>
                 <th>{{ __('title.created_at') }}</th>

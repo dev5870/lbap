@@ -61,7 +61,7 @@ class AdminController extends Controller
         return view('admin.notice.index', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
-            'notices' => SystemNotice::paginate(config('view.per_page')),
+            'notices' => SystemNotice::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
         ]);
     }
 }
