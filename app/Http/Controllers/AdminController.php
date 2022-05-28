@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ReferralFilter;
+use App\Models\Address;
 use App\Models\Content;
 use App\Models\Notification;
 use App\Models\Payment;
@@ -26,9 +27,12 @@ class AdminController extends Controller
         $users = User::orderBy('id', 'desc');
         $contents = Content::orderBy('id', 'desc');
         $payments = Payment::orderBy('id', 'desc');
+        $addresses = Address::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
             'notifications' => Notification::all(),
+            'allAddresses' => $addresses->count(),
+            'lastDayAddresses' => $addresses->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'allContents' => $contents->count(),
             'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'settings' => Setting::first(),

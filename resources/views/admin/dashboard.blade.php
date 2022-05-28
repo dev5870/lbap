@@ -6,20 +6,6 @@
 
     <div class="row">
         <div class="d-flex col-xl col-md-6">
-            <div class="illustration flex-fill card">
-                <div class="p-0 d-flex flex-fill card-body">
-                    <div class="g-0 w-100 row">
-                        <div class="col-12">
-                            <div class="illustration-text p-3 m-1">
-                                <h4 class="illustration-text">{{ __('title.welcome_back') }}!</h4>
-                                <p class="mb-0">{{ Auth::user()->email }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="d-flex col-xl col-md-6">
             <div class="flex-fill card">
                 <div class=" py-4 card-body">
                     <div class="d-flex align-items-start">
@@ -54,13 +40,13 @@
                 <div class=" py-4 card-body">
                     <div class="d-flex align-items-start">
                         <div class="flex-grow-1">
-                            <h3 class="mb-2">{{ $allContents }}</h3>
-                            <p class="mb-2">{{ __('title.content.total') }}</p>
+                            <h3 class="mb-2">{{ $allAddresses }}</h3>
+                            <p class="mb-2">{{ __('title.address.total') }}</p>
                             <div class="mb-0">
-                                @if($lastDayContents)
-                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayContents }}</span>
+                                @if($lastDayAddresses)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayAddresses }}</span>
                                 @else
-                                    <span>{{ $lastDayContents }}</span>
+                                    <span>{{ $lastDayAddresses }}</span>
                                 @endif
                                 <span class="text-muted">{{ __('title.user.last_day') }}</span>
                             </div>
@@ -70,8 +56,8 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                                      class="feather align-middle me-2">
-                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
-                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                                    <line x1="1" y1="10" x2="23" y2="10"></line>
                                 </svg>
                             </div>
                         </div>
@@ -100,6 +86,36 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="align-middle text-success">
                                     <line x1="12" y1="1" x2="12" y2="23"></line>
                                     <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex col-xl col-md-6">
+            <div class="flex-fill card">
+                <div class=" py-4 card-body">
+                    <div class="d-flex align-items-start">
+                        <div class="flex-grow-1">
+                            <h3 class="mb-2">{{ $allContents }}</h3>
+                            <p class="mb-2">{{ __('title.content.total') }}</p>
+                            <div class="mb-0">
+                                @if($lastDayContents)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayContents }}</span>
+                                @else
+                                    <span>{{ $lastDayContents }}</span>
+                                @endif
+                                <span class="text-muted">{{ __('title.user.last_day') }}</span>
+                            </div>
+                        </div>
+                        <div class="d-inline-block ms-3">
+                            <div class="stat">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                     class="feather align-middle me-2">
+                                    <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                                    <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
                                 </svg>
                             </div>
                         </div>

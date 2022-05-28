@@ -104,6 +104,7 @@ return [
     'address' => [
         'title' => 'Address',
         'add' => 'Add new address',
+        'total' => 'Total addresses',
     ],
 
     'payment_system' => [
