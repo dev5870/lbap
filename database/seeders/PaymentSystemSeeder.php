@@ -15,8 +15,8 @@ class PaymentSystemSeeder extends Seeder
     public function run()
     {
         PaymentSystem::create([
-            'name' => 'Bitcoin',
-            'iso_code' => 'BTC',
+            'name' => 'Dogecoin',
+            'iso_code' => 'DOGE',
         ]);
     }
 }
