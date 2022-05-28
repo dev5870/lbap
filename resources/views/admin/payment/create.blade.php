@@ -45,8 +45,8 @@
                                         <div class="mb-3">
                                             <label class="form-label"
                                                    for="inputName">{{ __('title.payment.full_amount') }}</label>
-                                            <input name="full_amount" placeholder="{{ __('title.payment.full_amount') }}"
-                                                   type="number" id="inputName" class="form-control"
+                                            <input name="full_amount" placeholder="{{ __('title.payment.full_amount_placeholder') }}"
+                                                   type="number" step="0.00000001" min="100" id="inputName" class="form-control"
                                                    value="{{ old('full_amount') }}">
                                         </div>
                                     </div>

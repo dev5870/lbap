@@ -70,10 +70,10 @@ class UserController extends Controller
         $user->save();
         $user->refresh();
 
-        if ((
+        if (
             $request->file('file') &&
-            (new FileUploadService())->handle($request->file('file'), $user, $request->get('description')) === false
-        )) {
+            ((new FileUploadService())->handle($request->file('file'), $user, $request->get('description')) === false)
+        ) {
             return redirect()->route('admin.user.edit', $user)->with([
                 'error-message' => __('title.file_not_upload')
             ]);
@@ -170,7 +170,7 @@ class UserController extends Controller
      */
     public function removeFile(File $file): RedirectResponse
     {
-        if ((Storage::delete('public/' . $file->file_name) && $file->delete())) {
+        if (Storage::delete('public/' . $file->file_name) && $file->delete()) {
             return redirect()->route('admin.file')->with([
                 'success-message' => __('title.success')
             ]);

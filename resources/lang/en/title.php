@@ -73,6 +73,7 @@ return [
     'payment' => [
         'payment' => 'Payment',
         'full_amount' => 'Full amount',
+        'full_amount_placeholder' => 'Full amount (min: 100)',
         'amount' => 'Amount',
         'commission_amount' => 'Commission',
         'create_new' => 'Create new payment',

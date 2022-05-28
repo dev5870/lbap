@@ -75,11 +75,11 @@ class Payment extends Model
 
         self::created(function ($model) {
 
-            if ((
-                $model->type == PaymentType::TOP_UP &&
+            if (
+                ($model->type == PaymentType::TOP_UP) &&
                 !$model->address &&
                 PaymentService::getAddress()
-            )) {
+            ) {
 
                 DB::beginTransaction();
 

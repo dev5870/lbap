@@ -25,7 +25,7 @@ class PaymentCreateRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'exists:users,id'],
-            'full_amount' => ['required', 'int', 'min:10'],
+            'full_amount' => ['required', 'numeric'],
             'type' => ['required', 'string'],
         ];
     }

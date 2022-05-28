@@ -2,23 +2,35 @@
 
 namespace App\Services;
 
-use App\Http\Requests\PaymentCreateRequest;
+use App\Dto\PaymentCreateDto;
 use App\Models\Address;
 use App\Models\Payment;
 
 class PaymentService
 {
     /**
-     * @param PaymentCreateRequest $request
+     * @var PaymentCreateDto
+     */
+    private PaymentCreateDto $dto;
+
+    /**
+     * @param PaymentCreateDto $paymentCreateDto
+     */
+    public function __construct(PaymentCreateDto $paymentCreateDto)
+    {
+        $this->dto = $paymentCreateDto;
+    }
+
+    /**
      * @return bool
      */
-    public function handle(PaymentCreateRequest $request): bool
+    public function handle(): bool
     {
-        if (!$commissionAmount = self::getCommissionAmount($request->get('full_amount'))) {
+        if (!$commissionAmount = self::getCommissionAmount($this->dto->fullAmount)) {
             return false;
         }
 
-        if (!self::createNewPayment($request, $commissionAmount, )) {
+        if (!self::createNewPayment($this->dto, $commissionAmount)) {
             return false;
         }
 
@@ -35,18 +47,18 @@ class PaymentService
     }
 
     /**
-     * @param PaymentCreateRequest $request
+     * @param $dto
      * @param $commissionAmount
      * @return bool
      */
-    private static function createNewPayment(PaymentCreateRequest $request, $commissionAmount): bool
+    private static function createNewPayment($dto, $commissionAmount): bool
     {
         $payment = Payment::create([
-            'user_id' => $request->get('user_id'),
-            'full_amount' => $request->get('full_amount'),
-            'amount' => round($request->get('full_amount') - $commissionAmount),
+            'user_id' => $dto->userId,
+            'full_amount' => $dto->fullAmount,
+            'amount' => round(bcsub($dto->fullAmount, $commissionAmount)),
             'commission_amount' => $commissionAmount,
-            'type' => $request->get('type'),
+            'type' => $dto->type,
         ]);
 
         if ($payment->exists()) {

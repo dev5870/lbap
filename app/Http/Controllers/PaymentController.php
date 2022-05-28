@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Dto\PaymentCreateDto;
 use App\Dto\PaymentUpdateDto;
 use App\Enums\PaymentStatus;
 use App\Http\Filters\PaymentFilter;
@@ -57,7 +58,12 @@ class PaymentController extends Controller
      */
     public function store(PaymentCreateRequest $request): RedirectResponse
     {
-        if ((new PaymentService())->handle($request)) {
+        $paymentCreateDto = new PaymentCreateDto();
+        $paymentCreateDto->userId = $request->get('user_id');
+        $paymentCreateDto->fullAmount = $request->get('full_amount');
+        $paymentCreateDto->type = $request->get('type');
+
+        if ((new PaymentService($paymentCreateDto))->handle()) {
             return redirect()->route('admin.payment.index')->with([
                 'success-message' => __('title.success')
             ]);
