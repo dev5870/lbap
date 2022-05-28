@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Dto\PaymentCreateDto;
+use App\Enums\PaymentType;
 use App\Models\Address;
 use App\Models\Payment;
 
@@ -12,6 +13,7 @@ class PaymentService
      * @var PaymentCreateDto
      */
     private PaymentCreateDto $dto;
+    private float $commissionAmount;
 
     /**
      * @param PaymentCreateDto $paymentCreateDto
@@ -19,6 +21,7 @@ class PaymentService
     public function __construct(PaymentCreateDto $paymentCreateDto)
     {
         $this->dto = $paymentCreateDto;
+        $this->commissionAmount = $this->getCommissionAmount();
     }
 
     /**
@@ -26,11 +29,11 @@ class PaymentService
      */
     public function handle(): bool
     {
-        if (!$commissionAmount = self::getCommissionAmount($this->dto->fullAmount)) {
+        if ($this->dto->type == PaymentType::MINUS && ($this->isEnoughMoney() === false)) {
             return false;
         }
 
-        if (!self::createNewPayment($this->dto, $commissionAmount)) {
+        if (!$this->createNewPayment()) {
             return false;
         }
 
@@ -38,27 +41,32 @@ class PaymentService
     }
 
     /**
-     * @param $fullAmount
-     * @return float
+     * @return bool
      */
-    private static function getCommissionAmount($fullAmount): float
+    private function isEnoughMoney(): bool
     {
-        return round($fullAmount * 0.01);
+        return bccomp($this->dto->user->balance, $this->dto->fullAmount) >= 0;
     }
 
     /**
-     * @param $dto
-     * @param $commissionAmount
+     * @return float
+     */
+    private function getCommissionAmount(): float
+    {
+        return round($this->dto->fullAmount * 0.01);
+    }
+
+    /**
      * @return bool
      */
-    private static function createNewPayment($dto, $commissionAmount): bool
+    private function createNewPayment(): bool
     {
         $payment = Payment::create([
-            'user_id' => $dto->userId,
-            'full_amount' => $dto->fullAmount,
-            'amount' => round(bcsub($dto->fullAmount, $commissionAmount)),
-            'commission_amount' => $commissionAmount,
-            'type' => $dto->type,
+            'user_id' => $this->dto->user->id,
+            'full_amount' => $this->dto->fullAmount,
+            'amount' => round(bcsub($this->dto->fullAmount, $this->commissionAmount)),
+            'commission_amount' => $this->commissionAmount,
+            'type' => $this->dto->type,
         ]);
 
         if ($payment->exists()) {

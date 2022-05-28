@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\Transaction
@@ -43,4 +44,19 @@ class Transaction extends Model
         'new_balance',
         'old_balance',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+            $model->payment->user->balance = $model->new_balance;
+            $model->payment->user->save();
+        });
+    }
+
+    public function payment(): HasOne
+    {
+        return $this->hasOne(Payment::class, 'id', 'payment_id');
+    }
 }

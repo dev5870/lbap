@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedTinyInteger('status')->default(\App\Enums\PaymentStatus::CREATE);
             $table->unsignedTinyInteger('type');

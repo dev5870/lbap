@@ -90,6 +90,7 @@ class User extends Authenticatable
         'email',
         'password',
         'telegram',
+        'balance',
         'referrer',
         'comment',
     ];

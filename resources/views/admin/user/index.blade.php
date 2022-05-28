@@ -51,6 +51,7 @@
                         <tr>
                             <th>@sortablelink('id', __('title.id'))</th>
                             <th>@sortablelink('email', __('title.email'))</th>
+                            <th>{{ __('title.user.balance') }}</th>
                             <th>@sortablelink('created_at', __('title.created_at'))</th>
                             <th>{{ __('title.user.role') }}</th>
                             <th>{{ __('title.status') }}</th>
@@ -62,6 +63,7 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->email }}</td>
+                            <td>{{ $item->balance }}</td>
                             <td>{{ $item->created_at }}</td>
                             <td class="roles-col">
                                 @foreach ($item->roles()->get() as $role)

@@ -37,6 +37,7 @@ return [
         'add' => 'Add new user',
         'file' => 'File',
         'comment' => 'Comment',
+        'balance' => 'Balance',
     ],
 
     'main' => [

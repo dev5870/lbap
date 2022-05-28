@@ -45,6 +45,8 @@ use function Sodium\add;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUserId($value)
  * @mixin \Eloquent
+ * @property int|null $admin_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAdminId($value)
  */
 class Payment extends Model
 {
@@ -54,6 +56,7 @@ class Payment extends Model
 
     protected $fillable = [
         'user_id',
+        'admin_id',
         'address_id',
         'status',
         'type',
@@ -75,25 +78,25 @@ class Payment extends Model
 
         self::created(function ($model) {
 
-            if (
-                ($model->type == PaymentType::TOP_UP) &&
-                !$model->address &&
-                PaymentService::getAddress()
-            ) {
+            if (($model->type == PaymentType::TOP_UP) && !$model->user->address?->exists()) {
 
                 DB::beginTransaction();
 
-                $address = PaymentService::getAddress();
-                $address->user_id = $model->user_id;
+                if ($address = PaymentService::getAddress()) {
+                    $address->user_id = $model->user_id;
+                }
 
                 if ($address->save()) {
+                    $address->refresh();
                     $model->address_id = $address->id;
                     DB::commit();
                 } else {
                     DB::rollBack();
                 }
-
+            } elseif (($model->type == PaymentType::TOP_UP) && $model->user->address?->exists()) {
+                $model->address_id = $model->user->address->id;
             }
+
             $model->status = PaymentStatus::CREATE;
             $model->save();
         });
@@ -102,5 +105,10 @@ class Payment extends Model
     public function address(): HasOne
     {
         return $this->hasOne(Address::class, 'id', 'address_id');
+    }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

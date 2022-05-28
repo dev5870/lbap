@@ -11,12 +11,14 @@ use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Setting;
+use App\Models\User;
 use App\Services\PaymentService;
 use App\Services\PaymentUpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
@@ -59,7 +61,7 @@ class PaymentController extends Controller
     public function store(PaymentCreateRequest $request): RedirectResponse
     {
         $paymentCreateDto = new PaymentCreateDto();
-        $paymentCreateDto->userId = $request->get('user_id');
+        $paymentCreateDto->user = User::find($request->get('user_id'));
         $paymentCreateDto->fullAmount = $request->get('full_amount');
         $paymentCreateDto->type = $request->get('type');
 
@@ -100,6 +102,8 @@ class PaymentController extends Controller
     {
         $paymentDto = new PaymentUpdateDto();
         $paymentDto->payment = $payment;
+        $paymentDto->userAdmin = User::find(Auth::id());
+        $paymentDto->user = $payment->user;
 
         if ($request->has('cancel')) {
             $paymentDto->status = PaymentStatus::CANCEL;

@@ -2,11 +2,11 @@
 
 namespace App\Dto;
 
-use App\Models\Payment;
+use App\Models\User;
 
 class PaymentCreateDto
 {
-    public int $userId;
+    public User $user;
     public float $fullAmount;
     public string $type;
 }

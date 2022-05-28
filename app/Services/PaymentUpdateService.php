@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Dto\PaymentUpdateDto;
+use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentStatus;
+use App\Enums\PaymentType;
 use Carbon\Carbon;
 
 class PaymentUpdateService
@@ -26,23 +28,19 @@ class PaymentUpdateService
      */
     public function handle(): bool
     {
-        if ($this->isClosePayment()) {
+        if ($this->dto->payment->type == PaymentType::MINUS && ($this->isEnoughMoney() === false)) {
             return false;
         }
 
-        if ((
-            $this->dto->status === PaymentStatus::CANCEL
-        ) &&
-            self::canselPayment()
-        ) {
+        if ($this->isClosePayment() === true) {
+            return false;
+        }
+
+        if (($this->dto->status === PaymentStatus::CANCEL) && (self::canselPayment() === true)) {
             return true;
         }
 
-        if ((
-            $this->dto->status === PaymentStatus::PAID
-        ) &&
-            self::paidPayment()
-        ) {
+        if (($this->dto->status === PaymentStatus::PAID) && (self::paidPayment() === true)) {
             return true;
         }
 
@@ -52,9 +50,18 @@ class PaymentUpdateService
     /**
      * @return bool
      */
+    private function isEnoughMoney(): bool
+    {
+        return bccomp($this->dto->user->balance, $this->dto->payment->full_amount) >= 0;
+    }
+
+    /**
+     * @return bool
+     */
     private function canselPayment(): bool
     {
         $this->dto->payment->status = PaymentStatus::CANCEL;
+        $this->dto->payment->admin_id = $this->dto->userAdmin->id;
 
         if ($this->dto->payment->save()) {
             return true;
@@ -70,8 +77,15 @@ class PaymentUpdateService
     {
         $this->dto->payment->status = PaymentStatus::PAID;
         $this->dto->payment->paid_at = Carbon::now();
+        $this->dto->payment->admin_id = $this->dto->userAdmin->id;
 
         if ($this->dto->payment->save()) {
+            $this->dto->payment->refresh();
+
+            $transactionDto = new TransactionCreateDto();
+            $transactionDto->payment = $this->dto->payment;
+            (new TransactionCreateService($transactionDto))->handle();
+
             return true;
         }
 
