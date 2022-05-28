@@ -74,7 +74,7 @@ return [
         'payment' => 'Payment',
         'full_amount' => 'Full amount',
         'amount' => 'Amount',
-        'commission_amount' => 'Commission amount',
+        'commission_amount' => 'Commission',
         'create_new' => 'Create new payment',
         'update' => 'Update payment',
         'total' => 'Total payments',
