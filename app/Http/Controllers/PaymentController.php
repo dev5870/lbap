@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Dto\PaymentUpdateDto;
+use App\Enums\PaymentStatus;
 use App\Http\Filters\PaymentFilter;
 use App\Http\Requests\PaymentCreateRequest;
 use App\Http\Requests\PaymentUpdateRequest;
@@ -90,7 +92,18 @@ class PaymentController extends Controller
      */
     public function update(PaymentUpdateRequest $request, Payment $payment): RedirectResponse
     {
-        if ((new PaymentUpdateService())->handle($request, $payment)) {
+        $paymentDto = new PaymentUpdateDto();
+        $paymentDto->payment = $payment;
+
+        if ($request->has('cancel')) {
+            $paymentDto->status = PaymentStatus::CANCEL;
+        }
+
+        if ($request->has('confirm')) {
+            $paymentDto->status = PaymentStatus::PAID;
+        }
+
+        if ((new PaymentUpdateService($paymentDto))->handle()) {
             return redirect()->route('admin.payment.edit', $payment)->with([
                 'success-message' => __('title.success')
             ]);
@@ -99,16 +112,5 @@ class PaymentController extends Controller
         return redirect()->route('admin.payment.edit', $payment)->with([
             'error-message' => __('title.error')
         ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

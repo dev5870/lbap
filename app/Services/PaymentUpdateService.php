@@ -2,53 +2,47 @@
 
 namespace App\Services;
 
+use App\Dto\PaymentUpdateDto;
 use App\Enums\PaymentStatus;
-use App\Http\Requests\PaymentUpdateRequest;
-use App\Models\Payment;
+use Carbon\Carbon;
 
 class PaymentUpdateService
 {
     /**
-     * @param PaymentUpdateRequest $request
+     * @var PaymentUpdateDto
+     */
+    private PaymentUpdateDto $dto;
+
+    /**
+     * @param PaymentUpdateDto $paymentUpdateDto
+     */
+    public function __construct(PaymentUpdateDto $paymentUpdateDto)
+    {
+        $this->dto = $paymentUpdateDto;
+    }
+
+    /**
      * @return bool
      */
-    public function handle(PaymentUpdateRequest $request, Payment $payment): bool
+    public function handle(): bool
     {
-        if (self::isClosePayment($payment)) {
+        if ($this->isClosePayment()) {
             return false;
         }
 
-        if (($request->has('cancel') && self::closePayment($payment))) {
+        if ((
+            $this->dto->status === PaymentStatus::CANCEL
+        ) &&
+            self::canselPayment()
+        ) {
             return true;
         }
 
-        if (($request->has('confirm') && self::paidPayment($payment))) {
-            return true;
-        }
-
-        return false;
-    }
-
-    /**
-     * @param $payment
-     * @return bool
-     */
-    private static function isClosePayment($payment): bool
-    {
-        return $payment->status === PaymentStatus::PAID ||
-            $payment->status === PaymentStatus::EXPIRED ||
-            $payment->status === PaymentStatus::CANCEL;
-    }
-
-    /**
-     * @param $payment
-     * @return bool
-     */
-    private static function closePayment($payment): bool
-    {
-        $payment->status = PaymentStatus::CANCEL;
-
-        if ($payment->save()) {
+        if ((
+            $this->dto->status === PaymentStatus::PAID
+        ) &&
+            self::paidPayment()
+        ) {
             return true;
         }
 
@@ -56,17 +50,41 @@ class PaymentUpdateService
     }
 
     /**
-     * @param $payment
      * @return bool
      */
-    private static function paidPayment($payment): bool
+    private function canselPayment(): bool
     {
-        $payment->status = PaymentStatus::PAID;
+        $this->dto->payment->status = PaymentStatus::CANCEL;
 
-        if ($payment->save()) {
+        if ($this->dto->payment->save()) {
             return true;
         }
 
         return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function paidPayment(): bool
+    {
+        $this->dto->payment->status = PaymentStatus::PAID;
+        $this->dto->payment->paid_at = Carbon::now();
+
+        if ($this->dto->payment->save()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function isClosePayment(): bool
+    {
+        return ($this->dto->payment->status === PaymentStatus::PAID ||
+            $this->dto->payment->status === PaymentStatus::EXPIRED ||
+            $this->dto->payment->status === PaymentStatus::CANCEL);
     }
 }
