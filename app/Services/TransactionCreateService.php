@@ -6,6 +6,7 @@ use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentType;
 use App\Models\Transaction;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class TransactionCreateService
 {
@@ -44,6 +45,8 @@ class TransactionCreateService
      */
     private function createTransaction(): bool
     {
+        DB::beginTransaction();
+
         $transaction = Transaction::create([
             'payment_id' => $this->dto->payment->id,
             'full_amount' => $this->dto->payment->full_amount,
@@ -54,9 +57,11 @@ class TransactionCreateService
         ]);
 
         if ($transaction->exists()) {
+            DB::commit();
             return true;
         }
 
+        DB::rollBack();
         return false;
     }
 
@@ -69,9 +74,9 @@ class TransactionCreateService
     }
 
     /**
-     * @return mixed
+     * @return string|bool
      */
-    private function getNewBalance(): mixed
+    private function getNewBalance(): string|bool
     {
         if ($this->dto->payment->type === PaymentType::TOP_UP) {
             return bcadd($this->getOldBalance(), $this->dto->payment->amount);
