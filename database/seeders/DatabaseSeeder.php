@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserRoleSeeder::class,
             UserAdminSeeder::class,
             UserSeeder::class,
+            UserReferralSeeder::class,
             AddressSeeder::class,
             PaymentSeeder::class,
             NotificationSeeder::class,
