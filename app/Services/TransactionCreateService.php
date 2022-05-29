@@ -61,6 +61,10 @@ class TransactionCreateService
             return true;
         }
 
+        SystemNoticeService::createNotice(
+            'Error creating transaction',
+            'Error while creating payment transaction. Payment id: ' . $this->dto->payment->id
+        );
         DB::rollBack();
         return false;
     }
