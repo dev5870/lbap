@@ -12,11 +12,13 @@ class AddressService
      */
     public static function checkFreeAddress(): bool
     {
-        if (self::getFreeAddress() <= 5) {
-            SystemNoticeService::createNotice('Attention', 'Available address count');
+        $freeAddress = self::getFreeAddress();
+
+        if ($freeAddress <= 5) {
+            SystemNoticeService::createNotice('Attention', 'Available address count: ' . $freeAddress);
 
             $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
-            $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'Available address count');
+            $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'Available address count: ' . $freeAddress);
         }
 
         return true;
