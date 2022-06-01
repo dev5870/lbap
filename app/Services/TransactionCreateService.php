@@ -7,6 +7,9 @@ use App\Enums\PaymentType;
 use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Exception;
+use TelegramBot\Api\InvalidArgumentException;
 
 class TransactionCreateService
 {
@@ -42,29 +45,38 @@ class TransactionCreateService
 
     /**
      * @return bool
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     private function createTransaction(): bool
     {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        $transaction = Transaction::create([
-            'payment_id' => $this->dto->payment->id,
-            'full_amount' => $this->dto->payment->full_amount,
-            'amount' => $this->dto->payment->amount,
-            'commission_amount' => $this->dto->payment->commission_amount,
-            'new_balance' => $this->getNewBalance(),
-            'old_balance' => $this->getOldBalance(),
-        ]);
+            $transaction = Transaction::create([
+                'payment_id' => $this->dto->payment->id,
+                'full_amount' => $this->dto->payment->full_amount,
+                'amount' => $this->dto->payment->amount,
+                'commission_amount' => $this->dto->payment->commission_amount,
+                'new_balance' => $this->getNewBalance(),
+                'old_balance' => $this->getOldBalance(),
+            ]);
 
-        if ($transaction->exists()) {
-            DB::commit();
-            return true;
+            if ($transaction->exists()) {
+                DB::commit();
+                return true;
+            }
+
+        } catch (Exception $e) {
+            $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
+            $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'Available address count');
+
+            SystemNoticeService::createNotice(
+                'Error creating transaction',
+                'Error while creating payment transaction. Payment id: ' . $this->dto->payment->id
+            );
         }
 
-        SystemNoticeService::createNotice(
-            'Error creating transaction',
-            'Error while creating payment transaction. Payment id: ' . $this->dto->payment->id
-        );
         DB::rollBack();
         return false;
     }
@@ -90,6 +102,4 @@ class TransactionCreateService
 
         return false;
     }
-
-
 }
