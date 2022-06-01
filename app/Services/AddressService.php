@@ -4,11 +4,15 @@ namespace App\Services;
 
 use App\Models\Address;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Exception;
+use TelegramBot\Api\InvalidArgumentException;
 
 class AddressService
 {
     /**
      * @return bool
+     * @throws Exception
+     * @throws InvalidArgumentException
      */
     public static function checkFreeAddress(): bool
     {
