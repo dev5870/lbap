@@ -120,6 +120,19 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ request()->routeIs('admin.transaction.*') ? 'active' : '' }}">
+                    <a depth="0" activeclassname="active" class="sidebar-link"
+                       href="{{ Route('admin.transaction') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('title.menu.transactions') }}</span>
+                    </a>
+                </li>
+
                 <li class="sidebar-item {{ request()->routeIs('admin.file') ? 'active' : '' }}">
                     <a depth="0" activeclassname="active" class="sidebar-link" href="{{ Route('admin.file') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

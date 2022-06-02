@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Kyslik\ColumnSortable\Sortable;
 
 /**
  * App\Models\Transaction
@@ -35,6 +36,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Transaction extends Model
 {
     use HasFactory;
+    use Sortable;
 
     protected $fillable = [
         'payment_id',
@@ -43,6 +45,11 @@ class Transaction extends Model
         'commission_amount',
         'new_balance',
         'old_balance',
+    ];
+
+    public $sortable = [
+        'id',
+        'created_at',
     ];
 
     public static function boot()

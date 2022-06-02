@@ -69,6 +69,12 @@ return [
         'payments' => 'Payments',
         'addresses' => 'Addresses',
         'notices' => 'System notices',
+        'transactions' => 'Transactions',
+    ],
+
+    'transaction' => [
+        'new_balance' => 'New balance',
+        'old_balance' => 'Old balance',
     ],
 
     'payment' => [

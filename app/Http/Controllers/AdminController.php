@@ -9,6 +9,7 @@ use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\Setting;
 use App\Models\SystemNotice;
+use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
@@ -60,12 +61,27 @@ class AdminController extends Controller
         ]);
     }
 
+    /**
+     * @return View
+     */
     public function systemNotice(): View
     {
         return view('admin.notice.index', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'notices' => SystemNotice::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
+        ]);
+    }
+
+    /**
+     * @return View
+     */
+    public function transaction(): View
+    {
+        return view('admin.transaction.index', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'transactions' => Transaction::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
         ]);
     }
 }
