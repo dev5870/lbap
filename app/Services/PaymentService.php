@@ -53,7 +53,11 @@ class PaymentService
      */
     private function getCommissionAmount(): float
     {
-        return round($this->dto->fullAmount * 0.01);
+        return bcmul(
+            $this->dto->fullAmount,
+            0.01,
+            8
+        );
     }
 
     /**
@@ -64,7 +68,7 @@ class PaymentService
         $payment = Payment::create([
             'user_id' => $this->dto->user->id,
             'full_amount' => $this->dto->fullAmount,
-            'amount' => round(bcsub($this->dto->fullAmount, $this->commissionAmount)),
+            'amount' => bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
             'commission_amount' => $this->commissionAmount,
             'type' => $this->dto->type,
         ]);
