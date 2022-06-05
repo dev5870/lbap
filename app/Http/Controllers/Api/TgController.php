@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserTelegram;
+use App\Services\UserService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
@@ -34,19 +35,19 @@ class TgController extends Controller
                 if ($message && filter_var($message->getText(), FILTER_VALIDATE_EMAIL)) {
 
                     // Check if email already exists
-                    if ($this->isEmailExists($message->getText())) {
+                    if (UserService::isEmailExists($message->getText())) {
                         return false;
                     }
 
                     // Check if chat id already exists
-                    if ($this->isChatIdExists($message->getFrom()->getId())) {
+                    if (UserService::isChatIdExists($message->getFrom()->getId())) {
                         return false;
                     }
 
                     DB::beginTransaction();
 
                     // Register new user
-                    $password = $this->generateRandomString();
+                    $password = UserService::generateRandomString();
                     $user = User::create([
                         'email' => $message->getText(),
                         'password' => Hash::make($password)
@@ -85,37 +86,5 @@ class TgController extends Controller
         } catch (\Exception $e) {
             Log::channel('telegram')->info($e->getMessage());
         }
-    }
-
-    /**
-     * @param $email
-     * @return bool
-     */
-    private function isEmailExists($email): bool
-    {
-        return User::where('email', '=', $email)->exists();
-    }
-
-    /**
-     * @param $chatId
-     * @return bool
-     */
-    private function isChatIdExists($chatId): bool
-    {
-        return UserTelegram::where('chat_id', '=', $chatId)->exists();
-    }
-
-    /**
-     * @return string
-     */
-    private function generateRandomString(): string
-    {
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        $charactersLength = strlen($characters);
-        $randomString = '';
-        for ($i = 0; $i < 10; $i++) {
-            $randomString .= $characters[rand(0, $charactersLength - 1)];
-        }
-        return $randomString;
     }
 }
