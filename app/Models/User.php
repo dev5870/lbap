@@ -22,7 +22,7 @@ use App\Enums\UserRole;
  * @property int $id
  * @property string|null $name
  * @property string $email
- * @property string $telegram
+ * @property int $user_telegram_id
  * @property string|null $balance
  * @property int|null $referrer
  * @property string|null $comment
@@ -68,7 +68,7 @@ use App\Enums\UserRole;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereReferrer($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|User whereTelegram($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUserTelegramId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
  */
@@ -90,7 +90,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'telegram',
+        'user_telegram_id',
         'balance',
         'referrer',
         'comment',

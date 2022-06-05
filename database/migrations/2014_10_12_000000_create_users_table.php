@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id()->from(857);
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('telegram')->nullable();
             $table->decimal('balance', 18, 8)->default('0.00000000');
             $table->unsignedBigInteger('referrer')->nullable();
             $table->string('comment')->nullable();

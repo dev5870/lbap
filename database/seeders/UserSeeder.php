@@ -19,7 +19,6 @@ class UserSeeder extends Seeder
         $user = User::create([
             'email' => 'test@site.com',
             'name' => 'user',
-            'telegram' => 'tg_user2',
             'referrer' => 857,
             'comment' => 'Admin comment for user 858',
             'password' => Hash::make('password')

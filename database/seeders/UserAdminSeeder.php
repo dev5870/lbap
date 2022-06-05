@@ -19,7 +19,6 @@ class UserAdminSeeder extends Seeder
         $user = User::create([
             'email' => 'admin@site.com',
             'name' => 'admin',
-            'telegram' => 'tg_user',
             'comment' => 'Admin comment for user 857',
             'password' => Hash::make('password')
         ]);
