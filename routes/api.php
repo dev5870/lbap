@@ -14,4 +14,4 @@ use App\Http\Controllers\Api\TgController;
 |
 */
 
-Route::get('tg', [TgController::class, 'index'])->name('api.tg');
+Route::post('tg', [TgController::class, 'index'])->name('api.tg');

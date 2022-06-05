@@ -88,6 +88,10 @@ return [
         'total' => 'Total payments',
     ],
 
+    'bot' => [
+        'welcome' => 'Welcome! Please, enter your email for registration.',
+    ],
+
     'notice' => [
         'title' => 'System notice',
         'description' => 'Description',

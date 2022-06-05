@@ -14,10 +14,6 @@
                             <input name="email" placeholder="{{ __('title.input.email') }}" type="email" value="{{ old('email') }}" class="form-control">
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">{{ __('title.tg') }}</label>
-                            <input name="telegram" placeholder="{{ __('title.tg') }}" type="text" value="{{ old('telegram') }}" class="form-control">
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">{{ __('title.input.password') }}</label>
                             <input name="password" placeholder="{{ __('title.input.password') }}" type="password" class="form-control">
                         </div>
