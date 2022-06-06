@@ -47,6 +47,7 @@ use function Sodium\add;
  * @mixin \Eloquent
  * @property int|null $admin_id
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAdminId($value)
+ * @property-read \App\Models\User|null $user
  */
 class Payment extends Model
 {

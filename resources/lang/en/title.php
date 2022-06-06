@@ -89,7 +89,12 @@ return [
     ],
 
     'bot' => [
-        'welcome' => 'Welcome! Please, enter your email for registration.',
+        'welcome' => 'Welcome! Please, enter your email for registration or your secret key (if you already registered).',
+        'chat_id_exists' => 'Your chat id already exists!',
+        'success_login' => 'Success login!',
+        'success_registration' => 'Success registration!',
+        'email' => 'Your email: ',
+        'password' => 'Your password: ',
     ],
 
     'notice' => [

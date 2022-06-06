@@ -32,6 +32,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction wherePaymentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Payment|null $payment
+ * @method static \Illuminate\Database\Eloquent\Builder|Transaction sortable($defaultParameters = null)
  */
 class Transaction extends Model
 {

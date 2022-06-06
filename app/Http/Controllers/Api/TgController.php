@@ -31,16 +31,21 @@ class TgController extends Controller
                 Log::channel('telegram')->info('Tg API: update block');
                 Log::channel('telegram')->info(print_r($message->getFrom(), true));
 
+                // If message null
+                if (!$message || !$message->getText()) {
+                    return false;
+                }
+
+                // Check if chat id already exists
+                if (UserService::isChatIdExists($message->getFrom()->getId())) {
+                    return false;
+                }
+
                 // Check if user send email address
-                if ($message && filter_var($message->getText(), FILTER_VALIDATE_EMAIL)) {
+                if (filter_var($message->getText(), FILTER_VALIDATE_EMAIL)) {
 
                     // Check if email already exists
                     if (UserService::isEmailExists($message->getText())) {
-                        return false;
-                    }
-
-                    // Check if chat id already exists
-                    if (UserService::isChatIdExists($message->getFrom()->getId())) {
                         return false;
                     }
 
@@ -54,19 +59,39 @@ class TgController extends Controller
                     ]);
 
                     // Create user telegram information
-                    $userTelegram = UserTelegram::create([
-                        'user_id' => $user->id,
-                        'chat_id' => $message->getFrom()->getId(),
-                        'username' => $message->getFrom()->getUsername(),
-                        'firstName' => $message->getFrom()->getFirstName(),
-                        'lastName' => $message->getFrom()->getLastName(),
-                        'languageCode' => $message->getFrom()->getLanguageCode(),
-                    ]);
+                    $userTelegram = $this->addUserTelegramInfo($message, $user);
 
                     if ($user && $userTelegram) {
                         $bot->sendMessage(
                             $message->getChat()->getId(),
-                            "Your email: " . $message->getText() . "\n" . "Your password: " . $password
+                            __('title.bot.success_registration') . "\n" . __('title.bot.email') . $message->getText() . "\n" . __('title.bot.password') . $password
+                        );
+                        DB::commit();
+                        return true;
+                    } else {
+                        DB::rollBack();
+                        return false;
+                    }
+                }
+
+                // Check if user send secret key
+                if (strlen($message->getText()) == 8) {
+
+                    // Check secret key exists
+                    if (!UserService::isSecretKeyExists($message->getText())) {
+                        return false;
+                    }
+
+                    $user = User::whereSecretKey($message->getText())->first();
+
+                    // Create user telegram information
+                    DB::beginTransaction();
+                    $userTelegram = $this->addUserTelegramInfo($message, $user);
+
+                    if ($userTelegram) {
+                        $bot->sendMessage(
+                            $message->getChat()->getId(),
+                            __('title.bot.success_login')
                         );
                         DB::commit();
                         return true;
@@ -86,5 +111,28 @@ class TgController extends Controller
         } catch (\Exception $e) {
             Log::channel('telegram')->info($e->getMessage());
         }
+    }
+
+    /**
+     * @param $message
+     * @param $user
+     * @return bool
+     */
+    private function addUserTelegramInfo($message, $user): bool
+    {
+        $userTelegram = UserTelegram::create([
+            'user_id' => $user->id,
+            'chat_id' => $message->getFrom()->getId(),
+            'username' => $message->getFrom()->getUsername(),
+            'firstName' => $message->getFrom()->getFirstName(),
+            'lastName' => $message->getFrom()->getLastName(),
+            'languageCode' => $message->getFrom()->getLanguageCode(),
+        ]);
+
+        if ($userTelegram->exists()) {
+            return true;
+        }
+
+        return false;
     }
 }

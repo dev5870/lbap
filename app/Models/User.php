@@ -72,6 +72,10 @@ use App\Enums\UserRole;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUserTelegramId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $secret_key
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
+ * @property-read int|null $transactions_count
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereSecretKey($value)
  */
 class User extends Authenticatable
 {

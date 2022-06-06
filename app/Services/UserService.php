@@ -38,4 +38,12 @@ class UserService
     {
         return UserTelegram::where('chat_id', '=', $chatId)->exists();
     }
+
+    /**
+     * @return bool
+     */
+    public static function isSecretKeyExists($secretKey): bool
+    {
+        return User::whereSecretKey($secretKey)->exists();
+    }
 }
