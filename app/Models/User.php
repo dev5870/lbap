@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\Filterable;
+use App\Services\UserService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
@@ -131,9 +132,13 @@ class User extends Authenticatable
             } catch (\Exception $e) {
                 throw new NotFoundHttpException('Role not found');
             }
+
+            // Create user secret key
+            $model->secret_key = UserService::generateRandomString();
         });
 
         self::created(function ($model) {
+            // Assign user role
             $model->assignRole(UserRole::USER);
         });
     }

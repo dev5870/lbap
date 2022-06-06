@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('balance', 18, 8)->default('0.00000000');
             $table->unsignedBigInteger('referrer')->nullable();
             $table->string('comment')->nullable();
+            $table->string('secret_key', 8)-> nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->integer('status')->default(\App\Enums\UserStatus::ACTIVE);
