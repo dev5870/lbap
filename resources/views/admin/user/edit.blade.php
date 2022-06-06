@@ -88,7 +88,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.tg') }}</label>
-                                            <input name="telegram" class="form-control" value="{{ $user->telegram }}"
+                                            <input name="telegram" class="form-control" value="{{ '@' . $user->telegram?->username }}"
                                                    readonly>
                                         </div>
                                     </div>

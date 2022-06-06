@@ -76,6 +76,7 @@ use App\Enums\UserRole;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Transaction[] $transactions
  * @property-read int|null $transactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSecretKey($value)
+ * @property-read \App\Models\UserTelegram|null $telegram
  */
 class User extends Authenticatable
 {
@@ -175,5 +176,10 @@ class User extends Authenticatable
     public function transactions(): HasManyThrough
     {
         return $this->hasManyThrough(Transaction::class, Payment::class);
+    }
+
+    public function telegram(): HasOne
+    {
+        return $this->hasOne(UserTelegram::class, 'user_id', 'id');
     }
 }
