@@ -11,6 +11,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\Cabinet\CabinetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,7 @@ Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [LogoutController::class, 'destroy'])->middleware('auth')->name('user.logout');
 
 // todo: role admin
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
         Route::get('/user/referral', [AdminController::class, 'referral'])->name('referral');
@@ -52,5 +53,12 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::resource('/notification', NotificationController::class);
         Route::resource('/payment', PaymentController::class);
         Route::resource('/address', AddressController::class);
+    });
+});
+
+// todo: role user
+Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+    Route::prefix('cabinet')->name('cabinet.')->group(function () {
+        Route::get('/', [CabinetController::class, 'index'])->name('index');
     });
 });
