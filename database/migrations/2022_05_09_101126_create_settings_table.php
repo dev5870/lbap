@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('site_name')->unique();
             $table->string('commission_amount')->default('1');
+            $table->string('registration_method')->default(\App\Enums\RegistrationMethod::SITE);
             $table->timestamps();
         });
     }

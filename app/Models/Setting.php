@@ -22,6 +22,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Setting whereSiteName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Setting whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $registration_method
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereRegistrationMethod($value)
  */
 class Setting extends Model
 {
