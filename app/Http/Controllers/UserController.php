@@ -65,7 +65,6 @@ class UserController extends Controller
     public function update(UserUpdateRequest $request, User $user): RedirectResponse
     {
         $user->status = $request->get('status');
-        $user->telegram = $request->get('telegram');
         $user->roles()->sync($request->get('roles'));
         $user->save();
         $user->refresh();

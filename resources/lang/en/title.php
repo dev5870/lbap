@@ -52,6 +52,8 @@ return [
         'title' => 'Registration',
         'success' => 'Success registration!',
         'error' => 'Error registration!',
+        'disabled' => 'Registration disabled!',
+        'telegram' => 'For registration use telegram!',
     ],
 
     'menu' => [

@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\RegistrationMethod;
 use App\Http\Requests\RegistrationRequest;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserReferral;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
 class RegistrationController extends Controller
@@ -17,7 +18,17 @@ class RegistrationController extends Controller
      */
     public function create(): View
     {
-        return view('registration');
+        $settings = Setting::first();
+
+        if ($settings->registration_method == RegistrationMethod::SITE) {
+            return view('registration.site');
+        } elseif ($settings->registration_method == RegistrationMethod::TELEGRAM) {
+            return view('registration.telegram', [
+                'url' => env('TELEGRAM_BOT_URL')
+            ]);
+        }
+
+        return view('registration.disabled');
     }
 
     /**
