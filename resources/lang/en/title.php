@@ -130,6 +130,7 @@ return [
 
     'settings' => [
         'site' => 'Site settings',
+        'registration_method' => 'Registration method',
     ],
 
     'content' => [

@@ -28,6 +28,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">{{ __('title.settings.registration_method') }}</label>
+                                        {!! Form::select('registration_method', \App\Enums\RegistrationMethod::$list, $settings->registration_method, ['class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary">
                                 {{ __('title.btn.update') }}
                             </button>
