@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Cabinet\CabinetController;
+use App\Http\Controllers\Cabinet\UserController as CabinetUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,5 +61,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('cabinet')->name('cabinet.')->group(function () {
         Route::get('/', [CabinetController::class, 'index'])->name('index');
+        Route::get('/user/profile', [CabinetUserController::class, 'profile'])->name('user.profile');
+        Route::get('/user/log', [CabinetUserController::class, 'log'])->name('user.log');
     });
 });

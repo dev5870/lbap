@@ -28,6 +28,38 @@
                     </a>
                 </li>
 
+                <li class="sidebar-item {{ request()->routeIs('cabinet.user.*') ? 'active' : '' }}">
+                    <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
+                       href="#user">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('title.menu.users') }}</span>
+                        <div></div>
+                    </a>
+
+                    <ul id="user" class="sidebar-dropdown list-unstyled collapse">
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('cabinet.user.profile') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.user.profile') }}">
+                                <span class="align-middle" depth="1">{{ __('cabinet.menu.profile') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('cabinet.user.log') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.user.log') }}">
+                                <span class="align-middle" depth="1">{{ __('title.menu.user_logs') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </li>
 
             </ul>
         </div>

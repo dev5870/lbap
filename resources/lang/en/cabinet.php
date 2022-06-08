@@ -12,4 +12,13 @@ return [
         'preview' => 'Preview',
         'show'=> 'Show',
     ],
+
+    'menu' => [
+        'profile' => 'My profile',
+    ],
+
+    'profile' => [
+        'title' => 'Profile',
+        'details' => 'Profile details',
+    ],
 ];
