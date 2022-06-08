@@ -182,4 +182,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserTelegram::class, 'user_id', 'id');
     }
+
+    public function params(): HasOne
+    {
+        return $this->hasOne(UserParam::class, 'user_id', 'id');
+    }
 }
