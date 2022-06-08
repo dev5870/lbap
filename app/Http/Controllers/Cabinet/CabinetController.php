@@ -24,18 +24,21 @@ class CabinetController extends Controller
         $addresses = Address::orderBy('id', 'desc');
 
         return view('cabinet.index', [
+            'lastContents' => $contents->take(5)->get(),
             'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'logs' => UserUserAgent::where('user_id', '=', Auth::id())->sortable(['created_at' => 'desc'])->take(5)->get(),
+
+            // todo: clear
             'allAddresses' => $addresses->count(),
             'lastDayAddresses' => $addresses->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'allContents' => $contents->count(),
             'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'settings' => Setting::first(),
             'users' => $users->take(5)->get(),
             'allUser' => $users->count(),
             'allPayment' => $payments->count(),
             'lastDayPayment' => $payments->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'lastDay' => $users->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'logs' => UserUserAgent::where('user_id', '=', Auth::id())->sortable(['created_at' => 'desc'])->take(5)->get(),
         ]);
     }
 }

@@ -134,10 +134,10 @@
     </div>
     <div class="flex-fill w-100 card">
         <div class="card-header">
-            <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.latest') }}</div>
+            <div class="mb-0 card-title h5" tag="h5">{{ __('cabinet.index.latest_news') }}</div>
         </div>
         <div class="flex-fill w-100 card">
-            @include('admin.user.table')
+            @include('cabinet.content.table')
         </div>
     </div>
 @endsection
