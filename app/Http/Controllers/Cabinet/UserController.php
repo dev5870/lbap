@@ -38,4 +38,20 @@ class UserController extends Controller
             'logs' => UserUserAgent::whereUserId(Auth::id())->sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
+
+    public function security(): View
+    {
+        return view('cabinet.user.security', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+        ]);
+    }
+
+    public function edit(): View
+    {
+        return view('cabinet.user.edit', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+        ]);
+    }
 }

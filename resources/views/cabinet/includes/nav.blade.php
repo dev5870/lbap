@@ -37,7 +37,7 @@
                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                             <circle cx="12" cy="7" r="4"></circle>
                         </svg>
-                        <span class="align-middle" depth="0">{{ __('title.menu.users') }}</span>
+                        <span class="align-middle" depth="0">{{ __('cabinet.menu.profile') }}</span>
                         <div></div>
                     </a>
 
@@ -46,15 +46,61 @@
                             <a depth="1" activeclassname="active"
                                class="sidebar-link {{ request()->routeIs('cabinet.user.profile') ? 'active' : '' }}"
                                href="{{ Route('cabinet.user.profile') }}">
-                                <span class="align-middle" depth="1">{{ __('cabinet.menu.profile') }}</span>
+                                <span class="align-middle" depth="1">{{ __('cabinet.menu.my_profile') }}</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('cabinet.user.edit') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.user.edit') }}">
+                                <span class="align-middle" depth="1">{{ __('cabinet.menu.edit') }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="sidebar-item {{ request()->routeIs('cabinet.content.index') ? 'active' : '' }}">
+                    <a depth="0" activeclassname="active" class="sidebar-link"
+                       href="{{ Route('cabinet.content.index') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('cabinet.menu.content') }}</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-item {{ request()->routeIs('cabinet.user.*') ? 'active' : '' }}">
+                    <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
+                       href="#settings">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path
+                                d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('cabinet.menu.settings') }}</span>
+                        <div></div>
+                    </a>
+
+                    <ul id="settings" class="sidebar-dropdown list-unstyled collapse">
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
                                class="sidebar-link {{ request()->routeIs('cabinet.user.log') ? 'active' : '' }}"
                                href="{{ Route('cabinet.user.log') }}">
-                                <span class="align-middle" depth="1">{{ __('title.menu.user_logs') }}</span>
+                                <span class="align-middle" depth="1">{{ __('cabinet.menu.login_history') }}</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a depth="1" activeclassname="active"
+                               class="sidebar-link {{ request()->routeIs('cabinet.user.security') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.user.security') }}">
+                                <span class="align-middle" depth="1">{{ __('cabinet.menu.security') }}</span>
                             </a>
                         </li>
                     </ul>

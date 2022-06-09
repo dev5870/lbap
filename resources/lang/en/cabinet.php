@@ -14,11 +14,21 @@ return [
     ],
 
     'menu' => [
-        'profile' => 'My profile',
+        'profile' => 'Profile',
+        'my_profile' => 'My profile',
+        'edit' => 'Edit profile',
+        'settings' => 'Settings',
+        'login_history' => 'Login history',
+        'security' => 'Security',
+        'content' => 'Contents',
     ],
 
     'profile' => [
         'title' => 'Profile',
         'details' => 'Profile details',
+    ],
+
+    'log' => [
+        'my' => 'My login history',
     ],
 ];
