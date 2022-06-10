@@ -33,6 +33,8 @@
                 @include('cabinet.includes.alerts')
                 @yield('content')
             </div>
+            <footer class="footer"><div class="container-fluid"><div class="text-muted row"><div class="text-start col-6"><ul class="list-inline"><li class="list-inline-item"><span class="text-muted" href="#">Support</span></li><li class="list-inline-item"><span class="text-muted" href="#">Help Center</span></li><li class="list-inline-item"><span class="text-muted" href="#">Privacy</span></li><li class="list-inline-item"><span class="text-muted" href="#">Terms of Service</span></li></ul></div><div class="text-end col-6"><p class="mb-0">© 2022 - <span href="/" class="text-muted">AppStack</span></p></div></div></div></footer>
+
         </div>
     </div>
 

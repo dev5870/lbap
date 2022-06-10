@@ -1,15 +1,11 @@
 @extends('cabinet.layouts.default')
 @section('content')
-    <div class="mb-2 mb-xl-3 d-flex justify-content-between">
-        <div class="">
-            <h3>{{ __('cabinet.profile.title') }}</h3>
-        </div>
-    </div>
+    <div class="p-0 container-fluid"><h1 class="h3 mb-3">Profile</h1>
         <div class="row">
             <div class="col-xl-3 col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <div class="mb-0 card-title h5">{{ __('cabinet.profile.details') }}</div>
+                        <div class="mb-0 card-title h5">Profile Details</div>
                     </div>
                     <div class="text-center card-body"><img src="/static/media/avatar-4.93166a0c.jpg" alt="Stacie Hall"
                                                             class="img-fluid rounded-circle mb-2" width="128"

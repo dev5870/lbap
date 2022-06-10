@@ -434,6 +434,13 @@ img, svg {
     color: var(--bs-table-striped-color);
 }
 
+footer.footer {
+    background: #fff;
+    border-top: 1px solid #dee6ed;
+    padding: 1rem 0.75rem;
+    direction: ltr;
+}
+
 svg:not(:root).svg-inline--fa {
     overflow: visible;
 }
