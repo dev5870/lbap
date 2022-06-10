@@ -1,7 +1,7 @@
 <nav class="sidebar">
     <div class="simplebar-content-wrapper">
         <div class="simplebar-content">
-            <a class="sidebar-brand" href="/">
+            <a class="sidebar-brand" href="/cabinet/">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                      width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20"
                      xml:space="preserve" fill="#2871e7">

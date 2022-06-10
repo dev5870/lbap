@@ -67,5 +67,6 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::get('/user/security', [CabinetUserController::class, 'security'])->name('user.security');
         Route::get('/user/log', [CabinetUserController::class, 'log'])->name('user.log');
         Route::get('/content', [CabinetContentController::class, 'index'])->name('content.index');
+        Route::get('/content/{content}', [CabinetContentController::class, 'show'])->name('content.show');
     });
 });
