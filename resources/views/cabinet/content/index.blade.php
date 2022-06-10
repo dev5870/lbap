@@ -9,10 +9,8 @@
         <table class="my-0 table table-striped users">
             <thead>
             <tr>
-                <th>@sortablelink('id',  __('title.id'))</th>
                 <th>{{ __('title.content.title') }}</th>
                 <th>{{ __('title.content.preview') }}</th>
-                <th>{{ __('title.content.delayed_publication') }}</th>
                 <th>@sortablelink('created_at',  __('title.created_at'))</th>
                 <th></th>
             </tr>
@@ -20,14 +18,8 @@
             <tbody>
             @foreach ($contents as $item)
                 <tr>
-                    <td>{{ $item->id }}</td>
                     <td>{{ $item->title }}</td>
                     <td>{{ $item->preview }}</td>
-                    @if($item->delayed_date_publication)
-                        <td>{{ $item->delayed_date_publication . ' ' . $item->delayed_time_publication }}</td>
-                    @else
-                        <td></td>
-                    @endif
                     <td>{{ $item->created_at }}</td>
                     <td class="text-center">
                         <a href="{{ Route('cabinet.content.show', $item) }}">

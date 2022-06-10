@@ -63,4 +63,16 @@ class Content extends Model
         'id',
         'created_at',
     ];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function ($model) {
+            if (!$model->delayed_time_publication) {
+                $model->delayed_time_publication = now();
+                $model->save();
+            }
+        });
+    }
 }

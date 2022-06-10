@@ -15,7 +15,9 @@ class ContentController extends Controller
         return view('cabinet.content.index', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
-            'contents' => Content::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
+            'contents' => Content::where('delayed_time_publication', '<', now())
+                ->sortable(['id' => 'desc'])
+                ->paginate(config('view.per_page')),
         ]);
     }
 

@@ -18,8 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('preview');
             $table->string('text');
-            $table->date('delayed_date_publication')->nullable();
-            $table->time('delayed_time_publication')->nullable();
+            $table->dateTime('delayed_time_publication')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
