@@ -441,6 +441,17 @@ footer.footer {
     direction: ltr;
 }
 
+.sidebar-cta-content {
+    padding: 1.5rem;
+    margin: 1.75rem;
+    border-radius: 0.3rem;
+    background: #333b52;
+}
+
+.sidebar-cta-content, .sidebar-cta-content strong {
+    color: #e9ecef;
+}
+
 svg:not(:root).svg-inline--fa {
     overflow: visible;
 }
