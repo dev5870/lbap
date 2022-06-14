@@ -109,7 +109,16 @@
 
             </ul>
 
-            <div class="sidebar-cta"><div class="sidebar-cta-content"><strong class="d-inline-block mb-2">Monthly Sales Report</strong><div class="mb-3 text-sm">Your monthly sales report is ready for download!</div><div class="d-grid"><a href="https://themes.getbootstrap.com/product/appstack-react-admin-dashboard-template/" class="btn btn-primary" target="_blank" rel="noreferrer">Download</a></div></div></div>
+            <div class="sidebar-cta">
+                <div class="sidebar-cta-content"><strong class="d-inline-block mb-2">{{ __('cabinet.profile.balance') }}</strong>
+                    <div class="mb-3 text-sm">{{ Auth::user()->balance }} {{ __('cabinet.profile.doge') }}</div>
+                    <div class="d-grid">
+                        <a href="" class="btn btn-primary" target="_blank" rel="noreferrer">
+                            {{ __('cabinet.payment.top_up') }}
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </nav>

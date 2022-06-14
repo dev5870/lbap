@@ -26,9 +26,15 @@ return [
     'profile' => [
         'title' => 'Profile',
         'details' => 'Profile details',
+        'balance' => 'Balance',
+        'doge' => 'DOGE',
     ],
 
     'log' => [
         'my' => 'My login history',
+    ],
+
+    'payment' => [
+        'top_up' => 'Top up',
     ],
 ];
