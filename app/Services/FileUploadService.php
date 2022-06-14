@@ -10,6 +10,7 @@ class FileUploadService
     /**
      * @param $file
      * @param $model
+     * @param $description
      * @return bool
      */
     public function handle($file, $model, $description): bool
@@ -39,6 +40,7 @@ class FileUploadService
     /**
      * @param $url
      * @param $model
+     * @param $description
      * @return bool
      */
     private static function save($url, $model, $description): bool

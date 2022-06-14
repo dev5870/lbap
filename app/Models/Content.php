@@ -5,6 +5,8 @@ namespace App\Models;
 use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Kyslik\ColumnSortable\Sortable;
 
@@ -74,5 +76,10 @@ class Content extends Model
                 $model->save();
             }
         });
+    }
+
+    public function file(): HasOne
+    {
+        return $this->hasOne(File::class, 'fileable_id', 'id')->where('fileable_type', '=', 'App\Models\Content');
     }
 }

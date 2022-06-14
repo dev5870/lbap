@@ -45,7 +45,11 @@
                         @foreach ($files as $item)
                         <tr>
                             <td><img src="/storage/{{ $item->file_name }}" style="width: 30px"></td>
-                            <td><a href="{{ Route('admin.user.edit', $item->fileable_id) }}">{{ $item->user->id }}</a></td>
+                            @if($item->fileable_type == 'App\Models\User')
+                                <td><a href="{{ Route('admin.user.edit', $item->fileable_id) }}">{{ $item->user->id }}</a></td>
+                            @else
+                                <td><a href="{{ Route('admin.content.edit', $item->fileable_id) }}">{{ $item->content->id }}</a></td>
+                            @endif
                             <td>{{ $item->file_name }}</td>
                             <td>{{ $item->fileable_type }}</td>
                             <td>{{ $item->created_at }}</td>

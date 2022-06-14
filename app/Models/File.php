@@ -73,4 +73,9 @@ class File extends Model
     {
         return $this->hasOne(User::class, 'id', 'fileable_id');
     }
+
+    public function content(): HasOne
+    {
+        return $this->hasOne(Content::class, 'id', 'fileable_id');
+    }
 }

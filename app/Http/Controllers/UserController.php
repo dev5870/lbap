@@ -76,7 +76,6 @@ class UserController extends Controller
             return redirect()->route('admin.user.edit', $user)->with([
                 'error-message' => __('title.file_not_upload')
             ]);
-
         }
 
         return redirect()->route('admin.user.edit', $user)->with([

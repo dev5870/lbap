@@ -61,9 +61,23 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
+                                            <label class="form-label">{{ __('title.user.file') }}</label>
+                                            <input name="file" type="file" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label">{{ __('title.file.description') }}</label>
+                                            <textarea name="description" placeholder="{{ __('title.file.description') }}"
+                                                      class="form-control" rows="3">{{ $user->file->description ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.delayed_publication') }}</label>
-                                            <input type="date" name="delayed_date_publication" class="form-control">
-                                            <input type="time" name="delayed_time_publication" class="form-control">
+                                            <input type="datetime-local" name="delayed_time_publication" class="form-control">
                                         </div>
                                     </div>
                                 </div>

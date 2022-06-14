@@ -64,8 +64,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.delayed_publication') }}</label>
-                                            <input type="date" name="delayed_date_publication" class="form-control" value="{{ $content->delayed_date_publication }}">
-                                            <input type="time" name="delayed_time_publication" class="form-control" value="{{ $content->delayed_time_publication }}">
+                                            <input type="datetime-local" name="delayed_time_publication" class="form-control" value="{{ $content->delayed_time_publication }}">
                                         </div>
                                     </div>
                                 </div>
