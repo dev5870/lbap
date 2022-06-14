@@ -10,7 +10,7 @@ return [
     'content' => [
         'title' => 'Title',
         'preview' => 'Preview',
-        'show'=> 'Show',
+        'read'=> 'Read',
     ],
 
     'menu' => [

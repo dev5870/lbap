@@ -33,6 +33,6 @@ return [
         realpath(storage_path('framework/views'))
     ),
 
-    'per_page' => 10,
+    'per_page' => 12,
 
 ];
