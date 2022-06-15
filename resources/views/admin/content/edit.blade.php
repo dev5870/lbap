@@ -78,4 +78,17 @@
             </div>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.menu.files') }}</div>
+                </div>
+                <div class="card-body">
+                    @include('admin.file.table')
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

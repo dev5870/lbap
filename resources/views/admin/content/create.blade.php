@@ -48,8 +48,6 @@
                                                       class="form-control" rows="5">{{ old('preview') }}</textarea>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.content.text') }}</label>
@@ -69,7 +67,7 @@
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.file.description') }}</label>
                                             <textarea name="description" placeholder="{{ __('title.file.description') }}"
-                                                      class="form-control" rows="3">{{ $user->file->description ?? '' }}</textarea>
+                                                      class="form-control" rows="3"></textarea>
                                         </div>
                                     </div>
                                 </div>
