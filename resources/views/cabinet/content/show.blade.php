@@ -19,7 +19,12 @@
         </div>
     </div>
     <div class="flex-fill w-100 card table-responsive users">
-        {{ $content->text }}
+        <p style="margin: 8px;">
+            @if($content->file)
+                <img src="/storage/{{ $content->file->file_name }}" style="width: 30% !important; float: left;">
+            @endif
+            {{ $content->text }}
+        </p>
     </div>
     <div>
         {{ $content->delayed_time_publication }}
