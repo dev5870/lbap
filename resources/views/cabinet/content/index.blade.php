@@ -9,13 +9,7 @@
         @foreach ($contents as $item)
             <div class="col-lg-4 col-md-6">
                 <div class="card">
-                    @if($item->file)
-                        <img class="card-img" width="100%" src="/storage/{{ $item->file->file_name }}"
-                             alt="Card image cap">
-                    @else
-                        <img class="card-img" width="100%" src="/storage/"
-                             alt="Card image cap">
-                    @endif
+                    <img src="{{ $item->file ? '/storage/' . $item->file?->file_name : asset('assets/img/default.jpg')}}" style="width: 100%" alt="">
                     <div class="card-header">
                         <div class="mb-0 card-title h5">{{ $item->title }}</div>
                     </div>
