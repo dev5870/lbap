@@ -39,14 +39,6 @@ class UserController extends Controller
         ]);
     }
 
-    public function security(): View
-    {
-        return view('cabinet.user.security', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
-    }
-
     public function edit(): View
     {
         return view('cabinet.user.edit', [

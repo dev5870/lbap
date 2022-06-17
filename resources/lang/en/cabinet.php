@@ -37,4 +37,9 @@ return [
     'payment' => [
         'top_up' => 'Top up',
     ],
+
+    'security' => [
+        'mfa' => 'Telegram 2fa',
+        'login_notify' => 'Notify about new login',
+    ],
 ];

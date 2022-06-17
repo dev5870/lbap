@@ -12,6 +12,7 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\Cabinet\CabinetController;
+use App\Http\Controllers\Cabinet\SecurityController;
 use App\Http\Controllers\Cabinet\UserController as CabinetUserController;
 use App\Http\Controllers\Cabinet\ContentController as CabinetContentController;
 
@@ -64,7 +65,8 @@ Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
         Route::get('/', [CabinetController::class, 'index'])->name('index');
         Route::get('/user/profile', [CabinetUserController::class, 'profile'])->name('user.profile');
         Route::get('/user/edit', [CabinetUserController::class, 'edit'])->name('user.edit');
-        Route::get('/user/security', [CabinetUserController::class, 'security'])->name('user.security');
+        Route::get('/user/security', [SecurityController::class, 'index'])->name('user.security');
+        Route::post('/user/security', [SecurityController::class, 'update'])->name('user.security.update');
         Route::get('/user/log', [CabinetUserController::class, 'log'])->name('user.log');
         Route::get('/content', [CabinetContentController::class, 'index'])->name('content.index');
         Route::get('/content/{content}', [CabinetContentController::class, 'show'])->name('content.show');
