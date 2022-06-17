@@ -39,5 +39,6 @@ class UserParam extends Model
         'username',
         'description',
         'mfa',
+        'login_notify',
     ];
 }
