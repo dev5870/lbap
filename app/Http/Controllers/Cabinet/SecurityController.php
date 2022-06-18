@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 
 class SecurityController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         $userParams = UserParam::firstOrCreate(['user_id' => Auth::id()]);
@@ -23,6 +26,10 @@ class SecurityController extends Controller
         ]);
     }
 
+    /**
+     * @param SecurityUpdateRequest $request
+     * @return View
+     */
     public function update(SecurityUpdateRequest $request): View
     {
         $userParams = UserParam::updateOrCreate(
