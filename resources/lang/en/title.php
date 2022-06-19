@@ -168,4 +168,8 @@ return [
     'headers' => [
         'sure' => 'Are you sure?',
     ],
+
+    'error' => [
+        'auth' => 'Auth error!',
+    ],
 ];
