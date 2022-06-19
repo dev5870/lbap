@@ -33,7 +33,7 @@ class NewLoginNotifyJob implements ShouldQueue
         $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
         $bot->sendMessage(
             Auth::user()->telegram()->first()->chat_id,
-            'Security notify: new login!'
+            __('cabinet.notify.login')
         );
     }
 }

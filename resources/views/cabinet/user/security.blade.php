@@ -8,6 +8,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if($telegram)
+                                    {{ __('cabinet.security.info_2') }}
+                                @else
+                                    {{ __('cabinet.security.info_1') }} <br>
+                                    <a href="https://t.me/Ad_acta_bot" target="_blank">@Ad_acta_bot</a>
+                                    ({{ __('cabinet.security.secret_key') }} {{ Auth::user()->secret_key }})
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
                         <form class="" method="POST" action="{{ Route('cabinet.user.security.update') }}">
                             @csrf
                             <div class="row">
@@ -28,7 +47,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary" {{ $telegram ? '' : 'disabled' }}>
                                 {{ __('title.btn.update') }}
                             </button>
                         </form>

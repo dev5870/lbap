@@ -17,12 +17,11 @@ class SecurityController extends Controller
      */
     public function index(): View
     {
-        $userParams = UserParam::firstOrCreate(['user_id' => Auth::id()]);
-
         return view('cabinet.user.security', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
-            'params' => $userParams
+            'params' => UserParam::firstOrCreate(['user_id' => Auth::id()]),
+            'telegram' => Auth::user()->telegram()->first(),
         ]);
     }
 
@@ -44,6 +43,7 @@ class SecurityController extends Controller
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'params' => $userParams,
+            'telegram' => Auth::user()->telegram()->first(),
         ]);
     }
 }

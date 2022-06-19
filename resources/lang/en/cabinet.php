@@ -41,5 +41,12 @@ return [
     'security' => [
         'mfa' => 'Telegram 2fa',
         'login_notify' => 'Notify about new login',
+        'secret_key' => 'Your secret key: ',
+        'info_1' => 'To configure, you need to subscribe to our telegram bot. Start the bot and send the secret code to the bot: ',
+        'info_2' => 'You have successfully subscribed to the telegram bot',
+    ],
+
+    'notify' => [
+        'login' => 'Security notify: new login!',
     ],
 ];
