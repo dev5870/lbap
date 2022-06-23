@@ -16,6 +16,12 @@
                             <label class="form-label">{{ __('title.input.password') }}</label>
                             <input name="password" placeholder="Password" type="password" class="form-control">
                         </div>
+                        @if(request()->has('mfa'))
+                            <div class="mb-3">
+                                <label class="form-label">{{ __('title.input.code') }}</label>
+                                <input name="code" placeholder="8888" type="number" class="form-control">
+                            </div>
+                        @endif
                         <button type="submit" class="btn btn-primary">{{ __('title.btn.submit') }}</button>
                     </form>
 

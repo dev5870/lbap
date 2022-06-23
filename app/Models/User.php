@@ -187,4 +187,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserParam::class, 'user_id', 'id');
     }
+
+    public function mfa(): HasOne
+    {
+        return $this->hasOne(UserTelegramCode::class, 'user_id', 'id');
+    }
 }

@@ -151,6 +151,7 @@ return [
         'email' => 'Email address',
         'password' => 'Password',
         'repeat_password' => 'Repeat password',
+        'code' => 'Telegram code',
     ],
 
     'btn' => [
@@ -171,5 +172,6 @@ return [
 
     'error' => [
         'auth' => 'Auth error!',
+        '2fa' => 'Please, enter 2fa code!'
     ],
 ];
