@@ -15,6 +15,7 @@ use App\Http\Controllers\Cabinet\CabinetController;
 use App\Http\Controllers\Cabinet\SecurityController;
 use App\Http\Controllers\Cabinet\UserController as CabinetUserController;
 use App\Http\Controllers\Cabinet\ContentController as CabinetContentController;
+use App\Http\Controllers\Cabinet\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -63,7 +64,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
     Route::prefix('cabinet')->name('cabinet.')->group(function () {
         Route::get('/', [CabinetController::class, 'index'])->name('index');
-        Route::get('/user/profile', [CabinetUserController::class, 'profile'])->name('user.profile');
+        Route::resource('/user/profile', ProfileController::class);
         Route::get('/user/edit', [CabinetUserController::class, 'edit'])->name('user.edit');
         Route::get('/user/security', [SecurityController::class, 'index'])->name('user.security');
         Route::post('/user/security', [SecurityController::class, 'update'])->name('user.security.update');

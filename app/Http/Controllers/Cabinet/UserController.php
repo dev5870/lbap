@@ -14,17 +14,6 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     /**
-     * @return View
-     */
-    public function profile(): View
-    {
-        return view('cabinet.user.profile', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
-    }
-
-    /**
      * @param Request $request
      * @return View
      */
@@ -36,14 +25,6 @@ class UserController extends Controller
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'logs' => UserUserAgent::whereUserId(Auth::id())->sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
-        ]);
-    }
-
-    public function edit(): View
-    {
-        return view('cabinet.user.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
         ]);
     }
 }

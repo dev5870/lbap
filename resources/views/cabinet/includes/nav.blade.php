@@ -28,9 +28,9 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('cabinet.user.*') ? 'active' : '' }}">
+                <li class="sidebar-item {{ request()->routeIs('cabinet.profile.*') ? 'active' : '' }}">
                     <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
-                       href="#user">
+                       href="#profile">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                              class="feather align-middle me-2">
@@ -41,19 +41,18 @@
                         <div></div>
                     </a>
 
-                    <ul id="user" class="sidebar-dropdown list-unstyled collapse">
+                    <ul id="profile" class="sidebar-dropdown list-unstyled collapse">
                         <li class="sidebar-item">
                             <a depth="1" activeclassname="active"
-                               class="sidebar-link {{ request()->routeIs('cabinet.user.profile') ? 'active' : '' }}"
-                               href="{{ Route('cabinet.user.profile') }}">
+                               class="sidebar-link {{ request()->routeIs('cabinet.profile.show') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.profile.show', Auth::user()->params->id) }}">
                                 <span class="align-middle" depth="1">{{ __('cabinet.menu.my_profile') }}</span>
                             </a>
                         </li>
-
                         <li class="sidebar-item">
                             <a depth="1" activeclassname="active"
-                               class="sidebar-link {{ request()->routeIs('cabinet.user.edit') ? 'active' : '' }}"
-                               href="{{ Route('cabinet.user.edit') }}">
+                               class="sidebar-link {{ request()->routeIs('cabinet.profile.edit') ? 'active' : '' }}"
+                               href="{{ Route('cabinet.profile.edit', Auth::user()->params->id) }}">
                                 <span class="align-middle" depth="1">{{ __('cabinet.menu.edit') }}</span>
                             </a>
                         </li>
