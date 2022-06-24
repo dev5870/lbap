@@ -14,7 +14,7 @@
                                     {{ __('cabinet.security.info_2') }}
                                 @else
                                     {{ __('cabinet.security.info_1') }} <br>
-                                    <a href="https://t.me/Ad_acta_bot" target="_blank">@Ad_acta_bot</a>
+                                    <a href="{{ env('TELEGRAM_BOT_URL') }}" target="_blank">{{ env('TELEGRAM_BOT_NAME') }}</a>
                                     ({{ __('cabinet.security.secret_key') }} {{ Auth::user()->secret_key }})
                                 @endif
                             </div>
