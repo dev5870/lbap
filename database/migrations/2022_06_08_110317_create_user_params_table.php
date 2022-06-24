@@ -18,6 +18,10 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->index();
             $table->uuid('user_uuid')->nullable();
             $table->string('username', 15)->nullable();
+            $table->string('about', 25)->nullable();
+            $table->string('skill', 25)->nullable();
+            $table->string('city', 25)->nullable();
+            $table->string('telegram', 25)->nullable();
             $table->string('description', 300)->nullable();
             $table->boolean('mfa')->default(false)->nullable();
             $table->boolean('login_notify')->default(false)->nullable();

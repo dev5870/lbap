@@ -7,9 +7,8 @@
                     <div class="card-header">
                         <div class="mb-0 card-title h5">Profile Details</div>
                     </div>
-                    <div class="text-center card-body"><img src="/static/media/avatar-4.93166a0c.jpg" alt="Stacie Hall"
-                                                            class="img-fluid rounded-circle mb-2" width="128"
-                                                            height="128">
+                    <div class="text-center card-body">
+                        <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user" class="img-fluid rounded-circle mb-2" width="128" height="128">
                         <div class="mb-0 card-title h5">Stacie Hall</div>
                         <div class="text-muted mb-2">Lead Developer</div>
                         <div>
