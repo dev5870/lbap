@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Services\SystemNoticeService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -38,6 +39,7 @@ class SendTgMessageJob implements ShouldQueue
                 $this->message
             );
         } catch (\Exception $exception) {
+            SystemNoticeService::createNotice('Error send tg message', $this->message . ' for user_id: ' . $this->user->id);
             Log::channel()->error('Error send tg message: ' . $this->message . ' for user_id: ' . $this->user->id);
             Log::channel()->error($exception->getMessage());
             Log::channel()->error($exception->getTraceAsString());

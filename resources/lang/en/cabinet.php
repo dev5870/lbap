@@ -11,6 +11,7 @@ return [
         'title' => 'Title',
         'preview' => 'Preview',
         'read'=> 'Read',
+        'show' => 'View'
     ],
 
     'menu' => [
