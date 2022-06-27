@@ -145,6 +145,11 @@ class User extends Authenticatable
         self::created(function ($model) {
             // Assign user role
             $model->assignRole(UserRole::USER);
+
+            // Create user param
+            UserParam::create([
+                'user_id' => $model->id
+            ]);
         });
     }
 

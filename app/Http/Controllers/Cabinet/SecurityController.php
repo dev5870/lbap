@@ -31,18 +31,10 @@ class SecurityController extends Controller
      */
     public function update(SecurityUpdateRequest $request): View
     {
-        $userParams = UserParam::updateOrCreate(
-            ['user_id' => Auth::id()],
-            [
-                'mfa' => $request->has('mfa'),
-                'login_notify' => $request->has('login_notify'),
-            ]
-        );
-
         return view('cabinet.user.security', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
-            'params' => $userParams,
+            'params' => UserParam::whereUserId(Auth::id())->first(),
             'telegram' => Auth::user()->telegram()->first(),
         ]);
     }
