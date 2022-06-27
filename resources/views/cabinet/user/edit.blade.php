@@ -15,17 +15,16 @@
                             <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user"
                                  class="img-fluid rounded-circle mb-2" width="128" height="128">
                             <div class="mb-0 card-title h5">
-                                <input name="username" value="" placeholder="Stacie Hall" style="width: 120px">
+                                <input name="username" value="{{ $profile->username }}" placeholder="Stacie Hall" style="width: 120px">
                             </div>
                             <div class="text-muted mb-2">
-                                <input name="about" value="" placeholder="Lead Developer" style="width: 120px">
+                                <input name="about" value="{{ $profile->about }}" placeholder="Lead Developer" style="width: 120px">
                             </div>
                         </div>
                         <hr class="my-0">
                         <div class="card-body">
                             <div class="card-title h5">Skills</div>
-                            <textarea name="skill" value="" placeholder="Separated by commas"
-                                      style="width: 170px"></textarea>
+                            <textarea name="skill" placeholder="Separated by commas" style="width: 170px">{{ $profile->skill }}</textarea>
                         </div>
                         <hr class="my-0">
                         <div class="card-body">
@@ -38,7 +37,7 @@
                                         <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                         <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                     </svg>
-                                    <input name="city" value="" placeholder="Lives in ..." style="width: 120px">
+                                    <input name="city" value="{{ $profile->city }}" placeholder="Lives in ..." style="width: 120px">
                             </ul>
                         </div>
                         <hr class="my-0">
@@ -53,7 +52,7 @@
                                         <path fill="currentColor"
                                               d="M444.52 3.52L28.74 195.42c-47.97 22.39-31.98 92.75 19.19 92.75h175.91v175.91c0 51.17 70.36 67.17 92.75 19.19l191.9-415.78c15.99-38.39-25.59-79.97-63.97-63.97z"></path>
                                     </svg>
-                                    <input name="telegram" value="" placeholder="@your_tg" style="width: 120px">
+                                    <input name="telegram" value="{{ $profile->telegram }}" placeholder="@your_tg" style="width: 120px">
                             </ul>
                         </div>
                     </div>
@@ -71,7 +70,7 @@
                                     tell us about yourself, your services and products
                                     <br>
                                     <div class="border text-sm text-muted p-2 mt-1">
-                                        <textarea name="skill" value="" placeholder="tell us about yourself" style="width: 565px"></textarea>
+                                        <textarea name="skill" placeholder="tell us about yourself" style="width: 565px">{{ $profile->description }}</textarea>
                                     </div>
                                 </div>
                             </div>
