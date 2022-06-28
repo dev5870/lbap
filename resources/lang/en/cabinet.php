@@ -29,6 +29,16 @@ return [
         'details' => 'Profile details',
         'balance' => 'Balance',
         'doge' => 'DOGE',
+        'description' => 'Description',
+        'skills' => 'Skills',
+        'about' => 'About',
+        'tg' => 'Telegram',
+        'info_1' => 'tell us about yourself, your services and products',
+        'info_2' => 'tell about yourself',
+        'lives' => 'Lives in',
+        'message' => 'Message',
+        'add_favorite' => 'Add to favorite',
+        'remove_favorite' => 'Remove from favorite',
     ],
 
     'log' => [

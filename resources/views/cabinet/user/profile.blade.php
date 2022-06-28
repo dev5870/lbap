@@ -1,11 +1,16 @@
 @extends('cabinet.layouts.default')
 @section('content')
-    <div class="p-0 container-fluid"><h1 class="h3 mb-3">Profile</h1>
+    <div class="p-0 container-fluid">
+        <h1 class="h3 mb-3">
+            {{ __('cabinet.profile.title') }}
+        </h1>
         <div class="row">
             <div class="col-xl-3 col-md-4">
                 <div class="card">
                     <div class="card-header">
-                        <div class="mb-0 card-title h5">Profile Details</div>
+                        <div class="mb-0 card-title h5">
+                            {{ __('cabinet.profile.details') }}
+                        </div>
                     </div>
                     <div class="text-center card-body">
                         <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user"
@@ -16,21 +21,25 @@
                         <div class="text-muted mb-2">
                             {{ $profile->about }}
                         </div>
-                        <div>
-                            <button type="button" class="me-1 btn btn-primary btn-sm">Follow</button>
+                        <div style="display: none">
+                            <button type="button" class="me-1 btn btn-primary btn-sm">
+                                {{ __('cabinet.profile.add_favorite') }}
+                            </button>
                             <button type="button" class="btn btn-primary btn-sm">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
                                      fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                      stroke-linejoin="round">
                                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                                 </svg>
-                                Message
+                                {{ __('cabinet.profile.message') }}
                             </button>
                         </div>
                     </div>
                     <hr class="my-0">
                     <div class="card-body">
-                        <div class="card-title h5">Skills</div>
+                        <div class="card-title h5">
+                            {{ __('cabinet.profile.skills') }}
+                        </div>
                         @foreach(explode(',', $profile->skill) as $item)
                             <span class="me-2 my-1 badge bg-primary">
                                 {{ $item }}
@@ -39,7 +48,9 @@
                     </div>
                     <hr class="my-0">
                     <div class="card-body">
-                        <div class="card-title h5">About</div>
+                        <div class="card-title h5">
+                            {{ __('cabinet.profile.about') }}
+                        </div>
                         <ul class="list-unstyled mb-0">
                             <li class="mb-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
@@ -48,12 +59,14 @@
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                     <polyline points="9 22 9 12 15 12 15 22"></polyline>
                                 </svg>
-                                Lives in {{ $profile->city }}</li>
+                                {{ __('cabinet.profile.lives') }} {{ $profile->city }}</li>
                         </ul>
                     </div>
                     <hr class="my-0">
                     <div class="card-body">
-                        <div class="card-title h5">Elsewhere</div>
+                        <div class="card-title h5">
+                            {{ __('cabinet.profile.tg') }}
+                        </div>
                         <ul class="list-unstyled mb-0">
                             <li class="mb-1">
                                 <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="globe"
@@ -71,7 +84,9 @@
             <div class="col-xl-9 col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <div class="mb-0 card-title h5">Description</div>
+                        <div class="mb-0 card-title h5">
+                            {{ __('cabinet.profile.description') }}
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="d-flex">
@@ -79,7 +94,7 @@
                                  class="rounded-circle me-2" width="36" height="36">
                             <div class="flex-grow-1">
                                 <strong>username</strong>
-                                tell about yourself
+                                {{ __('cabinet.profile.info_2') }}
                                 <br>
                                 <div class="border text-sm text-muted p-2 mt-1">
                                     {{ $profile->description }}

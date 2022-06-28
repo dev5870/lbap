@@ -9,7 +9,9 @@
                 <div class="col-xl-3 col-md-4">
                     <div class="card">
                         <div class="card-header">
-                            <div class="mb-0 card-title h5">Profile Details</div>
+                            <div class="mb-0 card-title h5">
+                                {{ __('cabinet.profile.details') }}
+                            </div>
                         </div>
                         <div class="text-center card-body">
                             <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user"
@@ -23,12 +25,16 @@
                         </div>
                         <hr class="my-0">
                         <div class="card-body">
-                            <div class="card-title h5">Skills</div>
+                            <div class="card-title h5">
+                                {{ __('cabinet.profile.skills') }}
+                            </div>
                             <textarea name="skill" placeholder="Separated by commas" style="width: 170px">{{ $profile->skill }}</textarea>
                         </div>
                         <hr class="my-0">
                         <div class="card-body">
-                            <div class="card-title h5">About</div>
+                            <div class="card-title h5">
+                                {{ __('cabinet.profile.about') }}
+                            </div>
                             <ul class="list-unstyled mb-0">
                                 <li class="mb-1">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
@@ -42,7 +48,9 @@
                         </div>
                         <hr class="my-0">
                         <div class="card-body">
-                            <div class="card-title h5">Telegram</div>
+                            <div class="card-title h5">
+                                {{ __('cabinet.profile.tg') }}
+                            </div>
                             <ul class="list-unstyled mb-0">
                                 <li class="mb-1">
                                     <svg aria-hidden="true" focusable="false" data-prefix="fas"
@@ -60,14 +68,16 @@
                 <div class="col-xl-9 col-md-8">
                     <div class="card">
                         <div class="card-header">
-                            <div class="mb-0 card-title h5">Description</div>
+                            <div class="mb-0 card-title h5">
+                                {{ __('cabinet.profile.description') }}
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="d-flex">
                                 <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user" class="rounded-circle me-2" width="36" height="36">
                                 <div class="flex-grow-1">
-                                    <strong>username</strong>
-                                    tell us about yourself, your services and products
+                                    <strong>{{ $profile->username }}</strong>
+                                    {{ __('cabinet.profile.info_1') }}
                                     <br>
                                     <div class="border text-sm text-muted p-2 mt-1">
                                         <textarea name="skill" placeholder="tell us about yourself" style="width: 565px">{{ $profile->description }}</textarea>
@@ -76,7 +86,9 @@
                             </div>
                             <hr>
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary">Save</button>
+                                <button type="button" class="btn btn-primary">
+                                    {{ __('title.btn.update') }}
+                                </button>
                             </div>
                         </div>
                     </div>
