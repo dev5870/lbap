@@ -40,6 +40,9 @@ return [
         'add_favorite' => 'Add to favorite',
         'remove_favorite' => 'Remove from favorite',
         'city' => 'City',
+        'activity' => 'Activity',
+        'date_registration' => 'Registration date: ',
+        'last_login' => 'Last time online: ',
     ],
 
     'log' => [

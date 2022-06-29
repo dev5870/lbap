@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\UserParam
@@ -45,4 +46,9 @@ class UserParam extends Model
         'mfa',
         'login_notify',
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

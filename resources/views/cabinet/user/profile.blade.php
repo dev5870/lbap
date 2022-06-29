@@ -93,7 +93,7 @@
                             <img src="{{ $file ?? asset('assets/img/logo.png') }}" alt="user"
                                  class="rounded-circle me-2" width="36" height="36">
                             <div class="flex-grow-1">
-                                <strong>username</strong>
+                                <strong>{{ $profile->username }}</strong>
                                 {{ __('cabinet.profile.info_2') }}
                                 <br>
                                 <div class="border text-sm text-muted p-2 mt-1">
@@ -102,6 +102,28 @@
                             </div>
                         </div>
                         <hr>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="mb-0 card-title h5">
+                            {{ __('cabinet.profile.activity') }}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <strong>{{ __('cabinet.profile.date_registration') }}</strong>
+                                {{ $profile->user->created_at }}
+                            </div>
+                        </div>
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <strong>{{ __('cabinet.profile.last_login') }}</strong>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
