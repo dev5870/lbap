@@ -4,7 +4,9 @@
         <h1 class="h3 mb-3">
             {{ __('cabinet.menu.edit') }}
         </h1>
-        <form class="" method="POST" action="{{ Route('cabinet.user.security.update') }}">
+        <form class="" method="POST" action="{{ Route('cabinet.profile.update', $profile) }}">
+            @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-xl-3 col-md-4">
                     <div class="card">
@@ -33,7 +35,7 @@
                         <hr class="my-0">
                         <div class="card-body">
                             <div class="card-title h5">
-                                {{ __('cabinet.profile.about') }}
+                                {{ __('cabinet.profile.city') }}
                             </div>
                             <ul class="list-unstyled mb-0">
                                 <li class="mb-1">
@@ -80,13 +82,13 @@
                                     {{ __('cabinet.profile.info_1') }}
                                     <br>
                                     <div class="border text-sm text-muted p-2 mt-1">
-                                        <textarea name="skill" placeholder="tell us about yourself" style="width: 565px">{{ $profile->description }}</textarea>
+                                        <textarea name="description" placeholder="tell us about yourself" style="width: 565px">{{ $profile->description }}</textarea>
                                     </div>
                                 </div>
                             </div>
                             <hr>
                             <div class="d-grid">
-                                <button type="button" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary">
                                     {{ __('title.btn.update') }}
                                 </button>
                             </div>

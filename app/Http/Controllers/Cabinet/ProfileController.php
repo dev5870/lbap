@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Cabinet\ProfileUpdateRequest;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\UserParam;
@@ -46,10 +47,18 @@ class ProfileController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, UserParam $profile)
+    public function update(ProfileUpdateRequest $request, UserParam $profile)
     {
-        //
+        if (!$profile->update($request->validated())) {
+            return redirect()->route('cabinet.profile.edit', $profile)->with([
+                'error-message' => __('title.error')
+            ]);
+        }
+
+        return redirect()->route('cabinet.profile.edit', $profile)->with([
+            'success-message' => __('title.success')
+        ]);
     }
 }

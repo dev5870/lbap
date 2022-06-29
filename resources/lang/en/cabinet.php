@@ -39,6 +39,7 @@ return [
         'message' => 'Message',
         'add_favorite' => 'Add to favorite',
         'remove_favorite' => 'Remove from favorite',
+        'city' => 'City',
     ],
 
     'log' => [

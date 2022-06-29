@@ -49,7 +49,7 @@
                     <hr class="my-0">
                     <div class="card-body">
                         <div class="card-title h5">
-                            {{ __('cabinet.profile.about') }}
+                            {{ __('cabinet.profile.city') }}
                         </div>
                         <ul class="list-unstyled mb-0">
                             <li class="mb-1">

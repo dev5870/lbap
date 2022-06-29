@@ -38,6 +38,10 @@ class UserParam extends Model
         'user_uuid',
         'username',
         'description',
+        'about',
+        'skill',
+        'city',
+        'telegram',
         'mfa',
         'login_notify',
     ];
