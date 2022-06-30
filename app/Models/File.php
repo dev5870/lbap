@@ -35,6 +35,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUserId($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Content|null $content
  */
 class File extends Model
 {

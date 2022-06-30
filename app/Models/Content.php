@@ -40,6 +40,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Query\Builder|Content withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Content withoutTrashed()
  * @mixin \Eloquent
+ * @property-read \App\Models\File|null $file
  */
 class Content extends Model
 {

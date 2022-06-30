@@ -77,6 +77,9 @@ use App\Enums\UserRole;
  * @property-read int|null $transactions_count
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSecretKey($value)
  * @property-read \App\Models\UserTelegram|null $telegram
+ * @property-read \App\Models\UserActivity|null $activity
+ * @property-read \App\Models\UserTelegramCode|null $mfa
+ * @property-read \App\Models\UserParam|null $params
  */
 class User extends Authenticatable
 {
@@ -196,5 +199,10 @@ class User extends Authenticatable
     public function mfa(): HasOne
     {
         return $this->hasOne(UserTelegramCode::class, 'user_id', 'id');
+    }
+
+    public function activity(): HasOne
+    {
+        return $this->hasOne(UserActivity::class, 'user_id');
     }
 }

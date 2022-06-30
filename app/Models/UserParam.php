@@ -29,6 +29,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereUserUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereUsername($value)
  * @mixin \Eloquent
+ * @property string|null $about
+ * @property string|null $skill
+ * @property string|null $city
+ * @property string|null $telegram
+ * @property int|null $login_notify
+ * @property-read \App\Models\User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereAbout($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereLoginNotify($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereSkill($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|UserParam whereTelegram($value)
  */
 class UserParam extends Model
 {
