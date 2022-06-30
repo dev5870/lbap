@@ -61,7 +61,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
 });
 
 // todo: role user
-Route::middleware(['auth:sanctum', 'role:user'])->group(function () {
+Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () {
     Route::prefix('cabinet')->name('cabinet.')->group(function () {
         Route::get('/', [CabinetController::class, 'index'])->name('index');
         Route::resource('/user/profile', ProfileController::class);

@@ -121,7 +121,7 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <strong>{{ __('cabinet.profile.last_login') }}</strong>
-
+                                {{ $profile->user->activity->last_activity }}
                             </div>
                         </div>
                     </div>
