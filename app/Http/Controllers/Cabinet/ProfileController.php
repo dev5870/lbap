@@ -7,7 +7,6 @@ use App\Http\Requests\Cabinet\ProfileUpdateRequest;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\UserParam;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 
 class ProfileController extends Controller

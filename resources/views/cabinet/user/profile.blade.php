@@ -121,7 +121,11 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <strong>{{ __('cabinet.profile.last_login') }}</strong>
-                                {{ $profile->user->activity->last_activity }}
+                                @if(now() < $profile->user->activity->last_activity->addMinutes(10))
+                                    <span style="color: green">online</span>
+                                @else
+                                    {{ $profile->user->activity->last_activity }}
+                                @endif
                             </div>
                         </div>
                     </div>
