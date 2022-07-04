@@ -72,6 +72,7 @@ return [
         'addresses' => 'Addresses',
         'notices' => 'System notices',
         'transactions' => 'Transactions',
+        'cabinet' => 'Go to cabinet',
     ],
 
     'transaction' => [

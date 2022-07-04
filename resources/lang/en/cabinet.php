@@ -22,6 +22,7 @@ return [
         'login_history' => 'Login history',
         'security' => 'Security',
         'content' => 'Contents',
+        'administration' => 'Administration',
     ],
 
     'profile' => [
