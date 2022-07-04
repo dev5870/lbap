@@ -59,7 +59,15 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.user.update') }}</div>
+                    <div class="mb-0 card-title h5" tag="h5">
+                        {{ __('title.user.update') }}
+                        ({{ __('cabinet.profile.last_login') }}
+                        @if(now() < $user->activity?->last_activity->addMinutes(10))
+                            <span style="color: green">online</span>)
+                        @else
+                            {{ $user->activity?->last_activity }})
+                        @endif
+                    </div>
                 </div>
                 <div class="card-body">
                     <form class="" method="POST" action="{{ Route('admin.user.update', $user) }}"
