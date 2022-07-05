@@ -59,7 +59,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="mb-3">
-                                            <label class="form-label">{{ __('title.user.file') }}</label>
+                                            <label class="form-label">{{ __('title.user.file') }} ({{ __('title.file.dimensions') }})</label>
                                             <input name="file" type="file" class="form-control">
                                         </div>
                                     </div>

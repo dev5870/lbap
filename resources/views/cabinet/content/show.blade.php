@@ -20,7 +20,7 @@
     </div>
     <div class="flex-fill w-100 card table-responsive users">
         <p style="margin: 8px;">
-            <img src="{{ $content->file ? '/storage/' . $item->file?->file_name : asset('assets/img/default.jpg')}}" style="width: 30% !important; float: left; margin-right: 10px;           " alt="">
+            <img src="{{ $content->file ? '/storage/' . $content->file?->file_name : asset('assets/img/default.jpg')}}" style="width: 30% !important; float: left; margin-right: 10px;           " alt="">
 
             {{ $content->text }}
         </p>

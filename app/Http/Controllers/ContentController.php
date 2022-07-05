@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Filters\ContentFilter;
+use App\Http\Requests\ContentCreateRequest;
 use App\Models\Content;
 use App\Models\Notification;
 use App\Models\Setting;
@@ -46,10 +47,10 @@ class ContentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param Request $request
+     * @param ContentCreateRequest $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function store(ContentCreateRequest $request): RedirectResponse
     {
         $content = new Content();
         $content->title = $request->get('title');

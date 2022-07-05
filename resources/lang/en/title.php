@@ -110,6 +110,7 @@ return [
         'fileable_id' => 'Fileable id',
         'fileable_type' => 'Fileable type',
         'description' => 'File description',
+        'dimensions' => 'width 300, height 200 only',
     ],
 
     'notification' => [

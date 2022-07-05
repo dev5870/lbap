@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('preview');
-            $table->string('text');
+            $table->string('title', 100);
+            $table->string('preview', 250);
+            $table->string('text', 800);
             $table->dateTime('delayed_time_publication')->nullable();
             $table->timestamps();
             $table->softDeletes();
