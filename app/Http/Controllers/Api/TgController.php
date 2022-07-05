@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\UserTelegram;
 use App\Services\UserService;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
@@ -49,8 +48,6 @@ class TgController extends Controller
                         return false;
                     }
 
-                    DB::beginTransaction();
-
                     // Register new user
                     $password = UserService::generateRandomString();
                     $user = User::create([
@@ -66,10 +63,10 @@ class TgController extends Controller
                             $message->getChat()->getId(),
                             __('title.bot.success_registration') . "\n" . __('title.bot.email') . $message->getText() . "\n" . __('title.bot.password') . $password
                         );
-                        DB::commit();
+
                         return true;
                     } else {
-                        DB::rollBack();
+
                         return false;
                     }
                 }
@@ -85,7 +82,6 @@ class TgController extends Controller
                     $user = User::whereSecretKey($message->getText())->first();
 
                     // Create user telegram information
-                    DB::beginTransaction();
                     $userTelegram = $this->addUserTelegramInfo($message, $user);
 
                     if ($userTelegram) {
@@ -93,10 +89,10 @@ class TgController extends Controller
                             $message->getChat()->getId(),
                             __('title.bot.success_login')
                         );
-                        DB::commit();
+
                         return true;
                     } else {
-                        DB::rollBack();
+
                         return false;
                     }
                 }

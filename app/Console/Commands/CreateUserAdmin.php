@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Enums\UserRole;
 use App\Models\User;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class CreateUserAdmin extends Command
@@ -36,8 +35,6 @@ class CreateUserAdmin extends Command
             return false;
         }
 
-        DB::beginTransaction();
-
         $user = User::create([
             'email' => $this->argument('email'),
             'password' => Hash::make($this->argument('password'))
@@ -45,12 +42,12 @@ class CreateUserAdmin extends Command
 
         if ($user && $user->assignRole(UserRole::ADMIN)) {
             $this->info('Success admin registration!');
-            DB::commit();
+
             return true;
         }
 
         $this->error('Error user registration!');
-        DB::rollBack();
+
         return false;
     }
 }

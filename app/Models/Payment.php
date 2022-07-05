@@ -9,7 +9,6 @@ use App\Services\PaymentService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Support\Facades\DB;
 use Kyslik\ColumnSortable\Sortable;
 use function Sodium\add;
 
@@ -81,8 +80,6 @@ class Payment extends Model
 
             if (($model->type == PaymentType::TOP_UP) && !$model->user->address?->exists()) {
 
-                DB::beginTransaction();
-
                 if ($address = PaymentService::getAddress()) {
                     $address->user_id = $model->user_id;
                 }
@@ -90,9 +87,6 @@ class Payment extends Model
                 if ($address->save()) {
                     $address->refresh();
                     $model->address_id = $address->id;
-                    DB::commit();
-                } else {
-                    DB::rollBack();
                 }
             } elseif (($model->type == PaymentType::TOP_UP) && $model->user->address?->exists()) {
                 $model->address_id = $model->user->address->id;

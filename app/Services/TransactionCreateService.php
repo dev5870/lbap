@@ -6,7 +6,6 @@ use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentType;
 use App\Models\Transaction;
 use App\Models\User;
-use Illuminate\Support\Facades\DB;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Exception;
 use TelegramBot\Api\InvalidArgumentException;
@@ -51,8 +50,6 @@ class TransactionCreateService
     private function createTransaction(): bool
     {
         try {
-            DB::beginTransaction();
-
             $transaction = Transaction::create([
                 'payment_id' => $this->dto->payment->id,
                 'full_amount' => $this->dto->payment->full_amount,
@@ -63,7 +60,7 @@ class TransactionCreateService
             ]);
 
             if ($transaction->exists()) {
-                DB::commit();
+
                 return true;
             }
 
@@ -77,7 +74,6 @@ class TransactionCreateService
             );
         }
 
-        DB::rollBack();
         return false;
     }
 
