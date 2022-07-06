@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentType;
 use App\Models\Transaction;
-use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Exception;
 use TelegramBot\Api\InvalidArgumentException;
@@ -30,14 +30,24 @@ class TransactionCreateService
      */
     public function handle(): bool
     {
-        if ($this->createTransaction() === true) {
-            return true;
-        }
+        Log::channel('transaction')->info($this->dto->payment->id . ' - trying create new transaction');
 
-        SystemNoticeService::createNotice(
-            'Error transaction',
-            'Error while create transaction for payment id: ' . $this->dto->payment->id
-        );
+        try {
+            if ($this->createTransaction()) {
+                Log::channel('transaction')->info($this->dto->payment->id . ' - success transaction created');
+
+                return true;
+            }
+
+        } catch (Exception $exception) {
+            Log::channel('transaction')->error($this->dto->payment->id . ' - error transaction created');
+
+            SystemNoticeService::createNotice(
+                'Error transaction',
+                'Error while create transaction for payment id: '
+                . $this->dto->payment->id . '. Error message: ' . $exception->getMessage()
+            );
+        }
 
         return false;
     }
@@ -60,17 +70,23 @@ class TransactionCreateService
             ]);
 
             if ($transaction->exists()) {
+                Log::channel('transaction')->info($this->dto->payment->id . ' - transaction id: ' . $transaction->id);
 
                 return true;
             }
 
-        } catch (Exception $e) {
+        } catch (Exception $exception) {
+            Log::channel('transaction')->info($this->dto->payment->id . ' - error while creating transaction');
+            Log::channel('transaction')->info($exception->getMessage());
+            Log::channel('transaction')->info($exception->getTraceAsString());
+
             $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
-            $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'Available address count');
+            $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'Error while creating payment transaction. Payment id: ' . $this->dto->payment->id);
 
             SystemNoticeService::createNotice(
-                'Error creating transaction',
-                'Error while creating payment transaction. Payment id: ' . $this->dto->payment->id
+                'Error transaction',
+                'Error while create transaction for payment id: '
+                . $this->dto->payment->id . '. Error message: ' . $exception->getMessage()
             );
         }
 
@@ -78,11 +94,11 @@ class TransactionCreateService
     }
 
     /**
-     * @return mixed
+     * @return string|null
      */
-    private function getOldBalance(): mixed
+    private function getOldBalance(): null|string
     {
-        return User::find($this->dto->payment->user_id)->balance;
+        return $this->dto->payment->user->balance;
     }
 
     /**

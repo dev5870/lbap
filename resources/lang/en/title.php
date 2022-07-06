@@ -89,6 +89,8 @@ return [
         'create_new' => 'Create new payment',
         'update' => 'Update payment',
         'total' => 'Total payments',
+        'id' => 'Payment ID',
+        'type' => 'Type',
     ],
 
     'bot' => [

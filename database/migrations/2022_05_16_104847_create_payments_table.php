@@ -23,6 +23,7 @@ return new class extends Migration
             $table->decimal('full_amount', 18, 8)->nullable();
             $table->decimal('amount', 18, 8)->nullable();
             $table->decimal('commission_amount', 18, 8)->nullable();
+            $table->string('description', 50);
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });

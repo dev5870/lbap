@@ -78,7 +78,7 @@ class Payment extends Model
 
         self::created(function ($model) {
 
-            if (($model->type == PaymentType::TOP_UP) && !$model->user->address?->exists()) {
+            if (!$model->user->address?->exists()) {
 
                 if ($address = PaymentService::getAddress()) {
                     $address->user_id = $model->user_id;
@@ -88,7 +88,7 @@ class Payment extends Model
                     $address->refresh();
                     $model->address_id = $address->id;
                 }
-            } elseif (($model->type == PaymentType::TOP_UP) && $model->user->address?->exists()) {
+            } elseif ($model->user->address?->exists()) {
                 $model->address_id = $model->user->address->id;
             }
 

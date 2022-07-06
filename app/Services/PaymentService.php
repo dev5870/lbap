@@ -6,6 +6,8 @@ use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentType;
 use App\Models\Address;
 use App\Models\Payment;
+use Exception;
+use Illuminate\Support\Facades\Log;
 
 class PaymentService
 {
@@ -29,15 +31,30 @@ class PaymentService
      */
     public function handle(): bool
     {
-        if ($this->dto->type == PaymentType::MINUS && ($this->isEnoughMoney() === false)) {
-            return false;
+        Log::channel('payment')->info('create - trying create new payment');
+        Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
+
+        try {
+            if ($this->dto->type == PaymentType::MINUS && !$this->isEnoughMoney()) {
+                Log::channel('payment')->error('create - user does not have money');
+
+                return false;
+            }
+
+            if (!$this->createNewPayment()) {
+                Log::channel('payment')->error('create - can not create new payment');
+
+                return false;
+            }
+
+            return true;
+        } catch (Exception $exception) {
+            Log::channel('payment')->error('create - error while creating new payment');
+            Log::channel('payment')->error($exception->getMessage());
+            Log::channel('payment')->error($exception->getTraceAsString());
         }
 
-        if (!$this->createNewPayment()) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -45,7 +62,10 @@ class PaymentService
      */
     private function isEnoughMoney(): bool
     {
-        return bccomp($this->dto->user->balance, $this->dto->fullAmount) >= 0;
+        Log::channel('payment')->info('create - user balance: ' . $this->dto->user->balance);
+        Log::channel('payment')->info('create - payment full amount: ' . $this->dto->fullAmount);
+
+        return bccomp($this->dto->user->balance, $this->dto->fullAmount, 8) >= 0;
     }
 
     /**
@@ -53,11 +73,7 @@ class PaymentService
      */
     private function getCommissionAmount(): float
     {
-        return bcmul(
-            $this->dto->fullAmount,
-            0.01,
-            8
-        );
+        return bcmul($this->dto->fullAmount, '0.01', 8);
     }
 
     /**
@@ -74,6 +90,8 @@ class PaymentService
         ]);
 
         if ($payment->exists()) {
+            Log::channel('payment')->info('create - payment created. Payment id: ' . $payment->id);
+
             return true;
         }
 

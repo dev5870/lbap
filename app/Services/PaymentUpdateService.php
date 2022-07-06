@@ -7,6 +7,8 @@ use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentStatus;
 use App\Enums\PaymentType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class PaymentUpdateService
 {
@@ -28,20 +30,36 @@ class PaymentUpdateService
      */
     public function handle(): bool
     {
-        if ($this->dto->payment->type == PaymentType::MINUS && ($this->isEnoughMoney() === false)) {
-            return false;
-        }
+        Log::channel('payment')->info('update - trying payment update ' . $this->dto->payment->id);
 
-        if ($this->isClosePayment() === true) {
-            return false;
-        }
+        try {
+            if ($this->dto->payment->type == PaymentType::MINUS && !$this->isEnoughMoney()) {
+                Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 
-        if (($this->dto->status === PaymentStatus::CANCEL) && (self::canselPayment() === true)) {
-            return true;
-        }
+                return false;
+            }
 
-        if (($this->dto->status === PaymentStatus::PAID) && (self::paidPayment() === true)) {
-            return true;
+            if ($this->isClosePayment()) {
+                Log::channel('payment')->error('update - can not update, payment already closed ' . $this->dto->payment->id);
+
+                return false;
+            }
+
+            if ($this->dto->status === PaymentStatus::CANCEL && $this->canselPayment()) {
+                Log::channel('payment')->info('update - success payment canceled ' . $this->dto->payment->id);
+
+                return true;
+            }
+
+            if ($this->dto->status === PaymentStatus::PAID && $this->paidPayment()) {
+                Log::channel('payment')->info('update - success payment paid ' . $this->dto->payment->id);
+
+                return true;
+            }
+        } catch (Exception $exception) {
+            Log::channel('payment')->error('update - error while updating payment ' . $this->dto->payment->id);
+            Log::channel('payment')->error($exception->getMessage());
+            Log::channel('payment')->error($exception->getTraceAsString());
         }
 
         return false;

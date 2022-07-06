@@ -119,6 +119,16 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/telegram.log'),
         ],
+
+        'transaction' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/transaction.log'),
+        ],
+
+        'payment' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/payment.log'),
+        ],
     ],
 
 ];

@@ -10,7 +10,8 @@
             <thead>
             <tr>
                 <th>@sortablelink('id',  __('title.id'))</th>
-                <th>{{ __('title.payment.payment') }}</th>
+                <th>{{ __('title.payment.id') }}</th>
+                <th>{{ __('title.payment.type') }}</th>
                 <th>{{ __('title.payment.full_amount') }}</th>
                 <th>{{ __('title.payment.amount') }}</th>
                 <th>{{ __('title.payment.commission_amount') }}</th>
@@ -24,6 +25,7 @@
                 <tr>
                     <td>{{ $item->id }}</td>
                     <td><a href="{{ Route('admin.payment.edit', $item->payment_id) }}">{{ $item->payment_id }}</a></td>
+                    <td>{{ \App\Enums\PaymentType::$list[$item->payment->type] }}</td>
                     <td>{{ $item->full_amount }}</td>
                     <td>{{ $item->amount }}</td>
                     <td>{{ $item->commission_amount }}</td>

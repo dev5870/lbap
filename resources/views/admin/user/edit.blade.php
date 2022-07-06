@@ -50,6 +50,20 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                   for="inputName">{{ __('title.user.balance') }}</label>
+                                            <input type="text" id="inputName" class="form-control"
+                                                   value="{{ $user->balance }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
