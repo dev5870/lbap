@@ -91,6 +91,12 @@ return [
         'total' => 'Total payments',
         'id' => 'Payment ID',
         'type' => 'Type',
+        'method' => 'Method',
+        'description' => [
+            'top_up' => 'User top up balance',
+            'withdraw' => 'User withdraw balance',
+            'referral_commission' => 'Referral commission',
+        ]
     ],
 
     'bot' => [

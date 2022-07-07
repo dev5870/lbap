@@ -60,9 +60,11 @@ class Payment extends Model
         'address_id',
         'status',
         'type',
+        'method',
         'full_amount',
         'amount',
         'commission_amount',
+        'description',
         'paid_at',
     ];
 

@@ -18,34 +18,32 @@
             </a>
         </div>
     </div>
-    @if($payment->type == \App\Enums\PaymentType::TOP_UP)
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="mb-0 card-title h5" tag="h5">{{ __('title.payment_system.info') }}</div>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label"
-                                                   for="inputName">{{ __('title.payment_system.title') }}</label>
-                                            <input name="user_id" placeholder="{{ __('title.payment_system.title') }}"
-                                                   type="text" id="inputName" class="form-control"
-                                                   value="{{ $payment->address?->paymentSystem->name }}" readonly>
-                                        </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="mb-0 card-title h5" tag="h5">{{ __('title.payment_system.info') }}</div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                               for="inputName">{{ __('title.payment_system.title') }}</label>
+                                        <input name="user_id" placeholder="{{ __('title.payment_system.title') }}"
+                                               type="text" id="inputName" class="form-control"
+                                               value="{{ $payment->address?->paymentSystem->name }}" readonly>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label"
-                                                   for="inputName">{{ __('title.address.title') }}</label>
-                                            <input name="user_id" placeholder="{{ __('title.address.title') }}"
-                                                   type="text" id="inputName" class="form-control"
-                                                   value="{{ $payment->address?->address }}" readonly>
-                                        </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label"
+                                               for="inputName">{{ __('title.address.title') }}</label>
+                                        <input name="user_id" placeholder="{{ __('title.address.title') }}"
+                                               type="text" id="inputName" class="form-control"
+                                               value="{{ $payment->address?->address }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +52,7 @@
                 </div>
             </div>
         </div>
-    @endif
+    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
@@ -81,8 +79,8 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label"
-                                                   for="inputName">{{ __('title.notification.type') }}</label>
-                                            <input name="user_id" placeholder="{{ __('title.notification.type') }}"
+                                                   for="inputName">{{ __('title.payment.type') }}</label>
+                                            <input name="user_id" placeholder="{{ __('title.payment.type') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ \App\Enums\PaymentType::$list[$payment->type] }}" readonly>
                                         </div>
@@ -96,6 +94,15 @@
                                                    placeholder="{{ __('title.payment.full_amount') }}"
                                                    type="text" id="inputName" class="form-control"
                                                    value="{{ $payment->full_amount }}" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label class="form-label"
+                                                   for="inputName">{{ __('title.payment.method') }}</label>
+                                            <input name="user_id" placeholder="{{ __('title.payment.method') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ \App\Enums\PaymentMethod::$list[$payment->method] }}" readonly>
                                         </div>
                                     </div>
                                 </div>

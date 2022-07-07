@@ -20,10 +20,11 @@ return new class extends Migration
             $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedTinyInteger('status')->default(\App\Enums\PaymentStatus::CREATE);
             $table->unsignedTinyInteger('type');
+            $table->unsignedTinyInteger('method');
             $table->decimal('full_amount', 18, 8)->nullable();
             $table->decimal('amount', 18, 8)->nullable();
             $table->decimal('commission_amount', 18, 8)->nullable();
-            $table->string('description', 50);
+            $table->string('description', 200);
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
         });

@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Dto\TransactionCreateDto;
-use App\Enums\PaymentType;
+use App\Enums\PaymentMethod;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
@@ -106,9 +106,9 @@ class TransactionCreateService
      */
     private function getNewBalance(): string|bool
     {
-        if ($this->dto->payment->type === PaymentType::TOP_UP) {
+        if ($this->dto->payment->type === PaymentMethod::TOP_UP) {
             return bcadd($this->getOldBalance(), $this->dto->payment->amount, 8);
-        } elseif ($this->dto->payment->type === PaymentType::MINUS) {
+        } elseif ($this->dto->payment->type === PaymentMethod::MINUS) {
             return bcsub($this->getOldBalance(), $this->dto->payment->full_amount, 8);
         }
 

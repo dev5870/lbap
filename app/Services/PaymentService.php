@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Dto\PaymentCreateDto;
-use App\Enums\PaymentType;
+use App\Enums\PaymentMethod;
 use App\Models\Address;
 use App\Models\Payment;
 use Exception;
@@ -35,7 +35,7 @@ class PaymentService
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
         try {
-            if ($this->dto->type == PaymentType::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->type == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('create - user does not have money');
 
                 return false;
@@ -87,6 +87,8 @@ class PaymentService
             'amount' => bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
             'commission_amount' => $this->commissionAmount,
             'type' => $this->dto->type,
+            'method' => $this->dto->method,
+            'description' => $this->getDescription(),
         ]);
 
         if ($payment->exists()) {
@@ -96,6 +98,16 @@ class PaymentService
         }
 
         return false;
+    }
+
+    /**
+     * @return string
+     */
+    private function getDescription(): string
+    {
+        return $this->dto->method == PaymentMethod::TOP_UP ?
+            __('title.payment.description.top_up') :
+            __('title.payment.description.withdraw');
     }
 
     /**

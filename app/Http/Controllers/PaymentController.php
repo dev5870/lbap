@@ -64,6 +64,7 @@ class PaymentController extends Controller
         $paymentCreateDto->user = User::find($request->get('user_id'));
         $paymentCreateDto->fullAmount = $request->get('full_amount');
         $paymentCreateDto->type = $request->get('type');
+        $paymentCreateDto->method = $request->get('method');
 
         if ((new PaymentService($paymentCreateDto))->handle()) {
             return redirect()->route('admin.payment.index')->with([

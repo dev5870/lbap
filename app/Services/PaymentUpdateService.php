@@ -4,8 +4,8 @@ namespace App\Services;
 
 use App\Dto\PaymentUpdateDto;
 use App\Dto\TransactionCreateDto;
+use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
-use App\Enums\PaymentType;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Exception;
@@ -33,7 +33,7 @@ class PaymentUpdateService
         Log::channel('payment')->info('update - trying payment update ' . $this->dto->payment->id);
 
         try {
-            if ($this->dto->payment->type == PaymentType::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->payment->type == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 
                 return false;
