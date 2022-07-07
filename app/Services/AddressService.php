@@ -35,4 +35,12 @@ class AddressService
     {
         return Address::whereNull('user_id')->count();
     }
+
+    /**
+     * @return Address|bool
+     */
+    public static function getAddress(): Address|bool
+    {
+        return Address::whereNull('user_id')->first() ?? false;
+    }
 }

@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
-use App\Models\Address;
 use App\Models\Payment;
 use Exception;
 use Illuminate\Support\Facades\Log;
@@ -35,7 +34,7 @@ class PaymentService
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
         try {
-            if ($this->dto->type == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('create - user does not have money');
 
                 return false;
@@ -108,13 +107,5 @@ class PaymentService
         return $this->dto->method == PaymentMethod::TOP_UP ?
             __('title.payment.description.top_up') :
             __('title.payment.description.withdraw');
-    }
-
-    /**
-     * @return Address|bool
-     */
-    public static function getAddress(): Address|bool
-    {
-        return Address::whereNull('user_id')->first() ?? false;
     }
 }

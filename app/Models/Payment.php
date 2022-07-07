@@ -3,14 +3,12 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
-use App\Enums\PaymentType;
 use App\Models\Traits\Filterable;
-use App\Services\PaymentService;
+use App\Services\AddressService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
-use function Sodium\add;
 
 /**
  * App\Models\Payment
@@ -82,7 +80,7 @@ class Payment extends Model
 
             if (!$model->user->address?->exists()) {
 
-                if ($address = PaymentService::getAddress()) {
+                if ($address = AddressService::getAddress()) {
                     $address->user_id = $model->user_id;
                 }
 

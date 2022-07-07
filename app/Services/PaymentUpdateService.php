@@ -33,7 +33,7 @@ class PaymentUpdateService
         Log::channel('payment')->info('update - trying payment update ' . $this->dto->payment->id);
 
         try {
-            if ($this->dto->payment->type == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->payment->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 
                 return false;

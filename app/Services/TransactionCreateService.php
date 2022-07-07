@@ -106,12 +106,8 @@ class TransactionCreateService
      */
     private function getNewBalance(): string|bool
     {
-        if ($this->dto->payment->type === PaymentMethod::TOP_UP) {
-            return bcadd($this->getOldBalance(), $this->dto->payment->amount, 8);
-        } elseif ($this->dto->payment->type === PaymentMethod::MINUS) {
-            return bcsub($this->getOldBalance(), $this->dto->payment->full_amount, 8);
-        }
-
-        return false;
+        return $this->dto->payment->method === PaymentMethod::TOP_UP ?
+            bcadd($this->getOldBalance(), $this->dto->payment->amount, 8) :
+            bcsub($this->getOldBalance(), $this->dto->payment->amount, 8);
     }
 }
