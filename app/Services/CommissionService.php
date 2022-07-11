@@ -2,16 +2,19 @@
 
 namespace App\Services;
 
-use App\Models\Payment;
+use App\Dto\PaymentCreateDto;
+use App\Models\PaymentType;
 
 class CommissionService
 {
     /**
-     * @param Payment $payment
+     * @param PaymentCreateDto $dto
      * @return string
      */
-    public static function getCommission(Payment $payment): string
+    public static function getPercentCommission(PaymentCreateDto $dto): string
     {
-        return $payment->type->commission ?? config('balance.default_commission');
+        $paymentType = PaymentType::find($dto->type);
+
+        return $paymentType ? $paymentType->commission : config('balance.default_commission');
     }
 }

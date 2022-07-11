@@ -72,7 +72,11 @@ class PaymentService
      */
     private function getCommissionAmount(): float
     {
-        return bcmul($this->dto->fullAmount, '0.01', 8);
+        return bcmul(
+            $this->dto->fullAmount,
+            CommissionService::getPercentCommission($this->dto),
+            8
+        );
     }
 
     /**
