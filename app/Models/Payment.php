@@ -17,7 +17,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property int $user_id
  * @property int $address_id
  * @property int $status
- * @property int $type
+ * @property int $payment_type_id
  * @property string $full_amount
  * @property string $amount
  * @property string $commission_amount
@@ -38,7 +38,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaidAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Payment whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaymentTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereUserId($value)
  * @mixin \Eloquent
@@ -57,7 +57,7 @@ class Payment extends Model
         'admin_id',
         'address_id',
         'status',
-        'type',
+        'payment_type_id',
         'method',
         'full_amount',
         'amount',
@@ -105,5 +105,10 @@ class Payment extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function type(): HasOne
+    {
+        return $this->hasOne(PaymentType::class, 'id', 'payment_type_id');
     }
 }

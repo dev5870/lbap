@@ -10,6 +10,7 @@ use App\Http\Requests\PaymentCreateRequest;
 use App\Http\Requests\PaymentUpdateRequest;
 use App\Models\Notification;
 use App\Models\Payment;
+use App\Models\PaymentType;
 use App\Models\Setting;
 use App\Models\User;
 use App\Services\PaymentService;
@@ -49,6 +50,7 @@ class PaymentController extends Controller
         return view('admin.payment.create', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
+            'paymentTypes' => PaymentType::all(),
         ]);
     }
 

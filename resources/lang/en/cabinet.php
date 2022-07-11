@@ -43,7 +43,7 @@ return [
         'city' => 'City',
         'activity' => 'Activity',
         'date_registration' => 'Registration date: ',
-        'last_login' => 'Last time online: ',
+        'last_login' => 'Last time activity: ',
     ],
 
     'log' => [

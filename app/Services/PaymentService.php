@@ -85,7 +85,7 @@ class PaymentService
             'full_amount' => $this->dto->fullAmount,
             'amount' => bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
             'commission_amount' => $this->commissionAmount,
-            'type' => $this->dto->type,
+            'payment_type_id' => $this->dto->type,
             'method' => $this->dto->method,
             'description' => $this->getDescription(),
         ]);

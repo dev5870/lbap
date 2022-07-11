@@ -19,7 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('admin_id')->nullable();
             $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedTinyInteger('status')->default(\App\Enums\PaymentStatus::CREATE);
-            $table->unsignedTinyInteger('type');
+            $table->unsignedTinyInteger('payment_type_id');
             $table->unsignedTinyInteger('method');
             $table->decimal('full_amount', 18, 8)->nullable();
             $table->decimal('amount', 18, 8)->nullable();

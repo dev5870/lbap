@@ -55,7 +55,7 @@
                                     <div class="col-md-6">
                                         <div class="mb-3">
                                             <label class="form-label">{{ __('title.payment.type') }}</label>
-                                            {!! Form::select('type', \App\Enums\PaymentType::$list, old('type'), ['class' => 'form-control']) !!}
+                                            {!! Form::select('type', $paymentTypes->pluck('name', 'id'), old('type'), ['class' => 'form-control']) !!}
                                         </div>
                                     </div>
                                 </div>

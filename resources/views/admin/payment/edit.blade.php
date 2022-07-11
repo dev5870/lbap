@@ -82,7 +82,7 @@
                                                    for="inputName">{{ __('title.payment.type') }}</label>
                                             <input name="user_id" placeholder="{{ __('title.payment.type') }}"
                                                    type="text" id="inputName" class="form-control"
-                                                   value="{{ \App\Enums\PaymentType::$list[$payment->type] }}" readonly>
+                                                   value="{{ $payment->type->name }}" readonly>
                                         </div>
                                     </div>
                                 </div>

@@ -65,7 +65,7 @@
                     <td>{{ $item->id }}</td>
                     <td><a href="{{ Route('admin.user.edit', $item->user_id) }}">{{ $item->user_id }}</a></td>
                     <td>{{ \App\Enums\PaymentStatus::$list[$item->status] }}</td>
-                    <td>{{ \App\Enums\PaymentType::$list[$item->type] }}</td>
+                    <td>{{ $item->type->name }}</td>
                     <td>{{ \App\Enums\PaymentMethod::$list[$item->method] }}</td>
                     <td>{{ $item->full_amount }}</td>
                     <td>{{ $item->amount }}</td>

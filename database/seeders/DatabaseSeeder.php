@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            PaymentTypeSeeder::class,
             SettingSeeder::class,
             PaymentSystemSeeder::class,
             ContentSeeder::class,
