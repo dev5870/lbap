@@ -21,6 +21,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @property string $full_amount
  * @property string $amount
  * @property string $commission_amount
+ * @property int $parent_id
  * @property string|null $paid_at
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -36,6 +37,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereFullAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereParentId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaidAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment wherePaymentTypeId($value)
@@ -45,6 +47,11 @@ use Kyslik\ColumnSortable\Sortable;
  * @property int|null $admin_id
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereAdminId($value)
  * @property-read \App\Models\User|null $user
+ * @property int $method
+ * @property string $description
+ * @property-read \App\Models\PaymentType|null $type
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereMethod($value)
  */
 class Payment extends Model
 {
@@ -63,6 +70,7 @@ class Payment extends Model
         'amount',
         'commission_amount',
         'description',
+        'parent_id',
         'paid_at',
     ];
 

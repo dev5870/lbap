@@ -92,6 +92,7 @@ class PaymentService
             'payment_type_id' => $this->dto->type,
             'method' => $this->dto->method,
             'description' => $this->getDescription(),
+            'parent_id' => $this->dto->parentId,
         ]);
 
         if ($payment->exists()) {

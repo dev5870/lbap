@@ -79,4 +79,15 @@ class UserService
         $request->session()->invalidate();
         $request->session()->regenerateToken();
     }
+
+    /**
+     * @param User $user
+     * @return bool
+     */
+    public static function isReferralUser(User $user): bool
+    {
+        return User::where('id', '=', $user->id)
+            ->whereNotNull('referrer')
+            ->exists();
+    }
 }

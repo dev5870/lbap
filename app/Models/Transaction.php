@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\ReferralPaymentService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -61,6 +62,8 @@ class Transaction extends Model
         self::created(function ($model) {
             $model->payment->user->balance = $model->new_balance;
             $model->payment->user->save();
+
+            (new ReferralPaymentService($model))->handle();
         });
     }
 
