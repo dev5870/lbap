@@ -76,6 +76,7 @@ return [
     ],
 
     'transaction' => [
+        'title' => 'transaction',
         'new_balance' => 'New balance',
         'old_balance' => 'Old balance',
     ],
@@ -96,7 +97,8 @@ return [
             'top_up' => 'User top up balance',
             'withdraw' => 'User withdraw balance',
             'referral_commission' => 'Referral commission',
-        ]
+        ],
+        'parent_id' => 'Parent ID',
     ],
 
     'bot' => [

@@ -115,6 +115,18 @@
                                                    value="{{ $payment->amount }}" readonly>
                                         </div>
                                     </div>
+                                    @if($payment->parent_id)
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">
+                                                    {{ __('title.payment.parent_id') }} (<a href="{{ Route('admin.transaction') }}" target="_blank">{{ __('title.transaction.title') }}</a> )
+                                                </label>
+                                                <input name="amount" placeholder="{{ __('title.payment.parent_id') }}"
+                                                       type="text" id="inputName" class="form-control"
+                                                       value="{{ $payment->parent_id }}" readonly>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
