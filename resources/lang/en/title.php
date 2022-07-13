@@ -164,6 +164,8 @@ return [
         'general' => 'General',
         'user' => 'User',
         'finance' => 'Finance',
+        'total' => 'Total',
+        'date' => 'Date'
     ],
 
     'input' => [

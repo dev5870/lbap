@@ -5,13 +5,25 @@
             <h3>{{ __('title.statistic.user') }}</h3>
         </div>
     </div>
-    <div class="row users">
-        <div class="col-xl-12">
-            <div class="card">
-                <div class="card-body">
-
-                </div>
-            </div>
-        </div>
+    <div class="flex-fill w-100 card table-responsive users">
+        <table class="my-0 table table-striped users">
+            <thead>
+            <tr>
+                <th>{{ __('title.statistic.date') }}</th>
+                <th>{{ __('title.statistic.total') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach ($statistics as $item)
+                <tr>
+                    <td>{{ $item->date }}</td>
+                    <td>{{ $item->total }}</td>
+                </tr>
+            @endforeach
+            </tbody>
+        </table>
+    </div>
+    <div class="paginationBlock">
+        {{ $statistics->appends(request()->query())->links('includes.pagination') }}
     </div>
 @endsection
