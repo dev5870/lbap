@@ -11,6 +11,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddressController;
+use App\Http\Controllers\StatisticController;
 use App\Http\Controllers\Cabinet\CabinetController;
 use App\Http\Controllers\Cabinet\SecurityController;
 use App\Http\Controllers\Cabinet\UserController as CabinetUserController;
@@ -57,19 +58,32 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::resource('/notification', NotificationController::class);
         Route::resource('/payment', PaymentController::class);
         Route::resource('/address', AddressController::class);
+
+        Route::prefix('statistic')->name('statistic.')->group(function () {
+            Route::get('/', [StatisticController::class, 'index'])->name('index');
+            Route::get('/user', [StatisticController::class, 'user'])->name('user');
+            Route::get('/finance', [StatisticController::class, 'finance'])->name('finance');
+        });
     });
 });
 
 // todo: role user
 Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () {
     Route::prefix('cabinet')->name('cabinet.')->group(function () {
+
         Route::get('/', [CabinetController::class, 'index'])->name('index');
-        Route::resource('/user/profile', ProfileController::class);
-        Route::get('/user/edit', [CabinetUserController::class, 'edit'])->name('user.edit');
-        Route::get('/user/security', [SecurityController::class, 'index'])->name('user.security');
-        Route::post('/user/security', [SecurityController::class, 'update'])->name('user.security.update');
-        Route::get('/user/log', [CabinetUserController::class, 'log'])->name('user.log');
-        Route::get('/content', [CabinetContentController::class, 'index'])->name('content.index');
-        Route::get('/content/{content}', [CabinetContentController::class, 'show'])->name('content.show');
+
+        Route::prefix('user')->group(function () {
+            Route::resource('/profile', ProfileController::class);
+            Route::get('/edit', [CabinetUserController::class, 'edit'])->name('user.edit');
+            Route::get('/security', [SecurityController::class, 'index'])->name('user.security');
+            Route::post('/security', [SecurityController::class, 'update'])->name('user.security.update');
+            Route::get('/log', [CabinetUserController::class, 'log'])->name('user.log');
+        });
+
+        Route::prefix('content')->group(function () {
+            Route::get('/', [CabinetContentController::class, 'index'])->name('content.index');
+            Route::get('/{content}', [CabinetContentController::class, 'show'])->name('content.show');
+        });
     });
 });

@@ -73,6 +73,7 @@ return [
         'notices' => 'System notices',
         'transactions' => 'Transactions',
         'cabinet' => 'Go to cabinet',
+        'statistic' => 'Statistics',
     ],
 
     'transaction' => [
@@ -157,6 +158,12 @@ return [
         'preview' => 'Preview',
         'update' => 'Update content',
         'total' => 'Total contents',
+    ],
+
+    'statistic' => [
+        'general' => 'General',
+        'user' => 'User',
+        'finance' => 'Finance',
     ],
 
     'input' => [
