@@ -165,7 +165,12 @@ return [
         'user' => 'User',
         'finance' => 'Finance',
         'total' => 'Total',
-        'date' => 'Date'
+        'date' => 'Date',
+        'full_amount_top_up' => 'Full amount (top up)',
+        'full_amount_withdraw' => 'Full amount (withdraw)',
+        'amount_top_up' => 'Amount (top up)',
+        'amount_withdraw' => 'Amount (withdraw)',
+        'commission_amount' => 'Commission amount',
     ],
 
     'input' => [
