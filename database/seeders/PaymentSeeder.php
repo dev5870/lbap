@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
-use App\Enums\PaymentType;
 use App\Models\Payment;
 use Illuminate\Database\Seeder;
 
@@ -48,9 +47,9 @@ class PaymentSeeder extends Seeder
             'payment_type_id' => 1,
             'method' => PaymentMethod::MINUS,
             'description' => __('title.payment.description.withdraw'),
-            'full_amount' => '90.76491257',
-            'amount' => '81.76398728',
-            'commission_amount' => '9.75648362',
+            'full_amount' => '-90.76491257',
+            'amount' => '-81.76398728',
+            'commission_amount' => '-9.75648362',
         ]);
     }
 }

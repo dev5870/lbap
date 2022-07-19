@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class PaymentService
 {
-    /**
-     * @var PaymentCreateDto
-     */
     private PaymentCreateDto $dto;
     private float $commissionAmount;
 
@@ -84,11 +81,35 @@ class PaymentService
      */
     private function createNewPayment(): bool
     {
+        $amount = bcsub($this->dto->fullAmount, $this->commissionAmount, 8);
+        $fullAmount = $this->dto->fullAmount;
+        $commission = $this->commissionAmount;
+
+        if ($this->dto->method == PaymentMethod::MINUS) {
+            $fullAmount = bcmul(
+                -1,
+                $this->dto->fullAmount,
+                8
+            );
+
+            $amount = bcmul(
+                -1,
+                bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
+                8
+            );
+
+            $commission = bcmul(
+                -1,
+                $this->commissionAmount,
+                8
+            );
+        }
+
         $payment = Payment::create([
             'user_id' => $this->dto->user->id,
-            'full_amount' => $this->dto->fullAmount,
-            'amount' => bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
-            'commission_amount' => $this->commissionAmount,
+            'full_amount' => $fullAmount,
+            'amount' => $amount,
+            'commission_amount' => $commission,
             'payment_type_id' => $this->dto->type,
             'method' => $this->dto->method,
             'description' => $this->getDescription(),

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentStatus;
 use App\Models\Notification;
+use App\Models\Payment;
+use App\Models\PaymentType;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
 
@@ -51,29 +53,16 @@ class StatisticController extends Controller
                 DB::raw('
                     (select sum(full_amount)
                         from payments
-                        where DATE(paid_at) = date and
-                              status = 50 and
-                              method = 10) as full_amount_top_up,
-                   (select sum(full_amount)
-                    from payments
-                    where DATE(paid_at) = date and
-                            status = 50 and
-                            method = 20) as full_amount_withdraw,
+                        where DATE(paid_at) = date) as full_amount,
                    (select sum(amount)
                         from payments
-                        where DATE(paid_at) = date and
-                            status = 50 and
-                            method = 10) as amount_top_up,
-                   (select sum(amount)
-                    from payments
-                    where DATE(paid_at) = date and
-                            status = 50 and
-                            method = 20) as amount_withdraw,
-                   (select sum(commission_amount)
+                        where DATE(paid_at) = date) as amount,
+                    (select sum(abs(commission_amount))
                         from payments
                         where DATE(paid_at) = date) as commission_amount
                 ')
             )
+            ->whereNotNull('paid_at')
             ->groupBy('date')
             ->orderBy('date', 'DESC')
             ->paginate(30);
@@ -82,6 +71,17 @@ class StatisticController extends Controller
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'statistics' => $statistics,
+            'totalUserBalance' => User::where('balance', '>', '0')->sum('balance'),
+            'totalPaymentSum' => Payment::whereStatus(PaymentStatus::PAID)->sum('amount'),
+            'totalCommission' => DB::table('payments')
+                ->select(
+                    DB::raw('sum(abs(commission_amount)) as value'),
+                )
+                ->whereNotNull('paid_at')
+                ->first(),
+            'totalReferralPayments' => Payment::where('status', '=', PaymentStatus::PAID)
+                ->where('payment_type_id', '=', PaymentType::whereName('referral_commission')->first()->id)
+                ->sum('full_amount'),
         ]);
     }
 }

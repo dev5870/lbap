@@ -108,6 +108,6 @@ class TransactionCreateService
     {
         return $this->dto->payment->method === PaymentMethod::TOP_UP ?
             bcadd($this->getOldBalance(), $this->dto->payment->amount, 8) :
-            bcsub($this->getOldBalance(), $this->dto->payment->amount, 8);
+            bcsub($this->getOldBalance(), abs($this->dto->payment->amount), 8);
     }
 }
