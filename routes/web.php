@@ -60,7 +60,6 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::resource('/address', AddressController::class);
 
         Route::prefix('statistic')->name('statistic.')->group(function () {
-            Route::get('/', [StatisticController::class, 'index'])->name('index');
             Route::get('/user', [StatisticController::class, 'user'])->name('user');
             Route::get('/finance', [StatisticController::class, 'finance'])->name('finance');
         });

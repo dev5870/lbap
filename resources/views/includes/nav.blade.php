@@ -149,14 +149,6 @@
                     <ul id="statistic" class="sidebar-dropdown list-unstyled collapse">
                         <li class="sidebar-item">
                             <a depth="1" activeclassname="active"
-                               class="sidebar-link {{ request()->routeIs('admin.statistic.index') ? 'active' : '' }}"
-                               href="{{ Route('admin.statistic.index') }}">
-                                <span class="align-middle" depth="1">{{ __('title.statistic.general') }}</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a depth="1" activeclassname="active"
                                class="sidebar-link {{ request()->routeIs('admin.statistic.user') ? 'active' : '' }}"
                                href="{{ Route('admin.statistic.user') }}">
                                 <span class="align-middle" depth="1">{{ __('title.statistic.user') }}</span>
