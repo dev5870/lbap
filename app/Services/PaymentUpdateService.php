@@ -33,6 +33,12 @@ class PaymentUpdateService
         Log::channel('payment')->info('update - trying payment update ' . $this->dto->payment->id);
 
         try {
+            if (!$this->dto->userAdmin->hasRole('admin')) {
+                Log::channel('payment')->error('update - user does not have permission');
+
+                return false;
+            }
+
             if ($this->dto->payment->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 

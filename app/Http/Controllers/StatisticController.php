@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
 use App\Models\Notification;
 use App\Models\Payment;
@@ -67,12 +68,28 @@ class StatisticController extends Controller
             ->orderBy('date', 'DESC')
             ->paginate(30);
 
+        $totalPaymentWithdrawSum = Payment::whereStatus(PaymentStatus::PAID)
+            ->where('method', '=', PaymentMethod::MINUS)
+            ->sum('full_amount');
+
+        $totalPaymentTopUpSum = Payment::whereStatus(PaymentStatus::PAID)
+            ->where('method', '=', PaymentMethod::TOP_UP)
+            ->sum('amount');
+
+        $balanceDifference = bcsub(
+            $totalPaymentTopUpSum,
+            abs($totalPaymentWithdrawSum),
+            8
+        );
+
         return view('admin.statistic.finance', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
             'statistics' => $statistics,
             'totalUserBalance' => User::where('balance', '>', '0')->sum('balance'),
-            'totalPaymentSum' => Payment::whereStatus(PaymentStatus::PAID)->sum('amount'),
+            'totalPaymentTopUpSum' => $totalPaymentTopUpSum,
+            'totalPaymentWithdrawSum' => $totalPaymentWithdrawSum,
+            'balanceDifference' => $balanceDifference,
             'totalCommission' => DB::table('payments')
                 ->select(
                     DB::raw('sum(abs(commission_amount)) as value'),

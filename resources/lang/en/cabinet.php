@@ -23,6 +23,7 @@ return [
         'security' => 'Security',
         'content' => 'Contents',
         'administration' => 'Administration',
+        'payments' => 'Payments',
     ],
 
     'profile' => [

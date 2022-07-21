@@ -107,7 +107,7 @@ class TransactionCreateService
     private function getNewBalance(): string|bool
     {
         return $this->dto->payment->method === PaymentMethod::TOP_UP ?
-            bcadd($this->getOldBalance(), $this->dto->payment->amount, 8) :
-            bcsub($this->getOldBalance(), abs($this->dto->payment->amount), 8);
+            bcadd($this->getOldBalance(), $this->dto->payment->amount, 8) : // Top up amount without commission
+            bcsub($this->getOldBalance(), abs($this->dto->payment->full_amount), 8); // Withdraw full amount
     }
 }

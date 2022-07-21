@@ -54,8 +54,8 @@
                 <th>{{ __('title.payment.full_amount') }}</th>
                 <th>{{ __('title.payment.amount') }}</th>
                 <th>{{ __('title.payment.commission_amount') }}</th>
-                <th>{{ __('title.paid_at') }}</th>
-                <th>@sortablelink('title',  __('title.created_at'))</th>
+                <th>@sortablelink('paid_at',  __('title.paid_at'))</th>
+                <th>@sortablelink('created_at',  __('title.created_at'))</th>
                 <th></th>
             </tr>
             </thead>

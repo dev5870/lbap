@@ -64,6 +64,7 @@ class PaymentController extends Controller
     {
         $paymentCreateDto = new PaymentCreateDto();
         $paymentCreateDto->user = User::find($request->get('user_id'));
+        $paymentCreateDto->userInitiator = User::find(Auth::id());
         $paymentCreateDto->fullAmount = $request->get('full_amount');
         $paymentCreateDto->type = $request->get('type');
         $paymentCreateDto->method = $request->get('method');

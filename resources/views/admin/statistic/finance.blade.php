@@ -26,8 +26,16 @@
                         <td>{{ $totalUserBalance }}</td>
                     </tr>
                     <tr>
-                        <td>{{ __('title.statistic.total_payments') }}</td>
-                        <td>{{ $totalPaymentSum }}</td>
+                        <td>{{ __('title.statistic.full_amount_top_up') }}</td>
+                        <td>{{ $totalPaymentTopUpSum }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ __('title.statistic.full_amount_withdraw') }}</td>
+                        <td>{{ $totalPaymentWithdrawSum }}</td>
+                    </tr>
+                    <tr>
+                        <td>{{ __('title.statistic.diff_balance') }}</td>
+                        <td>{{ $balanceDifference }}</td>
                     </tr>
                     </tbody>
                 </table>

@@ -5,13 +5,14 @@ namespace App\Services;
 use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
 use App\Models\Payment;
+use App\Models\PaymentType;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
 class PaymentService
 {
     private PaymentCreateDto $dto;
-    private float $commissionAmount;
+    private string $commissionAmount;
 
     /**
      * @param PaymentCreateDto $paymentCreateDto
@@ -31,12 +32,24 @@ class PaymentService
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
         try {
+            // If initiator not equal recipient or not admin
+            if ($this->dto->userInitiator &&
+                $this->dto->userInitiator->id != $this->dto->user->id &&
+                !$this->dto->userInitiator->hasRole('admin')
+            ) {
+                Log::channel('payment')->error('create - user does not have permission');
+
+                return false;
+            }
+
+            // If withdraw and user does not have money
             if ($this->dto->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('create - user does not have money');
 
                 return false;
             }
 
+            // If can't create payment
             if (!$this->createNewPayment()) {
                 Log::channel('payment')->error('create - can not create new payment');
 
@@ -67,7 +80,7 @@ class PaymentService
     /**
      * @return float
      */
-    private function getCommissionAmount(): float
+    private function getCommissionAmount(): string
     {
         return bcmul(
             $this->dto->fullAmount,
@@ -133,5 +146,15 @@ class PaymentService
         return $this->dto->method == PaymentMethod::TOP_UP ?
             __('title.payment.description.top_up') :
             __('title.payment.description.withdraw');
+    }
+
+    /**
+     * @return bool
+     */
+    private function isReferralPayment(): bool
+    {
+        $referralPaymentType = PaymentType::whereName('referral_commission')->first();
+
+        return ($referralPaymentType->id != $this->dto->type);
     }
 }

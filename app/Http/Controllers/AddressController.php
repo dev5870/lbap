@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Filters\AddressFilter;
 use App\Models\Address;
 use App\Models\Notification;
 use App\Models\PaymentSystem;
@@ -15,14 +16,17 @@ class AddressController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        $filter = new AddressFilter($request);
+
         return view('admin.address.index', [
             'notifications' => Notification::all(),
             'settings' => Setting::first(),
-            'addresses' => Address::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
+            'addresses' => Address::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
 

@@ -29,15 +29,8 @@ class ReferralPaymentService
         Log::channel('payment')->info('create (referral payment) - transaction id: ' . $this->transaction->id);
 
         try {
-            // If transaction does not top up
-            if ($this->transaction->payment->method != PaymentMethod::TOP_UP) {
-                Log::channel('payment')->info('create (referral payment) - transaction does not top up method');
-
-                return;
-            }
-
             // If transaction does not have commission
-            if (bccomp($this->transaction->commission_amount, '0', 8) <= 0) {
+            if (bccomp(abs($this->transaction->commission_amount), '0', 8) <= 0) {
                 Log::channel('payment')->info('create (referral payment) - transaction does not have commission');
 
                 return;
@@ -117,7 +110,7 @@ class ReferralPaymentService
     private function getReferrerCommissionFullAmount(): string
     {
         return bcmul(
-            $this->transaction->commission_amount,
+            abs($this->transaction->commission_amount),
             CommissionService::getReferralCommission(),
             8
         );

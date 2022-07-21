@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\Filterable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -28,11 +29,13 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Address whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Address whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Address filter(\App\Http\Filters\QueryFilter $filter)
  */
 class Address extends Model
 {
     use HasFactory;
     use Sortable;
+    use Filterable;
 
     protected $fillable = [
         'address',
