@@ -39,7 +39,7 @@ class PaymentUpdateService
                 return false;
             }
 
-            if ($this->dto->payment->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->payment->method == PaymentMethod::WITHDRAW && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 
                 return false;

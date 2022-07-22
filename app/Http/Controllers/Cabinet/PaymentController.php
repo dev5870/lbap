@@ -2,84 +2,70 @@
 
 namespace App\Http\Controllers\Cabinet;
 
+use App\Dto\PaymentCreateDto;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Notification;
+use App\Models\Payment;
+use App\Models\PaymentType;
+use App\Models\Setting;
+use App\Models\User;
+use App\Services\PaymentService;
+use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Cabinet\PaymentCreateRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PaymentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function index()
+    public function index(): View
     {
-        //
+        return view('cabinet.payment.index', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'payments' => Payment::where('user_id', '=', Auth::id())
+                ->sortable(['id' => 'desc'])
+                ->paginate(config('view.per_page')),
+        ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
-    public function create()
+    public function create(): View
     {
-        //
+        return view('cabinet.payment.create', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'paymentTypes' => PaymentType::all(),
+        ]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param PaymentCreateRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(PaymentCreateRequest $request): RedirectResponse
     {
-        //
-    }
+        $paymentType = PaymentType::whereName('real_money')->first();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $paymentCreateDto = new PaymentCreateDto();
+        $paymentCreateDto->user = User::find(Auth::id());
+        $paymentCreateDto->userInitiator = User::find(Auth::id());
+        $paymentCreateDto->fullAmount = $request->get('full_amount');
+        $paymentCreateDto->type = $paymentType->id;
+        $paymentCreateDto->method = $request->get('method');
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if ((new PaymentService($paymentCreateDto))->handle()) {
+            return redirect()->route('cabinet.payment.index')->with([
+                'success-message' => __('title.success')
+            ]);
+        }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        return redirect()->route('cabinet.payment.create')->with([
+            'error-message' => __('title.error')
+        ]);
     }
 }

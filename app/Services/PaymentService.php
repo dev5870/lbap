@@ -43,7 +43,7 @@ class PaymentService
             }
 
             // If withdraw and user does not have money
-            if ($this->dto->method == PaymentMethod::MINUS && !$this->isEnoughMoney()) {
+            if ($this->dto->method == PaymentMethod::WITHDRAW && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('create - user does not have money');
 
                 return false;
@@ -98,7 +98,7 @@ class PaymentService
         $fullAmount = $this->dto->fullAmount;
         $commission = $this->commissionAmount;
 
-        if ($this->dto->method == PaymentMethod::MINUS) {
+        if ($this->dto->method == PaymentMethod::WITHDRAW) {
             $fullAmount = bcmul(
                 -1,
                 $this->dto->fullAmount,

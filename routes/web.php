@@ -17,6 +17,7 @@ use App\Http\Controllers\Cabinet\SecurityController;
 use App\Http\Controllers\Cabinet\UserController as CabinetUserController;
 use App\Http\Controllers\Cabinet\ContentController as CabinetContentController;
 use App\Http\Controllers\Cabinet\ProfileController;
+use App\Http\Controllers\Cabinet\PaymentController as CabinetPaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,5 +85,7 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
             Route::get('/', [CabinetContentController::class, 'index'])->name('content.index');
             Route::get('/{content}', [CabinetContentController::class, 'show'])->name('content.show');
         });
+
+        Route::resource('/payment', CabinetPaymentController::class);
     });
 });

@@ -69,7 +69,7 @@ class StatisticController extends Controller
             ->paginate(30);
 
         $totalPaymentWithdrawSum = Payment::whereStatus(PaymentStatus::PAID)
-            ->where('method', '=', PaymentMethod::MINUS)
+            ->where('method', '=', PaymentMethod::WITHDRAW)
             ->sum('full_amount');
 
         $totalPaymentTopUpSum = Payment::whereStatus(PaymentStatus::PAID)
