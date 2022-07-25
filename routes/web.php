@@ -79,6 +79,7 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
             Route::get('/security', [SecurityController::class, 'index'])->name('user.security');
             Route::post('/security', [SecurityController::class, 'update'])->name('user.security.update');
             Route::get('/log', [CabinetUserController::class, 'log'])->name('user.log');
+            Route::get('/referral', [CabinetUserController::class, 'referral'])->name('user.referral');
         });
 
         Route::prefix('content')->group(function () {

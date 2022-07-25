@@ -85,7 +85,7 @@
                     </a>
                 </li>
 
-                <li class="sidebar-item {{ request()->routeIs('cabinet.user.*') ? 'active' : '' }}">
+                <li class="sidebar-item {{ request()->routeIs('cabinet.user.log*') ? 'active' : '' }}">
                     <a class="sidebar-link collapsed" data-bs-toggle="collapse" aria-expanded="true" depth="0"
                        href="#settings">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -116,7 +116,19 @@
                             </a>
                         </li>
                     </ul>
+                </li>
 
+                <li class="sidebar-item {{ request()->routeIs('cabinet.user.referral') ? 'active' : '' }}">
+                    <a depth="0" activeclassname="active" class="sidebar-link"
+                       href="{{ Route('cabinet.user.referral') }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                             class="feather align-middle me-2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <span class="align-middle" depth="0">{{ __('cabinet.menu.ref_program') }}</span>
+                    </a>
                 </li>
 
                 @if(Auth::user()->roles->contains(3))

@@ -24,6 +24,7 @@ return [
         'content' => 'Contents',
         'administration' => 'Administration',
         'payments' => 'Payments',
+        'ref_program' => 'Partner program',
     ],
 
     'profile' => [
@@ -53,6 +54,15 @@ return [
 
     'payment' => [
         'top_up' => 'Top up',
+    ],
+
+    'referral' => [
+        'total_amount' => 'Total amount',
+        'statistics' => 'Statistics',
+        'total_referrals' => 'Total referrals',
+        'info' => 'Information',
+        'link' => 'Your partner link',
+        'list' => 'Your referrals',
     ],
 
     'security' => [

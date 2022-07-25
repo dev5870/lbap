@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CabinetController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         $users = User::orderBy('id', 'desc');

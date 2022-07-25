@@ -90,4 +90,13 @@ class UserService
             ->whereNotNull('referrer')
             ->exists();
     }
+
+    /**
+     * @param string $userId
+     * @return string
+     */
+    public static function getUserReferralLink(string $userId): string
+    {
+        return env('APP_URL') . '?referrer/' . $userId;
+    }
 }
