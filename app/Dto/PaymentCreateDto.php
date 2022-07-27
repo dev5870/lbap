@@ -12,4 +12,6 @@ class PaymentCreateDto
     public string $type;
     public string $method;
     public ?int $parentId = null;
+    public ?string $txid = null;
+    public ?string $address = null;
 }

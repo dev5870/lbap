@@ -45,7 +45,7 @@ class PaymentSeeder extends Seeder
             'address_id' => 2,
             'status' => PaymentStatus::CREATE,
             'payment_type_id' => 1,
-            'method' => PaymentMethod::MINUS,
+            'method' => PaymentMethod::WITHDRAW,
             'description' => __('title.payment.description.withdraw'),
             'full_amount' => '-90.76491257',
             'amount' => '-81.76398728',

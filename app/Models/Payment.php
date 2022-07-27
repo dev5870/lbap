@@ -70,6 +70,7 @@ class Payment extends Model
         'amount',
         'commission_amount',
         'description',
+        'txid',
         'parent_id',
         'paid_at',
     ];

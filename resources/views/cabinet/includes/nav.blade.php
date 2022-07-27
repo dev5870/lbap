@@ -154,7 +154,7 @@
                         class="d-inline-block mb-2">{{ __('cabinet.profile.balance') }}</strong>
                     <div class="mb-3 text-sm">{{ Auth::user()->balance }} {{ __('cabinet.profile.doge') }}</div>
                     <div class="d-grid">
-                        <a href="" class="btn btn-primary" target="_blank" rel="noreferrer">
+                        <a href="{{ Route('cabinet.payment.create') }}" class="btn btn-primary" target="_blank" rel="noreferrer">
                             {{ __('cabinet.payment.top_up') }}
                         </a>
                     </div>

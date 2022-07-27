@@ -140,6 +140,18 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label
+                                                class="form-label">{{ __('title.notice.description') }}</label>
+                                            <input name="commission_amount"
+                                                   placeholder="{{ __('title.notice.description') }}"
+                                                   type="text" id="inputName" class="form-control"
+                                                   value="{{ $payment->description }}" readonly>
+                                        </div>
+                                    </div>
+                                </div>
                                 @if($payment->status !== \App\Enums\PaymentStatus::CREATE)
                                     <div class="row">
                                         <div class="col-md-6">

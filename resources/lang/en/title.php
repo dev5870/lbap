@@ -85,7 +85,7 @@ return [
     'payment' => [
         'payment' => 'Payment',
         'full_amount' => 'Full amount',
-        'full_amount_placeholder' => 'Full amount (min: 100)',
+        'full_amount_placeholder' => 'Full amount (min: :min)',
         'amount' => 'Amount',
         'commission_amount' => 'Commission',
         'create_new' => 'Create new payment',
@@ -98,8 +98,13 @@ return [
             'top_up' => 'User top up balance',
             'withdraw' => 'User withdraw balance',
             'referral_commission' => 'Referral commission',
+            'payment' => 'Send coin on your Dogecoin address.',
+            'wallet' => 'Your address: :wallet',
+            'info' => 'Money will be credited to your balance automatically after replenishment of the address.',
+            'question' => 'How top up balance?',
         ],
         'parent_id' => 'Parent ID',
+        'tx' => 'Transaction hash',
     ],
 
     'bot' => [
@@ -212,6 +217,9 @@ return [
 
     'error' => [
         'auth' => 'Auth error!',
-        '2fa' => 'Please, enter 2fa code!'
+        '2fa' => 'Please, enter 2fa code!',
+        'withdraw' => 'Can\'t create withdraw payment',
+        'update_payment' => 'Can\'t update payment',
+        'create_payment' => 'Can\'t create payment',
     ],
 ];

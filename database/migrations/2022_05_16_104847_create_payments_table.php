@@ -25,6 +25,7 @@ return new class extends Migration
             $table->decimal('amount', 18, 8)->nullable();
             $table->decimal('commission_amount', 18, 8)->nullable();
             $table->string('description', 200);
+            $table->string('txid', 200)->nullable();
             $table->unsignedTinyInteger('parent_id')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();

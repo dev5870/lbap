@@ -25,35 +25,12 @@
                     <div class="mb-0 card-title h5" tag="h5">{{ __('title.payment.create_new') }}</div>
                 </div>
                 <div class="card-body">
-                    <form class="" method="POST" action="{{ Route('cabinet.payment.store') }}" enctype="multipart/form-data">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label"
-                                                   for="inputName">{{ __('title.payment.full_amount') }}</label>
-                                            <input name="full_amount" placeholder="{{ __('title.payment.full_amount_placeholder') }}"
-                                                   type="number" step="0.00000001" min="100" id="inputName" class="form-control"
-                                                   value="{{ old('full_amount') }}">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <div class="mb-3">
-                                            <label class="form-label">{{ __('title.payment.method') }}</label>
-                                            {!! Form::select('method', \App\Enums\PaymentMethod::$list, old('method'), ['class' => 'form-control']) !!}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary">
-                            {{ __('title.btn.create') }}
-                        </button>
-                    </form>
+                    <p>
+                        <span style="font-weight: bold">{{ __('title.payment.description.question') }}</span><br>
+                        {{ __('title.payment.description.payment') }}<br>
+                        {{ __('title.payment.description.wallet', ['wallet' => 'uyituiyuyt']) }}<br>
+                        {{ __('title.payment.description.info') }}
+                    </p>
                 </div>
             </div>
         </div>

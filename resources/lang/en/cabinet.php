@@ -54,6 +54,9 @@ return [
 
     'payment' => [
         'top_up' => 'Top up',
+        'withdraw' => 'Withdraw',
+        'dogecoin_address' => 'Dogecoin address (the wallet to which the money will be transferred)',
+        'dogecoin_placeholder' => 'DfwegwovJfwefasJniYUfqwe',
     ],
 
     'referral' => [

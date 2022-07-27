@@ -7,12 +7,14 @@ use App\Enums\PaymentMethod;
 use App\Models\Payment;
 use App\Models\PaymentType;
 use Exception;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class PaymentService
 {
     private PaymentCreateDto $dto;
     private string $commissionAmount;
+    private string $checkAddressUrl = 'https://dogechain.info/api/v1/address/balance/';
 
     /**
      * @param PaymentCreateDto $paymentCreateDto
@@ -32,6 +34,13 @@ class PaymentService
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
         try {
+            // Check address valid
+            if ($this->dto->address !== null && !$this->checkAddress()) {
+                Log::channel('payment')->error('create - invalid address: ' . $this->dto->address);
+
+                return false;
+            }
+
             // If initiator not equal recipient or not admin
             if ($this->dto->userInitiator &&
                 $this->dto->userInitiator->id != $this->dto->user->id &&
@@ -61,6 +70,21 @@ class PaymentService
             Log::channel('payment')->error('create - error while creating new payment');
             Log::channel('payment')->error($exception->getMessage());
             Log::channel('payment')->error($exception->getTraceAsString());
+        }
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function checkAddress(): bool
+    {
+        $response = Http::get($this->checkAddressUrl . $this->dto->address)->json();
+
+        if (isset($response['success']) && $response['success'] == 1) {
+
+            return true;
         }
 
         return false;
@@ -126,6 +150,7 @@ class PaymentService
             'payment_type_id' => $this->dto->type,
             'method' => $this->dto->method,
             'description' => $this->getDescription(),
+            'txid' => $this->dto->txid,
             'parent_id' => $this->dto->parentId,
         ]);
 
@@ -145,7 +170,7 @@ class PaymentService
     {
         return $this->dto->method == PaymentMethod::TOP_UP ?
             __('title.payment.description.top_up') :
-            __('title.payment.description.withdraw');
+            __('title.payment.description.withdraw') . ' ' . $this->dto->address;
     }
 
     /**

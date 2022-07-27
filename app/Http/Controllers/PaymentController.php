@@ -76,7 +76,7 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('admin.payment.create')->with([
-            'error-message' => __('title.error')
+            'error-message' => __('title.error.create_payment')
         ]);
     }
 
@@ -124,7 +124,7 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('admin.payment.edit', $payment)->with([
-            'error-message' => __('title.error')
+            'error-message' => __('title.error.update_payment')
         ]);
     }
 }

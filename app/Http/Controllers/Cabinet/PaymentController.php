@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Dto\PaymentCreateDto;
+use App\Enums\PaymentMethod;
 use App\Http\Controllers\Controller;
 use App\Models\Notification;
 use App\Models\Payment;
@@ -54,9 +55,10 @@ class PaymentController extends Controller
         $paymentCreateDto = new PaymentCreateDto();
         $paymentCreateDto->user = User::find(Auth::id());
         $paymentCreateDto->userInitiator = User::find(Auth::id());
-        $paymentCreateDto->fullAmount = $request->get('full_amount');
         $paymentCreateDto->type = $paymentType->id;
-        $paymentCreateDto->method = $request->get('method');
+        $paymentCreateDto->method = PaymentMethod::WITHDRAW;
+        $paymentCreateDto->address = $request->get('address');
+        $paymentCreateDto->fullAmount = $request->get('full_amount');
 
         if ((new PaymentService($paymentCreateDto))->handle()) {
             return redirect()->route('cabinet.payment.index')->with([
@@ -64,8 +66,20 @@ class PaymentController extends Controller
             ]);
         }
 
-        return redirect()->route('cabinet.payment.create')->with([
-            'error-message' => __('title.error')
+        return redirect()->route('cabinet.payment.withdraw')->with([
+            'error-message' => __('title.error.withdraw')
+        ]);
+    }
+
+    /**
+     * @return View
+     */
+    public function withdraw(): View
+    {
+        return view('cabinet.payment.withdraw', [
+            'notifications' => Notification::all(),
+            'settings' => Setting::first(),
+            'paymentTypes' => PaymentType::all(),
         ]);
     }
 }

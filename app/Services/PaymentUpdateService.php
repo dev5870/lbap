@@ -39,6 +39,12 @@ class PaymentUpdateService
                 return false;
             }
 
+            if ($this->dto->status === PaymentStatus::CANCEL && $this->canselPayment()) {
+                Log::channel('payment')->info('update - success payment canceled ' . $this->dto->payment->id);
+
+                return true;
+            }
+
             if ($this->dto->payment->method == PaymentMethod::WITHDRAW && !$this->isEnoughMoney()) {
                 Log::channel('payment')->error('update - can not update, user does not have money ' . $this->dto->payment->id);
 
@@ -49,12 +55,6 @@ class PaymentUpdateService
                 Log::channel('payment')->error('update - can not update, payment already closed ' . $this->dto->payment->id);
 
                 return false;
-            }
-
-            if ($this->dto->status === PaymentStatus::CANCEL && $this->canselPayment()) {
-                Log::channel('payment')->info('update - success payment canceled ' . $this->dto->payment->id);
-
-                return true;
             }
 
             if ($this->dto->status === PaymentStatus::PAID && $this->paidPayment()) {
@@ -76,7 +76,7 @@ class PaymentUpdateService
      */
     private function isEnoughMoney(): bool
     {
-        return bccomp($this->dto->user->balance, $this->dto->payment->full_amount) >= 0;
+        return bccomp($this->dto->user->balance, abs($this->dto->payment->full_amount)) >= 0;
     }
 
     /**

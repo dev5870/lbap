@@ -87,6 +87,7 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
             Route::get('/{content}', [CabinetContentController::class, 'show'])->name('content.show');
         });
 
+        Route::get('/payment/withdraw', [CabinetPaymentController::class, 'withdraw'])->name('payment.withdraw');
         Route::resource('/payment', CabinetPaymentController::class);
     });
 });
