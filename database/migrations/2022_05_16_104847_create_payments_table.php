@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('admin_id')->nullable();
-            $table->unsignedBigInteger('address_id')->nullable();
             $table->unsignedTinyInteger('status')->default(\App\Enums\PaymentStatus::CREATE);
             $table->unsignedTinyInteger('payment_type_id');
             $table->unsignedTinyInteger('method');

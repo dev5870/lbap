@@ -2,9 +2,7 @@
 
 namespace App\Models;
 
-use App\Enums\PaymentStatus;
 use App\Models\Traits\Filterable;
-use App\Services\AddressService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -80,36 +78,6 @@ class Payment extends Model
         'created_at',
         'paid_at',
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-
-        self::created(function ($model) {
-
-            if (!$model->user->address?->exists()) {
-
-                if ($address = AddressService::getAddress()) {
-                    $address->user_id = $model->user_id;
-                }
-
-                if ($address->save()) {
-                    $address->refresh();
-                    $model->address_id = $address->id;
-                }
-            } elseif ($model->user->address?->exists()) {
-                $model->address_id = $model->user->address->id;
-            }
-
-            $model->status = PaymentStatus::CREATE;
-            $model->save();
-        });
-    }
-
-    public function address(): HasOne
-    {
-        return $this->hasOne(Address::class, 'id', 'address_id');
-    }
 
     public function user(): HasOne
     {

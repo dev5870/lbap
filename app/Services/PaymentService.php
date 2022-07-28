@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
+use App\Enums\PaymentStatus;
 use App\Models\Payment;
 use App\Models\PaymentType;
 use Exception;
@@ -152,6 +153,7 @@ class PaymentService
             'description' => $this->getDescription(),
             'txid' => $this->dto->txid,
             'parent_id' => $this->dto->parentId,
+            'status' => PaymentStatus::CREATE,
         ]);
 
         if ($payment->exists()) {

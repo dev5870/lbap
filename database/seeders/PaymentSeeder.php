@@ -18,7 +18,6 @@ class PaymentSeeder extends Seeder
     {
         Payment::create([
             'user_id' => 857,
-            'address_id' => 1,
             'status' => PaymentStatus::CREATE,
             'payment_type_id' => 1,
             'method' => PaymentMethod::TOP_UP,
@@ -30,7 +29,6 @@ class PaymentSeeder extends Seeder
 
         Payment::create([
             'user_id' => 857,
-            'address_id' => 1,
             'status' => PaymentStatus::CREATE,
             'payment_type_id' => 1,
             'method' => PaymentMethod::TOP_UP,
@@ -42,7 +40,6 @@ class PaymentSeeder extends Seeder
 
         Payment::create([
             'user_id' => 858,
-            'address_id' => 2,
             'status' => PaymentStatus::CREATE,
             'payment_type_id' => 1,
             'method' => PaymentMethod::WITHDRAW,

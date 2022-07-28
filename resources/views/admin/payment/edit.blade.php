@@ -34,7 +34,7 @@
                                                for="inputName">{{ __('title.payment_system.title') }}</label>
                                         <input name="user_id" placeholder="{{ __('title.payment_system.title') }}"
                                                type="text" id="inputName" class="form-control"
-                                               value="{{ $payment->address?->paymentSystem->name }}" readonly>
+                                               value="{{ $payment->user->address->paymentSystem->name }}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -43,7 +43,7 @@
                                                for="inputName">{{ __('title.address.title') }}</label>
                                         <input name="user_id" placeholder="{{ __('title.address.title') }}"
                                                type="text" id="inputName" class="form-control"
-                                               value="{{ $payment->address?->address }}" readonly>
+                                               value="{{ $payment->user->address->address }}" readonly>
                                     </div>
                                 </div>
                             </div>

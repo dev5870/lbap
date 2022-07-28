@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\Filterable;
+use App\Services\AddressService;
 use App\Services\UserService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -153,6 +154,18 @@ class User extends Authenticatable
             UserParam::create([
                 'user_id' => $model->id
             ]);
+
+            // Assign address to user
+            if ($address = AddressService::getAddress()) {
+                $address->user_id = $model->user_id;
+                $address->save();
+                $address->refresh();
+            }
+
+            if ($address) {
+                $model->address_id = $address->id;
+                $model->save();
+            }
         });
     }
 
