@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('site_name')->unique();
-            $table->string('registration_method')->default(\App\Enums\RegistrationMethod::SITE);
+            $table->string('registration_method')->default(\App\Enums\RegistrationMethod::TELEGRAM);
             $table->timestamps();
         });
     }
