@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Dto\PaymentCreateDto;
 use App\Models\PaymentType;
 
 class CommissionService
@@ -10,12 +9,12 @@ class CommissionService
     /**
      * System commission
      *
-     * @param PaymentCreateDto $dto
+     * @param string $type
      * @return string
      */
-    public static function getPercentCommission(PaymentCreateDto $dto): string
+    public static function getPercentCommission(string $type): string
     {
-        $paymentType = PaymentType::find($dto->type);
+        $paymentType = PaymentType::find($type);
 
         if ($paymentType->name == 'real_money') {
 

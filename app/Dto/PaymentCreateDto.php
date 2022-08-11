@@ -2,6 +2,7 @@
 
 namespace App\Dto;
 
+use App\Enums\PaymentStatus;
 use App\Models\User;
 
 class PaymentCreateDto
@@ -14,4 +15,6 @@ class PaymentCreateDto
     public ?int $parentId = null;
     public ?string $txid = null;
     public ?string $address = null;
+    public int $status = PaymentStatus::CREATE;
+    public ?string $paidAt = null;
 }

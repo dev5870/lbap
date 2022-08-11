@@ -51,4 +51,9 @@ class Address extends Model
     {
         return $this->hasOne(PaymentSystem::class, 'id', 'payment_system_id');
     }
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

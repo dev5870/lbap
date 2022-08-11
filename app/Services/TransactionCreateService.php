@@ -26,19 +26,21 @@ class TransactionCreateService
     }
 
     /**
-     * @return bool
+     * @return Transaction|bool
      */
-    public function handle(): bool
+    public function handle(): Transaction|bool
     {
         Log::channel('transaction')->info($this->dto->payment->id . ' - trying create new transaction');
 
         try {
-            if ($this->createTransaction()) {
+            $transaction = $this->createTransaction();
+            if ($transaction->exists()) {
                 Log::channel('transaction')->info($this->dto->payment->id . ' - success transaction created');
 
-                return true;
+                return $transaction;
             }
 
+            return false;
         } catch (Exception $exception) {
             Log::channel('transaction')->error($this->dto->payment->id . ' - error transaction created');
 
@@ -53,11 +55,11 @@ class TransactionCreateService
     }
 
     /**
-     * @return bool
+     * @return Transaction|bool
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    private function createTransaction(): bool
+    private function createTransaction(): Transaction|bool
     {
         try {
             $transaction = Transaction::create([
@@ -72,9 +74,10 @@ class TransactionCreateService
             if ($transaction->exists()) {
                 Log::channel('transaction')->info($this->dto->payment->id . ' - transaction id: ' . $transaction->id);
 
-                return true;
+                return $transaction;
             }
 
+            return false;
         } catch (Exception $exception) {
             Log::channel('transaction')->info($this->dto->payment->id . ' - error while creating transaction');
             Log::channel('transaction')->info($exception->getMessage());

@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Services\AddressService;
 use App\Services\CheckDiffBalanceService;
+use App\Services\PaymentCheckService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -26,6 +27,11 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             (new CheckDiffBalanceService())->handle();
         })->everyThirtyMinutes();
+
+        // Check new payment
+        $schedule->call(function () {
+            (new PaymentCheckService())->handle();
+        })->everyMinute();
     }
 
     /**

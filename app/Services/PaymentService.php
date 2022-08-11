@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
-use App\Enums\PaymentStatus;
 use App\Models\Payment;
-use App\Models\PaymentType;
 use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -27,9 +25,9 @@ class PaymentService
     }
 
     /**
-     * @return bool
+     * @return Payment|bool
      */
-    public function handle(): bool
+    public function handle(): Payment|bool
     {
         Log::channel('payment')->info('create - trying create new payment');
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
@@ -60,13 +58,14 @@ class PaymentService
             }
 
             // If can't create payment
-            if (!$this->createNewPayment()) {
+            $payment = $this->createNewPayment();
+            if ($payment === null) {
                 Log::channel('payment')->error('create - can not create new payment');
 
                 return false;
             }
 
-            return true;
+            return $payment;
         } catch (Exception $exception) {
             Log::channel('payment')->error('create - error while creating new payment');
             Log::channel('payment')->error($exception->getMessage());
@@ -109,15 +108,15 @@ class PaymentService
     {
         return bcmul(
             $this->dto->fullAmount,
-            CommissionService::getPercentCommission($this->dto),
+            CommissionService::getPercentCommission($this->dto->type),
             8
         );
     }
 
     /**
-     * @return bool
+     * @return Payment|null
      */
-    private function createNewPayment(): bool
+    private function createNewPayment(): Payment|null
     {
         $amount = bcsub($this->dto->fullAmount, $this->commissionAmount, 8);
         $fullAmount = $this->dto->fullAmount;
@@ -153,16 +152,19 @@ class PaymentService
             'description' => $this->getDescription(),
             'txid' => $this->dto->txid,
             'parent_id' => $this->dto->parentId,
-            'status' => PaymentStatus::CREATE,
+            'status' => $this->dto->status,
+            'paid_at' => $this->dto->paidAt,
         ]);
+
+        $payment->refresh();
 
         if ($payment->exists()) {
             Log::channel('payment')->info('create - payment created. Payment id: ' . $payment->id);
 
-            return true;
+            return $payment;
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -173,15 +175,5 @@ class PaymentService
         return $this->dto->method == PaymentMethod::TOP_UP ?
             __('title.payment.description.top_up') :
             __('title.payment.description.withdraw') . ' ' . $this->dto->address;
-    }
-
-    /**
-     * @return bool
-     */
-    private function isReferralPayment(): bool
-    {
-        $referralPaymentType = PaymentType::whereName('referral_commission')->first();
-
-        return ($referralPaymentType->id != $this->dto->type);
     }
 }

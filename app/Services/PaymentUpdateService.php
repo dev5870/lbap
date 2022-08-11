@@ -6,7 +6,6 @@ use App\Dto\PaymentUpdateDto;
 use App\Dto\TransactionCreateDto;
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 use Exception;
 
@@ -100,7 +99,7 @@ class PaymentUpdateService
     private function paidPayment(): bool
     {
         $this->dto->payment->status = PaymentStatus::PAID;
-        $this->dto->payment->paid_at = Carbon::now();
+        $this->dto->payment->paid_at = now();
         $this->dto->payment->admin_id = $this->dto->userAdmin->id;
 
         if ($this->dto->payment->save()) {
