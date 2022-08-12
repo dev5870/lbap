@@ -6,6 +6,7 @@ use App\Enums\RegistrationMethod;
 use App\Http\Requests\RegistrationRequest;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\UserParam;
 use App\Models\UserReferral;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -32,12 +33,19 @@ class RegistrationController extends Controller
     }
 
     /**
+     * @param RegistrationRequest $request
      * @return RedirectResponse
      */
     public function store(RegistrationRequest $request): RedirectResponse
     {
+        $referrerParams = null;
+
+        if ($request->has('invite')) {
+            $referrerParams = UserParam::whereUserUuid($request->get('invite'))->first();
+        }
+
         $user = User::create([
-            'referrer' => $request->get('referrer'),
+            'referrer' => $referrerParams->user_id ?? null,
             'email' => $request->get('email'),
             'password' => Hash::make($request->get('password'))
         ]);

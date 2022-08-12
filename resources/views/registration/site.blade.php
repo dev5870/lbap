@@ -8,7 +8,7 @@
                     @include('includes.alerts')
                     <form method="POST" action="{{ Route('registration.store') }}" class="">
                         @csrf
-                        <input name="referrer" type="text" class="form-control" value="{{ request('referrer') }}" hidden>
+                        <input name="invite" type="text" class="form-control" value="{{ request('invite') }}" hidden>
                         <div class="mb-3">
                             <label class="form-label">{{ __('title.input.email') }}</label>
                             <input name="email" placeholder="{{ __('title.input.email') }}" type="email" value="{{ old('email') }}" class="form-control">

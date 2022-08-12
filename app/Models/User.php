@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Kyslik\ColumnSortable\Sortable;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Models\Role;
@@ -152,20 +153,17 @@ class User extends Authenticatable
 
             // Create user param
             UserParam::create([
-                'user_id' => $model->id
+                'user_id' => $model->id,
+                'user_uuid' => Str::uuid(),
             ]);
 
             // Assign address to user
             if ($address = AddressService::getAddress()) {
-                $address->user_id = $model->user_id;
+                $address->user_id = $model->id;
                 $address->save();
-                $address->refresh();
             }
 
-            if ($address) {
-                $model->address_id = $address->id;
-                $model->save();
-            }
+            $model->save();
         });
     }
 

@@ -68,14 +68,14 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th>{{ __('title.id') }}</th>
+                        <th>{{ __('title.referral_uuid') }}</th>
                         <th>{{ __('title.created_at') }}</th>
                     </tr>
                     </thead>
                     <tbody>
                     @foreach ($referrals as $item)
                         <tr>
-                            <td>{{ $item->id }}</td>
+                            <td>{{ $item->params->user_uuid }}</td>
                             <td>{{ $item->created_at }}</td>
                         </tr>
                     @endforeach

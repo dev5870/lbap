@@ -39,7 +39,8 @@ class UserController extends Controller
         $user = User::where('id', '=', Auth::id())
             ->with([
                 'referrals',
-                'payments'
+                'payments',
+                'params',
             ])
             ->first();
 
@@ -51,7 +52,7 @@ class UserController extends Controller
             'referrals' => User::whereReferrer(Auth::id())
                 ->sortable(['created_at' => 'desc'])
                 ->paginate(config('view.per_page')),
-            'link' => UserService::getUserReferralLink(Auth::id()),
+            'link' => UserService::getUserReferralLink($user),
             'totalReferrals' => count($user->referrals),
             'totalPaidAmount' => $user->payments()
                 ->where('payment_type_id', '=', $referralPaymentType->id)

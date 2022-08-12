@@ -92,11 +92,11 @@ class UserService
     }
 
     /**
-     * @param string $userId
+     * @param User $user
      * @return string
      */
-    public static function getUserReferralLink(string $userId): string
+    public static function getUserReferralLink(User $user): string
     {
-        return env('APP_URL') . '?referrer/' . $userId;
+        return env('APP_URL') . '?invite/' . $user->params->user_uuid;
     }
 }

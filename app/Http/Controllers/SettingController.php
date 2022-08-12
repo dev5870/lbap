@@ -29,7 +29,6 @@ class SettingController extends Controller
     {
         $setting = Setting::first();
         $setting->site_name = $request->get('site_name');
-        $setting->commission_amount = $request->get('commission_amount');
         $setting->registration_method = $request->get('registration_method');
         $setting->save();
 

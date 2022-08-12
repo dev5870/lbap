@@ -15,19 +15,44 @@ class AddressSeeder extends Seeder
     public function run()
     {
         Address::create([
-            'address' => '11iuy87t6745yff54e75ui68',
+            'address' => 'D7dgvMq8DogLneDzwGD1p9mwY2RdkrwZ2y',
             'user_id' => 857,
             'payment_system_id' => 1,
         ]);
 
         Address::create([
-            'address' => '22iuy87t6745yff54e75ui68',
+            'address' => 'DPb8EqnUapzGPWzWnMw8qU6yeLqNfcver4',
             'user_id' => 858,
             'payment_system_id' => 1,
         ]);
 
         Address::create([
-            'address' => '33iuy87t6745yff54e75ui68',
+            'address' => 'DG6NZJKrbR7Q7Wszs8fkxuSQP8peHffg7f',
+            'payment_system_id' => 1,
+        ]);
+
+        Address::create([
+            'address' => 'D5BbGoX2g6hboc5zkt3taXaB2Hqhi1ikSB',
+            'payment_system_id' => 1,
+        ]);
+
+        Address::create([
+            'address' => 'DRuQadkk6WjudpUMt9pdC6CQCEMEmQJNMo',
+            'payment_system_id' => 1,
+        ]);
+
+        Address::create([
+            'address' => 'DAXEsVod24VKytdWdVhwjkn7XP8LBw8Va5',
+            'payment_system_id' => 1,
+        ]);
+
+        Address::create([
+            'address' => 'DF1zzpqm9p2RarJF7rXjCvAhYE2Vrycogg',
+            'payment_system_id' => 1,
+        ]);
+
+        Address::create([
+            'address' => 'DPSg4keHtEUuUYtEL5VayeAcVwfzwmRRUp',
             'payment_system_id' => 1,
         ]);
     }

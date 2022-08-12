@@ -40,6 +40,7 @@ class Address extends Model
     protected $fillable = [
         'address',
         'payment_system_id',
+        'user_id',
     ];
 
     public $sortable = [

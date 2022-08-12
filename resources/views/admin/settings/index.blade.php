@@ -21,12 +21,6 @@
                                         <input name="site_name" class="form-control" value="{{ $settings->site_name }}">
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label class="form-label">{{ __('title.commission_amount') }}</label>
-                                        <input name="commission_amount" class="form-control" value="{{ $settings->commission_amount }}">
-                                    </div>
-                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">

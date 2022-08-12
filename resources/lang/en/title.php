@@ -7,6 +7,7 @@ return [
     'welcome_back' => 'Welcome',
     'id' => 'ID',
     'user_id' => 'User ID',
+    'referral_uuid' => 'Referral id',
     'user_agent' => 'User agent',
     'ip' => 'IP',
     'email' => 'Email',
