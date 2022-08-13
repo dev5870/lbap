@@ -73,10 +73,10 @@
                             <h3 class="mb-2">{{ $allPayment }}</h3>
                             <p class="mb-2">{{ __('title.payment.total') }}</p>
                             <div class="mb-0">
-                                @if($lastDayContents)
-                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayContents }}</span>
+                                @if($lastDayPayment)
+                                    <span class="badge-soft-success me-2 badge">+{{ $lastDayPayment }}</span>
                                 @else
-                                    <span>{{ $lastDayContents }}</span>
+                                    <span>{{ $lastDayPayment }}</span>
                                 @endif
                                 <span class="text-muted">{{ __('title.user.last_day') }}</span>
                             </div>

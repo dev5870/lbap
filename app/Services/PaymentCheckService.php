@@ -102,8 +102,18 @@ class PaymentCheckService
             if (!$this->isTransactionExists($transaction['txid']) && $transaction['confirmations'] > config('balance.confirmation')) {
                 Log::channel('payment-check')->info('Trying add new transaction txid: ' . $transaction['txid']);
 
-                if ($this->addNewTransaction($transaction, $response['data']['address'])) {
+                $newTransaction = $this->addNewTransaction($transaction, $response['data']['address']);
+                if ($newTransaction instanceof Transaction) {
                     Log::channel('payment-check')->info('Success add new transaction!');
+
+                    $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
+                    $bot->sendMessage(
+                        env('TELEGRAM_CHAT_ID'),
+                        'User id: ' . $newTransaction->payment->user_id .
+                        ' Top up amount: ' . $newTransaction->amount .
+                        ' Old balance: ' . $newTransaction->old_balance .
+                        ' New balance: ' . $newTransaction->new_balance
+                    );
                 }
             }
         }
@@ -123,27 +133,28 @@ class PaymentCheckService
     /**
      * @param array $transaction
      * @param string $address
-     * @return bool
+     * @return Transaction|bool
      */
-    private function addNewTransaction(array $transaction, string $address): bool
+    private function addNewTransaction(array $transaction, string $address): Transaction|bool
     {
         DB::beginTransaction();
 
         try {
             // Create paid payment
             $payment = $this->createPayment($transaction, $address);
-            if ($payment->exists() === false) {
+            if (!$payment) {
                 throw new Exception('Error while creating payment');
             }
 
             // Create transaction
-            if (!$this->createTransaction($payment)) {
+            $newTransaction = $this->createTransaction($payment);
+            if (!$newTransaction) {
                 throw new Exception('Error while creating transaction');
             }
 
             DB::commit();
 
-            return true;
+            return $newTransaction;
         } catch (Exception $exception) {
             Log::channel('payment-check')->error('Error while creating new transaction');
             Log::channel('payment-check')->info($exception->getMessage());

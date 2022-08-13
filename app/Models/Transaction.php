@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
-use TelegramBot\Api\BotApi;
 
 /**
  * App\Models\Transaction
@@ -62,14 +61,7 @@ class Transaction extends Model
 
         self::created(function ($model) {
             $model->payment->user->balance = $model->new_balance;
-
-            if ($model->payment->user->save()) {
-                $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
-                $bot->sendMessage(
-                    env('TELEGRAM_CHAT_ID'),
-                    'User id: ' . $model->payment->user->id . ' New balance: ' . $model->payment->user->balance
-                );
-            }
+            $model->payment->user->save();
 
             (new ReferralPaymentService($model))->handle();
         });

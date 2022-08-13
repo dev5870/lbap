@@ -44,8 +44,11 @@
                             <li class="list-inline-item"><span class="text-muted" href="#">Terms of Service</span></li>
                         </ul>
                     </div>
-                    <div class="text-end col-6"><p class="mb-0">© 2022 - <span href="/"
-                                                                               class="text-muted">{{ $settings->site_name }}</span></p>
+                    <div class="text-end col-6">
+                        <p class="mb-0">
+                            © 2022 -
+                            <span href="/" class="text-muted">{{ $settings->site_name }}</span>
+                        </p>
                     </div>
                 </div>
             </div>
