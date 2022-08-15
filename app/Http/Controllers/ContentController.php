@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ContentFilter;
 use App\Http\Requests\ContentCreateRequest;
 use App\Models\Content;
-use App\Models\Notification;
-use App\Models\Setting;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
@@ -15,8 +13,6 @@ use Illuminate\Http\RedirectResponse;
 class ContentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @param Request $request
      * @return View
      */
@@ -25,28 +21,19 @@ class ContentController extends Controller
         $filter = new ContentFilter($request);
 
         return view('admin.content.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'contents' => Content::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return View
      */
     public function create(): View
     {
-        return view('admin.content.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
+        return view('admin.content.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param ContentCreateRequest $request
      * @return RedirectResponse
      */
@@ -75,23 +62,17 @@ class ContentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Content $content
      * @return View
      */
     public function edit(Content $content): View
     {
         return view('admin.content.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'content' => $content,
         ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param Content $content
      * @return RedirectResponse
@@ -111,8 +92,6 @@ class ContentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param Content $content
      * @return RedirectResponse
      */

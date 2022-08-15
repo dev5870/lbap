@@ -75,6 +75,12 @@ return [
         'transactions' => 'Transactions',
         'cabinet' => 'Go to cabinet',
         'statistic' => 'Statistics',
+        'page' => 'Pages',
+    ],
+
+    'page' => [
+        'add' => 'Create new page',
+        'update' => 'Update',
     ],
 
     'transaction' => [
@@ -222,5 +228,6 @@ return [
         'withdraw' => 'Can\'t create withdraw payment',
         'update_payment' => 'Can\'t update payment',
         'create_payment' => 'Can\'t create payment',
+        'create' => 'Can\'t create',
     ],
 ];

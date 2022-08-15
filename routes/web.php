@@ -9,6 +9,7 @@ use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\AddressController;
 use App\Http\Controllers\StatisticController;
@@ -59,6 +60,7 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::resource('/notification', NotificationController::class);
         Route::resource('/payment', PaymentController::class);
         Route::resource('/address', AddressController::class);
+        Route::resource('/page', PageController::class);
 
         Route::prefix('statistic')->name('statistic.')->group(function () {
             Route::get('/user', [StatisticController::class, 'user'])->name('user');
@@ -72,6 +74,7 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
     Route::prefix('cabinet')->name('cabinet.')->group(function () {
 
         Route::get('/', [CabinetController::class, 'index'])->name('index');
+        Route::get('/page/{page}', [CabinetController::class, 'page'])->name('page');
 
         Route::prefix('user')->group(function () {
             Route::resource('/profile', ProfileController::class);

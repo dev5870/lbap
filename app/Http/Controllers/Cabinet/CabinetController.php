@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Cabinet;
 use App\Http\Controllers\Controller;
 use App\Models\Address;
 use App\Models\Content;
-use App\Models\Notification;
+use App\Models\Page;
 use App\Models\Payment;
-use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserUserAgent;
 use Illuminate\Contracts\View\View;
@@ -28,8 +27,6 @@ class CabinetController extends Controller
 
         return view('cabinet.index', [
             'lastContents' => $contents->take(5)->get(),
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'logs' => UserUserAgent::where('user_id', '=', Auth::id())->sortable(['created_at' => 'desc'])->take(5)->get(),
 
             // todo: clear
@@ -42,6 +39,17 @@ class CabinetController extends Controller
             'allPayment' => $payments->count(),
             'lastDayPayment' => $payments->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'lastDay' => $users->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
+        ]);
+    }
+
+    /**
+     * @param Page $page
+     * @return View
+     */
+    public function page(Page $page): View
+    {
+        return view('cabinet.page.show', [
+            'page' => $page,
         ]);
     }
 }

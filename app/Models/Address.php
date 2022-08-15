@@ -30,6 +30,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Address whereUserId($value)
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|Address filter(\App\Http\Filters\QueryFilter $filter)
+ * @property-read \App\Models\User|null $user
  */
 class Address extends Model
 {

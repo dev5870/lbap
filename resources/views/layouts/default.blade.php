@@ -1,3 +1,6 @@
+<?php
+    $settings = \App\Models\Setting::first();
+?>
 <!DOCTYPE html>
 <html lang="en">
 

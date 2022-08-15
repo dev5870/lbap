@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
-use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\PaymentType;
-use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\DB;
@@ -19,10 +17,7 @@ class StatisticController extends Controller
      */
     public function index(): View
     {
-        return view('admin.statistic.general', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
+        return view('admin.statistic.general');
     }
 
     /**
@@ -37,8 +32,6 @@ class StatisticController extends Controller
             ->paginate(30);
 
         return view('admin.statistic.user', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'statistics' => $statistics,
         ]);
     }
@@ -83,8 +76,6 @@ class StatisticController extends Controller
         );
 
         return view('admin.statistic.finance', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'statistics' => $statistics,
             'totalUserBalance' => User::where('balance', '>', '0')->sum('balance'),
             'totalPaymentTopUpSum' => $totalPaymentTopUpSum,

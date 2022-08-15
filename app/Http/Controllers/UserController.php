@@ -8,8 +8,6 @@ use App\Http\Filters\UserFilter;
 use App\Http\Requests\RegistrationRequest;
 use App\Http\Requests\UserUpdateRequest;
 use App\Models\File;
-use App\Models\Notification;
-use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
@@ -33,8 +31,6 @@ class UserController extends Controller
         $filter = new UserFilter($request);
 
         return view('admin.user.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'users' => User::sortable(['id' => 'desc'])->with('roles')->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
@@ -48,8 +44,6 @@ class UserController extends Controller
     public function edit(User $user): View
     {
         return view('admin.user.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'logs' => UserUserAgent::where('user_id', '=', $user->id)->sortable(['created_at' => 'desc'])->paginate(config('view.per_page')),
             'user' => $user
         ]);
@@ -92,8 +86,6 @@ class UserController extends Controller
         $filter = new LogFilter($request);
 
         return view('admin.user.log.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'logs' => UserUserAgent::sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
@@ -105,10 +97,7 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('admin.user.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
+        return view('admin.user.create');
     }
 
     /**
@@ -154,8 +143,6 @@ class UserController extends Controller
         $filter = new FileFilter($request);
 
         return view('admin.file.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'files' => File::sortable(['created_at' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }

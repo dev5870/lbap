@@ -50,6 +50,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @property-read \App\Models\PaymentType|null $type
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereMethod($value)
+ * @property string|null $txid
+ * @method static \Illuminate\Database\Eloquent\Builder|Payment whereTxid($value)
  */
 class Payment extends Model
 {

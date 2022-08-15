@@ -28,7 +28,7 @@
                     <p>
                         <span style="font-weight: bold">{{ __('title.payment.description.question') }}</span><br>
                         {{ __('title.payment.description.payment') }}<br>
-                        {{ __('title.payment.description.wallet', ['wallet' => 'uyituiyuyt']) }}<br>
+                        {{ __('title.payment.description.wallet', ['wallet' => $user->address->address]) }}<br>
                         {{ __('title.payment.description.info') }}
                     </p>
                 </div>

@@ -5,9 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Filters\ReferralFilter;
 use App\Models\Address;
 use App\Models\Content;
-use App\Models\Notification;
 use App\Models\Payment;
-use App\Models\Setting;
 use App\Models\SystemNotice;
 use App\Models\Transaction;
 use App\Models\User;
@@ -31,12 +29,10 @@ class AdminController extends Controller
         $addresses = Address::orderBy('id', 'desc');
 
         return view('admin.dashboard', [
-            'notifications' => Notification::all(),
             'allAddresses' => $addresses->count(),
             'lastDayAddresses' => $addresses->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
             'allContents' => $contents->count(),
             'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'settings' => Setting::first(),
             'users' => $users->take(5)->get(),
             'allUser' => $users->count(),
             'allPayment' => $payments->count(),
@@ -55,8 +51,6 @@ class AdminController extends Controller
         $filter = new ReferralFilter($request);
 
         return view('admin.user.referral.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'referrals' => UserReferral::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
@@ -67,8 +61,6 @@ class AdminController extends Controller
     public function systemNotice(): View
     {
         return view('admin.notice.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'notices' => SystemNotice::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
         ]);
     }
@@ -79,8 +71,6 @@ class AdminController extends Controller
     public function transaction(): View
     {
         return view('admin.transaction.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'transactions' => Transaction::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
         ]);
     }

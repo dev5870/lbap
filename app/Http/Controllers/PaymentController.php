@@ -8,10 +8,8 @@ use App\Enums\PaymentStatus;
 use App\Http\Filters\PaymentFilter;
 use App\Http\Requests\PaymentCreateRequest;
 use App\Http\Requests\PaymentUpdateRequest;
-use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\PaymentType;
-use App\Models\Setting;
 use App\Models\User;
 use App\Services\PaymentService;
 use App\Services\PaymentUpdateService;
@@ -34,8 +32,6 @@ class PaymentController extends Controller
         $filter = new PaymentFilter($request);
 
         return view('admin.payment.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'payments' => Payment::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
@@ -48,8 +44,6 @@ class PaymentController extends Controller
     public function create(): View
     {
         return view('admin.payment.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'paymentTypes' => PaymentType::all(),
         ]);
     }
@@ -89,8 +83,6 @@ class PaymentController extends Controller
     public function edit(Payment $payment): View
     {
         return view('admin.payment.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'payment' => $payment,
         ]);
     }

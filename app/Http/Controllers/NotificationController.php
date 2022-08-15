@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Notification;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -18,7 +17,6 @@ class NotificationController extends Controller
     public function index(): View
     {
         return view('admin.notification.index', [
-            'settings' => Setting::first(),
             'notifications' => Notification::sortable(['id' => 'desc'])->paginate(config('view.per_page')),
         ]);
     }
@@ -30,10 +28,7 @@ class NotificationController extends Controller
      */
     public function create(): View
     {
-        return view('admin.notification.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-        ]);
+        return view('admin.notification.create');
     }
 
     /**
@@ -64,8 +59,6 @@ class NotificationController extends Controller
     public function edit(Notification $notification): View
     {
         return view('admin.notification.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'notification' => $notification,
         ]);
     }

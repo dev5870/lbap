@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Cabinet\ProfileUpdateRequest;
-use App\Models\Notification;
-use App\Models\Setting;
 use App\Models\UserParam;
 use Illuminate\Contracts\View\View;
 
@@ -20,8 +18,6 @@ class ProfileController extends Controller
     public function show(UserParam $profile): View
     {
         return view('cabinet.user.profile', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'profile' => $profile,
         ]);
     }
@@ -35,8 +31,6 @@ class ProfileController extends Controller
     public function edit(UserParam $profile): View
     {
         return view('cabinet.user.edit', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'profile' => $profile,
         ]);
     }

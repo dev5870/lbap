@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Filters\AddressFilter;
 use App\Models\Address;
-use App\Models\Notification;
 use App\Models\PaymentSystem;
-use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -24,8 +22,6 @@ class AddressController extends Controller
         $filter = new AddressFilter($request);
 
         return view('admin.address.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'addresses' => Address::sortable(['id' => 'desc'])->filter($filter)->paginate(config('view.per_page')),
         ]);
     }
@@ -38,8 +34,6 @@ class AddressController extends Controller
     public function create(): View
     {
         return view('admin.address.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'paymentSystem' => PaymentSystem::all(['id', 'name']),
         ]);
     }

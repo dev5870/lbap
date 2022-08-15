@@ -1,3 +1,6 @@
+<?php
+$notifications = \App\Models\Notification::all();
+?>
 <nav class="navbar-bg navbar navbar-expand navbar-light">
     <span class="sidebar-toggle d-flex"><i class="hamburger align-self-center"></i></span>
     @foreach($notifications as $notification)

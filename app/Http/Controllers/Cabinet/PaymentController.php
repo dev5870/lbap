@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Cabinet;
 use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
 use App\Http\Controllers\Controller;
-use App\Models\Notification;
 use App\Models\Payment;
 use App\Models\PaymentType;
-use App\Models\Setting;
 use App\Models\User;
 use App\Services\PaymentService;
 use Illuminate\Contracts\View\View;
@@ -24,8 +22,6 @@ class PaymentController extends Controller
     public function index(): View
     {
         return view('cabinet.payment.index', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
             'payments' => Payment::where('user_id', '=', Auth::id())
                 ->sortable(['id' => 'desc'])
                 ->paginate(config('view.per_page')),
@@ -38,9 +34,9 @@ class PaymentController extends Controller
     public function create(): View
     {
         return view('cabinet.payment.create', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-            'paymentTypes' => PaymentType::all(),
+            'user' => User::with('address')
+                ->where('id', '=', Auth::id())
+                ->first(),
         ]);
     }
 
@@ -76,10 +72,6 @@ class PaymentController extends Controller
      */
     public function withdraw(): View
     {
-        return view('cabinet.payment.withdraw', [
-            'notifications' => Notification::all(),
-            'settings' => Setting::first(),
-            'paymentTypes' => PaymentType::all(),
-        ]);
+        return view('cabinet.payment.withdraw');
     }
 }

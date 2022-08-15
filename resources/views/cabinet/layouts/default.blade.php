@@ -1,3 +1,7 @@
+<?php
+$settings = \App\Models\Setting::first();
+$pages = \App\Models\Page::all();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -38,10 +42,11 @@
                 <div class="text-muted row">
                     <div class="text-start col-6">
                         <ul class="list-inline">
-                            <li class="list-inline-item"><span class="text-muted" href="#">Support</span></li>
-                            <li class="list-inline-item"><span class="text-muted" href="#">Help Center</span></li>
-                            <li class="list-inline-item"><span class="text-muted" href="#">Privacy</span></li>
-                            <li class="list-inline-item"><span class="text-muted" href="#">Terms of Service</span></li>
+                            @foreach($pages as $page)
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="{{ Route('cabinet.page', $page) }}">{{ $page->title }}</a>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                     <div class="text-end col-6">
