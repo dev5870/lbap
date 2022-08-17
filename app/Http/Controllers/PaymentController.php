@@ -16,14 +16,11 @@ use App\Services\PaymentUpdateService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Contracts\View\View;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @param Request $request
      * @return View
      */
@@ -37,9 +34,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
+     * @return View
      */
     public function create(): View
     {
@@ -49,8 +44,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param PaymentCreateRequest $request
      * @return RedirectResponse
      */
@@ -75,8 +68,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Payment $payment
      * @return View
      */
@@ -88,8 +79,6 @@ class PaymentController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param PaymentUpdateRequest $request
      * @param Payment $payment
      * @return RedirectResponse

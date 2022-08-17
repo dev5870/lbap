@@ -27,8 +27,16 @@ class SecurityController extends Controller
      */
     public function update(SecurityUpdateRequest $request): View
     {
+        $userParams = UserParam::updateOrCreate(
+            ['user_id' => Auth::id()],
+            [
+                'mfa' => $request->has('mfa'),
+                'login_notify' => $request->has('login_notify'),
+            ]
+        );
+
         return view('cabinet.user.security', [
-            'params' => UserParam::whereUserId(Auth::id())->first(),
+            'params' => $userParams,
             'telegram' => Auth::user()->telegram()->first(),
         ]);
     }

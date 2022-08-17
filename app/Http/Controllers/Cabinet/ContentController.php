@@ -8,6 +8,9 @@ use Illuminate\Contracts\View\View;
 
 class ContentController extends Controller
 {
+    /**
+     * @return View
+     */
     public function index(): View
     {
         return view('cabinet.content.index', [
@@ -17,6 +20,10 @@ class ContentController extends Controller
         ]);
     }
 
+    /**
+     * @param Content $content
+     * @return View
+     */
     public function show(Content $content): View
     {
         return view('cabinet.content.show', [

@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Log;
 
 class TgController extends Controller
 {
-    public function index()
+    /**
+     * @return void
+     */
+    public function index(): void
     {
         Log::channel('telegram')->info('Tg API: init');
 

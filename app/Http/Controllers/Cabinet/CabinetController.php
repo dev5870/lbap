@@ -3,14 +3,10 @@
 namespace App\Http\Controllers\Cabinet;
 
 use App\Http\Controllers\Controller;
-use App\Models\Address;
 use App\Models\Content;
 use App\Models\Page;
-use App\Models\Payment;
-use App\Models\User;
 use App\Models\UserUserAgent;
 use Illuminate\Contracts\View\View;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class CabinetController extends Controller

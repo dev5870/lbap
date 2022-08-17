@@ -9,12 +9,10 @@ use Illuminate\Support\Facades\Auth;
 class LogoutController extends Controller
 {
     /**
-     * Destroy an authenticated session.
-     *
      * @param Request $request
      * @return RedirectResponse
      */
-    public function destroy(Request $request)
+    public function destroy(Request $request): RedirectResponse
     {
         Auth::guard('web')->logout();
         $request->session()->invalidate();

@@ -10,8 +10,6 @@ use Illuminate\Http\RedirectResponse;
 class NotificationController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @return View
      */
     public function index(): View
@@ -22,9 +20,7 @@ class NotificationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return View
      */
     public function create(): View
     {
@@ -32,8 +28,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
      * @param Request $request
      * @return RedirectResponse
      */
@@ -51,8 +45,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
      * @param Notification $notification
      * @return View
      */
@@ -64,8 +56,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
      * @param Request $request
      * @param Notification $notification
      * @return RedirectResponse
@@ -83,8 +73,6 @@ class NotificationController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
      * @param Notification $notification
      * @return RedirectResponse
      */

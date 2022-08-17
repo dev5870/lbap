@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 class AddressController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @param Request $request
      * @return View
      */
@@ -27,8 +25,6 @@ class AddressController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return View
      */
     public function create(): View
@@ -39,9 +35,7 @@ class AddressController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
