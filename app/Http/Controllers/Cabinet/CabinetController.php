@@ -20,25 +20,9 @@ class CabinetController extends Controller
      */
     public function index(): View
     {
-        $users = User::orderBy('id', 'desc');
-        $contents = Content::orderBy('id', 'desc');
-        $payments = Payment::orderBy('id', 'desc');
-        $addresses = Address::orderBy('id', 'desc');
-
         return view('cabinet.index', [
-            'lastContents' => $contents->take(5)->get(),
+            'lastContents' => Content::orderBy('id', 'desc')->take(5)->get(),
             'logs' => UserUserAgent::where('user_id', '=', Auth::id())->sortable(['created_at' => 'desc'])->take(5)->get(),
-
-            // todo: clear
-            'allAddresses' => $addresses->count(),
-            'lastDayAddresses' => $addresses->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'allContents' => $contents->count(),
-            'lastDayContents' => $contents->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'users' => $users->take(5)->get(),
-            'allUser' => $users->count(),
-            'allPayment' => $payments->count(),
-            'lastDayPayment' => $payments->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
-            'lastDay' => $users->where('created_at', '>=', Carbon::now()->subDay()->toDateTimeString())->count(),
         ]);
     }
 
