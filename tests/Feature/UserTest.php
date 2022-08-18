@@ -199,4 +199,38 @@ class UserTest extends TestCase
             'email' => 'Auth error!',
         ]);
     }
+
+    /**
+     * User logout from cabinet
+     *
+     * @return void
+     */
+    public function test_logout(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        $this->get('/cabinet');
+
+        $response = $this->post(route('user.logout'));
+        $response->status(302);
+        $response->assertRedirect(route('login.create'));
+    }
+
+    /**
+     * User trying go to admin panel
+     *
+     * @return void
+     */
+    public function test_user_go_to_admin_panel(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $this->actingAs($user);
+        $response = $this->get(route('admin.dashboard'));
+        $response->assertForbidden();
+        $response->assertSeeText('User does not have the right roles.');
+    }
 }
