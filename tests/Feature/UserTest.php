@@ -10,6 +10,9 @@ use Tests\TestCase;
 class UserTest extends TestCase
 {
     use WithFaker;
+    use RefreshDatabase;
+
+    protected bool $seed = true;
 
     /**
      * Check registration page
@@ -121,6 +124,79 @@ class UserTest extends TestCase
 
         $response->assertSessionHasErrors([
             'password' => 'The password field is required.',
+        ]);
+    }
+
+    /**
+     * Check login page
+     *
+     * @return void
+     */
+    public function test_check_login_page(): void
+    {
+        $response = $this->get('/login');
+        $response->assertStatus(200);
+        $response->assertSeeText([
+            'Authorization',
+            'Email address',
+            'Password',
+            'Submit',
+        ]);
+    }
+
+    /**
+     * Login to cabinet (positive)
+     *
+     * @return void
+     */
+    public function test_login_positive(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $response->status(302);
+        $response->assertRedirect(route('cabinet.index'));
+    }
+
+    /**
+     * Login to cabinet (negative #1)
+     *
+     * @return void
+     */
+    public function test_login_negative1(): void
+    {
+        $response = $this->post(route('login.store'), [
+            'email' => $this->faker->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'email' => 'Auth error!',
+        ]);
+    }
+
+    /**
+     * Login to cabinet (negative #2)
+     *
+     * @return void
+     */
+    public function test_login_negative2(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'incorrect',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'email' => 'Auth error!',
         ]);
     }
 }
