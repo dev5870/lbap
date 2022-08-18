@@ -30,7 +30,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration default user
+     * Registration default user (positive)
      *
      * @return void
      */
@@ -48,7 +48,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration referral user
+     * Registration referral user (positive)
      *
      * @return void
      */
@@ -69,6 +69,58 @@ class UserTest extends TestCase
         $this->assertDatabaseHas(User::class, [
             'email' => $referralEmail,
             'referrer' => $referrer->id,
+        ]);
+    }
+
+    /**
+     * Registration default user (negative #1)
+     *
+     * @return void
+     */
+    public function test_registration_default_negative1(): void
+    {
+        $response = $this->post(route('registration.store'), [
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'email' => 'The email field is required.',
+        ]);
+    }
+
+    /**
+     * Registration default user (negative #2)
+     *
+     * @return void
+     */
+    public function test_registration_default_negative2(): void
+    {
+        $response = $this->post(route('registration.store'), [
+            'email' => $this->faker->email,
+            'password' => 'password',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'password' => 'The password confirmation does not match.',
+        ]);
+    }
+
+    /**
+     * Registration default user (negative #3)
+     *
+     * @return void
+     */
+    public function test_registration_default_negative3(): void
+    {
+        $response = $this->post(route('registration.store'), [
+            'email' => $this->faker->email,
+            'password' => '',
+            'password_confirmation' => '',
+        ]);
+
+        $response->assertSessionHasErrors([
+            'password' => 'The password field is required.',
         ]);
     }
 }
