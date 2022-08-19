@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use App\Models\UserTelegramCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -198,6 +199,44 @@ class UserTest extends TestCase
         $response->assertSessionHasErrors([
             'email' => 'Auth error!',
         ]);
+    }
+
+    /**
+     * Login to cabinet
+     *
+     * @return void
+     */
+    public function test_login_with_mfa(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->refresh();
+
+        $user->params()->update([
+            'mfa' => true
+        ]);
+
+        $responseMfa = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $responseMfa->status(302);
+        $responseMfa->assertRedirect(route('login.create') . '?mfa');
+        $responseMfa->assertSessionHas([
+            'error-message' => 'Please, enter 2fa code!',
+        ]);
+
+        $telegramCode = UserTelegramCode::whereUserId($user->id)->first();
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+            'code' => $telegramCode->code
+        ]);
+
+        $response->status(302);
+        $response->assertRedirect(route('cabinet.index'));
     }
 
     /**
