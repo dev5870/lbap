@@ -30,6 +30,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-check">
+                                            <input type="checkbox" name="invitation_only" id="invitation_only" class="form-check-input" {{ $settings->invitation_only == 1 ? 'checked' : '' }}>
+                                            <label title="" for="invitation_only" class="form-check-label">
+                                                {{ __('title.settings.invitation_only') }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <button type="submit" class="btn btn-primary">
                                 {{ __('title.btn.update') }}
                             </button>

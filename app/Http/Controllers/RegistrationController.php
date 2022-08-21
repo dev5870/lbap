@@ -38,6 +38,14 @@ class RegistrationController extends Controller
      */
     public function store(RegistrationRequest $request): RedirectResponse
     {
+        $settings = Setting::first();
+
+        if ($settings->invitation_only == 1 && empty($request->get('invite'))) {
+            return redirect()->route('registration.create')->with([
+                'error-message' => __('title.registration.error-invite')
+            ]);
+        }
+
         $referrerParams = null;
 
         if ($request->has('invite')) {

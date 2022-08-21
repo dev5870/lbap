@@ -55,6 +55,7 @@ return [
         'error' => 'Error registration!',
         'disabled' => 'Registration disabled!',
         'telegram' => 'For registration use telegram!',
+        'error-invite' => 'Registration by invitation only',
     ],
 
     'menu' => [
@@ -158,6 +159,7 @@ return [
     'settings' => [
         'site' => 'Site settings',
         'registration_method' => 'Registration method',
+        'invitation_only' => 'Registration by invitation only',
     ],
 
     'content' => [

@@ -37,6 +37,6 @@ class Setting extends Model
     protected $fillable = [
         'site_name',
         'registration_method',
-        'commission_amount',
+        'invitation_only',
     ];
 }

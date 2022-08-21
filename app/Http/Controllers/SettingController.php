@@ -28,6 +28,7 @@ class SettingController extends Controller
         $setting = Setting::first();
         $setting->site_name = $request->get('site_name');
         $setting->registration_method = $request->get('registration_method');
+        $setting->invitation_only = $request->has('invitation_only');
         $setting->save();
 
         return redirect()->route('admin.settings.index')->with([

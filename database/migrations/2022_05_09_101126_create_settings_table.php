@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('site_name')->unique();
             $table->string('registration_method')->default(\App\Enums\RegistrationMethod::SITE);
+            $table->boolean('invitation_only')->default(false)->nullable()->comment('Registration by invitation only');
             $table->timestamps();
         });
     }

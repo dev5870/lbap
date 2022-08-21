@@ -98,6 +98,28 @@ class UserTest extends TestCase
     }
 
     /**
+     * Registration invitation only
+     *
+     * @return void
+     */
+    public function test_registration_invitation_only(): void
+    {
+        $settings = Setting::first();
+        $settings->invitation_only = true;
+        $settings->save();
+
+        $response = $this->post(route('registration.store'), [
+            'email' => $this->faker->email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $response->assertSessionHas([
+            'error-message' => 'Registration by invitation only',
+        ]);
+    }
+
+    /**
      * Registration default user (negative #1)
      *
      * @return void
