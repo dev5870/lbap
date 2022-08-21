@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Enums\RegistrationMethod;
+use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserTelegramCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -16,11 +18,11 @@ class UserTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check registration page
+     * Check registration default page
      *
      * @return void
      */
-    public function test_check_registration_page(): void
+    public function test_check_registration_default_page(): void
     {
         $response = $this->get('/registration');
         $response->assertStatus(200);
@@ -30,6 +32,25 @@ class UserTest extends TestCase
             'Password',
             'Repeat password',
             'Submit',
+        ]);
+    }
+
+    /**
+     * Check registration telegram page
+     *
+     * @return void
+     */
+    public function test_check_registration_telegram_page(): void
+    {
+        $setting = Setting::first();
+        $setting->registration_method = RegistrationMethod::TELEGRAM;
+        $setting->save();
+
+        $response = $this->get('/registration');
+        $response->assertStatus(200);
+        $response->assertSeeText([
+            'For registration use telegram!',
+            'Telegram bot',
         ]);
     }
 
