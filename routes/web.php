@@ -58,8 +58,8 @@ Route::middleware(['auth:sanctum', 'role:admin'])->group(function () {
         Route::post('/settings/general', [SettingController::class, 'general'])->name('settings.general');
         Route::resource('/content', ContentController::class);
         Route::resource('/notification', NotificationController::class);
-        Route::resource('/payment', PaymentController::class);
-        Route::resource('/address', AddressController::class);
+        Route::resource('/payment', PaymentController::class)->only('index', 'create', 'store', 'edit', 'update');
+        Route::resource('/address', AddressController::class)->only('index', 'create', 'store');
         Route::resource('/page', PageController::class);
 
         Route::prefix('statistic')->name('statistic.')->group(function () {
@@ -77,7 +77,7 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
         Route::get('/page/{page}', [CabinetController::class, 'page'])->name('page');
 
         Route::prefix('user')->group(function () {
-            Route::resource('/profile', ProfileController::class);
+            Route::resource('/profile', ProfileController::class)->only('show', 'edit', 'update');
             Route::get('/edit', [CabinetUserController::class, 'edit'])->name('user.edit');
             Route::get('/security', [SecurityController::class, 'index'])->name('user.security');
             Route::post('/security', [SecurityController::class, 'update'])->name('user.security.update');
@@ -91,6 +91,6 @@ Route::middleware(['auth:sanctum', 'role:user', 'activity'])->group(function () 
         });
 
         Route::get('/payment/withdraw', [CabinetPaymentController::class, 'withdraw'])->name('payment.withdraw');
-        Route::resource('/payment', CabinetPaymentController::class);
+        Route::resource('/payment', CabinetPaymentController::class)->only('index', 'create', 'store');
     });
 });

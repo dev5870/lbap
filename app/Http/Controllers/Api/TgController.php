@@ -35,11 +35,15 @@ class TgController extends Controller
 
                 // If message null
                 if (!$message || !$message->getText()) {
+                    Log::channel('telegram')->info('Tg API: message is null');
+
                     return false;
                 }
 
                 // Check if chat id already exists
                 if (UserService::isChatIdExists($message->getFrom()->getId())) {
+                    Log::channel('telegram')->info('Tg API: chat already exists');
+
                     return false;
                 }
 
@@ -48,6 +52,8 @@ class TgController extends Controller
 
                     // Check if email already exists
                     if (UserService::isEmailExists($message->getText())) {
+                        Log::channel('telegram')->info('Tg API: email already exists');
+
                         return false;
                     }
 
@@ -79,6 +85,8 @@ class TgController extends Controller
 
                     // Check secret key exists
                     if (!UserService::isSecretKeyExists($message->getText())) {
+                        Log::channel('telegram')->info('Tg API: error secret key');
+
                         return false;
                     }
 

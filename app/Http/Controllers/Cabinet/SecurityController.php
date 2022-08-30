@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Cabinet\SecurityUpdateRequest;
 use App\Models\UserParam;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 
 class SecurityController extends Controller
@@ -23,10 +24,16 @@ class SecurityController extends Controller
 
     /**
      * @param SecurityUpdateRequest $request
-     * @return View
+     * @return RedirectResponse|View
      */
-    public function update(SecurityUpdateRequest $request): View
+    public function update(SecurityUpdateRequest $request): RedirectResponse|View
     {
+        if (empty($request->user()->telegram)) {
+            return redirect()->route('cabinet.user.security')->with([
+                'error-message' => __('title.error.update')
+            ]);
+        }
+
         $userParams = UserParam::updateOrCreate(
             ['user_id' => Auth::id()],
             [
@@ -35,9 +42,8 @@ class SecurityController extends Controller
             ]
         );
 
-        return view('cabinet.user.security', [
-            'params' => $userParams,
-            'telegram' => Auth::user()->telegram()->first(),
+        return redirect()->route('cabinet.user.security')->with([
+            'success-message' => __('title.success')
         ]);
     }
 }

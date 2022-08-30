@@ -231,5 +231,6 @@ return [
         'update_payment' => 'Can\'t update payment',
         'create_payment' => 'Can\'t create payment',
         'create' => 'Can\'t create',
+        'update' => 'Can\'t update',
     ],
 ];

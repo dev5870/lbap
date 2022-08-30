@@ -203,7 +203,7 @@ class UserTest extends TestCase
             'password' => 'password',
         ]);
 
-        $response->status(302);
+        $response->assertStatus(302);
         $response->assertRedirect(route('cabinet.index'));
     }
 
@@ -264,7 +264,7 @@ class UserTest extends TestCase
             'password' => 'password',
         ]);
 
-        $responseMfa->status(302);
+        $responseMfa->assertStatus(302);
         $responseMfa->assertRedirect(route('login.create') . '?mfa');
         $responseMfa->assertSessionHas([
             'error-message' => 'Please, enter 2fa code!',
@@ -278,7 +278,7 @@ class UserTest extends TestCase
             'code' => $telegramCode->code
         ]);
 
-        $response->status(302);
+        $response->assertStatus(302);
         $response->assertRedirect(route('cabinet.index'));
     }
 
@@ -296,7 +296,7 @@ class UserTest extends TestCase
         $this->get('/cabinet');
 
         $response = $this->post(route('user.logout'));
-        $response->status(302);
+        $response->assertStatus(302);
         $response->assertRedirect(route('login.create'));
     }
 

@@ -13,7 +13,6 @@ class PaymentService
 {
     private PaymentCreateDto $dto;
     private string $commissionAmount;
-    private string $checkAddressUrl = 'https://dogechain.info/api/v1/address/balance/';
 
     /**
      * @param PaymentCreateDto $paymentCreateDto
@@ -33,13 +32,6 @@ class PaymentService
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
         try {
-            // Check address valid
-            if ($this->dto->address !== null && !$this->checkAddress()) {
-                Log::channel('payment')->error('create - invalid address: ' . $this->dto->address);
-
-                return false;
-            }
-
             // If initiator not equal recipient or not admin
             if ($this->dto->userInitiator &&
                 $this->dto->userInitiator->id != $this->dto->user->id &&
@@ -70,21 +62,6 @@ class PaymentService
             Log::channel('payment')->error('create - error while creating new payment');
             Log::channel('payment')->error($exception->getMessage());
             Log::channel('payment')->error($exception->getTraceAsString());
-        }
-
-        return false;
-    }
-
-    /**
-     * @return bool
-     */
-    private function checkAddress(): bool
-    {
-        $response = Http::get($this->checkAddressUrl . $this->dto->address)->json();
-
-        if (isset($response['success']) && $response['success'] == 1) {
-
-            return true;
         }
 
         return false;
