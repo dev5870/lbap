@@ -28,7 +28,7 @@ class ContentCreateRequest extends FormRequest
             'preview' => ['required', 'string', 'max:250'],
             'text' => ['required', 'string', 'max:800'],
             'delayed_time_publication' => ['nullable', 'string'],
-            'file' => ['image', 'nullable', 'dimensions:width=300,height=200', 'max:2400'],
+            'file' => ['image', 'nullable', 'max:240'],
         ];
     }
 }

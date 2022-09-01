@@ -82,7 +82,6 @@ class ContentController extends Controller
         $content->title = $request->get('title');
         $content->preview = $request->get('preview');
         $content->text = $request->get('text');
-        $content->delayed_date_publication = $request->get('delayed_date_publication');
         $content->delayed_time_publication = $request->get('delayed_time_publication');
         $content->save();
 
