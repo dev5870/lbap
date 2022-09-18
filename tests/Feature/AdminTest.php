@@ -984,12 +984,110 @@ class AdminTest extends TestCase
     }
 
     /**
+     * Check update payment page
+     */
+    public function test_check_payment_update_page()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        $payment = Payment::factory()->create([
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->get(route('admin.payment.edit', [
+            'payment' => $payment
+        ]));
+
+        $response->assertStatus(200);
+        $response->assertSeeText('Payments');
+        $response->assertSeeText('Return');
+        $response->assertSeeText('Payment information');
+        $response->assertSeeText('Update payment');
+    }
+
+    /**
      * Update payment (confirm)
      */
+    public function test_payment_confirm()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        $payment = Payment::factory()->create([
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [
+            'confirm' => 'Confirm'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'success-message' => 'Success!',
+        ]);
+        $response->assertRedirect(route('admin.payment.edit', ['payment' => $payment]));
+        $this->assertDatabaseHas(Payment::class, [
+            'id' => $payment->id,
+            'user_id' => $payment['user_id'],
+            'status' => PaymentStatus::PAID,
+        ]);
+        $this->assertDatabaseHas(User::class, [
+            'id' => $payment['user_id'],
+            'balance' => $payment['amount'],
+        ]);
+    }
 
     /**
      * Update payment (cansel)
      */
+    public function test_payment_cansel()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create([
+            'balance' => 1000
+        ]);
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        $payment = Payment::factory()->create([
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [
+            'cancel' => 'Cancel'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'success-message' => 'Success!',
+        ]);
+        $response->assertRedirect(route('admin.payment.edit', ['payment' => $payment]));
+        $this->assertDatabaseHas(Payment::class, [
+            'id' => $payment->id,
+            'user_id' => $payment['user_id'],
+            'status' => PaymentStatus::CANCEL,
+        ]);
+    }
 
     /**
      * Check transactions list page
