@@ -95,7 +95,7 @@ class CabinetTest extends TestCase
         $this->actingAs($user);
 
         $params = [
-            'username' => $this->faker->userName,
+            'username' => $this->faker->text(10),
             'about' => 'about test',
             'skill' => 'skill',
             'city' => 'London',
