@@ -8,8 +8,12 @@ class FileFilter extends QueryFilter
 {
     public function id($value)
     {
-        $this->builder->whereHas('user', function (Builder $query) use ($value) {
-            $query->where('id', $value);
-        });
+        $this->builder
+            ->whereRelation('user', function (Builder $query) use ($value) {
+                $query->where('id', 'like', '%' . $value . '%');
+            })
+            ->orWhereRelation('content', function (Builder $query) use ($value) {
+                $query->where('id', 'like', '%' . $value . '%');
+            });
     }
 }
