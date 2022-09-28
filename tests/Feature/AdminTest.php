@@ -4,17 +4,21 @@ namespace Tests\Feature;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
+use App\Enums\RegistrationMethod;
 use App\Models\Address;
 use App\Models\Content;
 use App\Models\File;
+use App\Models\Notification;
 use App\Models\Page;
 use App\Models\Payment;
 use App\Models\PaymentSystem;
 use App\Models\PaymentType;
+use App\Models\Setting;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
+use App\Services\SystemNoticeService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
@@ -1238,25 +1242,137 @@ class AdminTest extends TestCase
     /**
      * Check system notice page
      */
+    public function test_check_system_notice_page()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        SystemNoticeService::createNotice(
+            'test notice title',
+            'test notice description'
+        );
+
+        $response = $this->get(route('admin.notice'));
+
+        $response->assertStatus(200);
+        $response->assertSeeText('System notices');
+        $response->assertSeeText('Title');
+        $response->assertSeeText('Description');
+        $response->assertSeeText('test notice title');
+        $response->assertSeeText('test notice description');
+    }
 
     /**
-     * Check settings general page
+     * Check settings general check page
      */
+    public function test_check_settings_general_page()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.settings.index'));
+
+        $response->assertStatus(200);
+        $response->assertSeeText('General');
+        $response->assertSeeText('Site settings');
+        $response->assertSeeText('Site name');
+        $response->assertSeeText('Registration method');
+        $response->assertSeeText('Registration by invitation only');
+    }
 
     /**
      * Update settings general
      */
+    public function test_settings_general_update()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        $this->assertDatabaseHas(Setting::class, [
+            'site_name' => 'Site name',
+            'registration_method' => RegistrationMethod::SITE,
+            'invitation_only' => false,
+        ]);
+
+        $params = [
+            'site_name' => 'Best name',
+            'registration_method' => RegistrationMethod::TELEGRAM,
+            'invitation_only' => true,
+        ];
+
+        $response = $this->post(route('admin.settings.general'), $params);
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('admin.settings.index'));
+        $response->assertSessionHas([
+            'success-message' => 'Success!',
+        ]);
+        $this->assertDatabaseHas(Setting::class, [
+            'site_name' => 'Best name',
+            'registration_method' => RegistrationMethod::TELEGRAM,
+            'invitation_only' => true,
+        ]);
+    }
 
     /**
-     * Check settings notification list page
+     * Check notification list page
      */
+    public function test_check_notification_list_page()
+    {
+        $role = Role::where('name', '=', 'admin')->first();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->roles()->sync($role->id);
+        $user->save();
+        $user->refresh();
+
+        /** @var Notification $notification */
+        $notification = Notification::factory()->create();
+
+        $this->actingAs($user);
+
+        $response = $this->get(route('admin.notification.index'));
+
+        $response->assertStatus(200);
+        $response->assertSeeText('Notifications');
+        $response->assertSeeText('Create');
+        $response->assertSeeText('Message');
+        $response->assertSeeText('Status');
+        $response->assertSeeText($notification->text);
+    }
 
     /**
      * Create new notification
      */
 
     /**
-     * Edit notification
+     * Check edit notification page
+     */
+
+    /**
+     * Update notification page
      */
 
     /**
