@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\AdminController;
@@ -32,7 +33,7 @@ use App\Http\Controllers\Cabinet\PaymentController as CabinetPaymentController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return Redirect::to('/login');
 });
 
 Route::get('/registration', [RegistrationController::class, 'create'])->name('registration.create');
