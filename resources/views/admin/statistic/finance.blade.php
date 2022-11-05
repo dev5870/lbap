@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends('layouts.default', ['title' => __('title.statistic.finance_statistics')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.statistic.finance') }}</h3>
+            <h3>{{ __('title.statistic.finance_statistics') }}</h3>
         </div>
     </div>
     <div class="row">

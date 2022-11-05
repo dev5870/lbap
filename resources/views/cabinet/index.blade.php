@@ -1,7 +1,9 @@
-@extends('cabinet.layouts.default')
+@extends('cabinet.layouts.default', ['title' => __('cabinet.index.title')])
 @section('content')
     <div class="mb-2 mb-xl-3 row">
-        <div class="d-none d-sm-block col-auto"><h3>{{ __('cabinet.index.title') }}</h3></div>
+        <div class="d-none d-sm-block col-auto">
+            <h3>{{ __('cabinet.index.title') }}</h3>
+        </div>
     </div>
 
     <div class="flex-fill w-100 card">

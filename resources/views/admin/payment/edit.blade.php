@@ -1,4 +1,4 @@
-@extends('layouts.default')
+@extends('layouts.default', ['title' => __('title.payment_system.info')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">

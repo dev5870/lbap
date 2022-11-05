@@ -1,8 +1,8 @@
-@extends('cabinet.layouts.default')
+@extends('cabinet.layouts.default', ['title' => __('cabinet.menu.ref_program')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.user.referrals') }}</h3>
+            <h3>{{ __('cabinet.menu.ref_program') }}</h3>
         </div>
     </div>
     <div class="row">

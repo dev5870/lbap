@@ -81,7 +81,7 @@ return [
 
     'page' => [
         'add' => 'Create new page',
-        'update' => 'Update',
+        'update' => 'Edit page',
     ],
 
     'transaction' => [
@@ -158,6 +158,7 @@ return [
 
     'settings' => [
         'site' => 'Site settings',
+        'general_settings' => 'General settings',
         'registration_method' => 'Registration method',
         'invitation_only' => 'Registration by invitation only',
     ],
@@ -177,7 +178,9 @@ return [
     'statistic' => [
         'general' => 'General',
         'user' => 'User',
+        'user_statistics' => 'User statistics',
         'finance' => 'Finance',
+        'finance_statistics' => 'Finance statistics',
         'total' => 'Total',
         'date' => 'Date',
         'full_amount_top_up' => 'Sum amount (top up)',

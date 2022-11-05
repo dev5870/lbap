@@ -1,4 +1,4 @@
-@extends('cabinet.layouts.default')
+@extends('cabinet.layouts.default', ['title' => __('cabinet.log.my')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">

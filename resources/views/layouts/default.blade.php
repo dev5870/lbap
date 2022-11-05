@@ -13,7 +13,7 @@
         name="viewport"
     />
 
-    <title>{{ $settings->site_name }}</title>
+    <title>{{ $settings->site_name }} {{ !empty($title) ? ' - ' . $title : '' }}</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">

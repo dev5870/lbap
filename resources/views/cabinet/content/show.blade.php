@@ -1,4 +1,4 @@
-@extends('cabinet.layouts.default')
+@extends('cabinet.layouts.default', ['title' => $content->title])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">

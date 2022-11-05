@@ -1,4 +1,4 @@
-@extends('cabinet.layouts.default')
+@extends('cabinet.layouts.default', ['title' => __('cabinet.profile.title')])
 @section('content')
     <div class="p-0 container-fluid">
         <h1 class="h3 mb-3">

@@ -1,7 +1,9 @@
-@extends('layouts.default')
+@extends('layouts.default', ['title' => __('title.main.title')])
 @section('content')
     <div class="mb-2 mb-xl-3 row">
-        <div class="d-none d-sm-block col-auto"><h3>{{ __('title.main.title') }}</h3></div>
+        <div class="d-none d-sm-block col-auto">
+            <h3>{{ __('title.main.title') }}</h3>
+        </div>
     </div>
 
     <div class="row">

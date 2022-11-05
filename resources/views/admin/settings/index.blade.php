@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends('layouts.default', ['title' => __('title.settings.general_settings')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.menu.general') }}</h3>
+            <h3>{{ __('title.settings.general_settings') }}</h3>
         </div>
     </div>
     <div class="row">

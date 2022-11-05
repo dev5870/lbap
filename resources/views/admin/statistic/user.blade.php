@@ -1,8 +1,8 @@
-@extends('layouts.default')
+@extends('layouts.default', ['title' => __('title.statistic.user_statistics')])
 @section('content')
     <div class="mb-2 mb-xl-3 d-flex justify-content-between">
         <div class="">
-            <h3>{{ __('title.statistic.user') }}</h3>
+            <h3>{{ __('title.statistic.user_statistics') }}</h3>
         </div>
     </div>
     <div class="flex-fill w-100 card table-responsive users">
