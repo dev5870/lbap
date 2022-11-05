@@ -4,7 +4,10 @@ namespace App\Console;
 
 use App\Services\AddressService;
 use App\Services\CheckDiffBalanceService;
+use App\Services\CommissionService;
 use App\Services\PaymentCheckService;
+use App\Services\PaymentService;
+use App\Services\TransactionCreateService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -30,7 +33,10 @@ class Kernel extends ConsoleKernel
 
         // Check new payment
         $schedule->call(function () {
-            (new PaymentCheckService())->handle();
+            (new PaymentCheckService(
+                new PaymentService(new CommissionService()),
+                new TransactionCreateService())
+            )->handle();
         })->everyMinute();
     }
 
