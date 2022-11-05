@@ -5,6 +5,7 @@ namespace App\Dto;
 
 use App\Enums\PaymentStatus;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 
 class PaymentCreateDto
 {
@@ -17,5 +18,5 @@ class PaymentCreateDto
     public ?string $txid = null;
     public ?string $address = null;
     public int $status = PaymentStatus::CREATE;
-    public ?string $paidAt = null;
+    public ?Carbon $paidAt = null;
 }

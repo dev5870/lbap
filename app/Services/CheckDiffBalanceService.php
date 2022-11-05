@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 
 class CheckDiffBalanceService
@@ -17,13 +19,18 @@ class CheckDiffBalanceService
 
         foreach ($users as $user) {
             if (!$this->isCorrect($user)) {
-                SystemNoticeService::createNotice(
-                    'Diff balance',
-                    'User id: ' . $user->id . ', balance: ' . $user->balance . ', transactions sum: ' . $user->transactions->sum('amount')
-                );
+                try {
+                    SystemNoticeService::createNotice(
+                        'Diff balance',
+                        'User id: ' . $user->id . ', balance: ' . $user->balance . ', transactions sum: ' . $user->transactions->sum('amount')
+                    );
 
-                $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
-                $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'User diff balance. User id: ' . $user->id);
+                    $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
+                    $bot->sendMessage(env('TELEGRAM_CHAT_ID'), 'User diff balance. User id: ' . $user->id);
+                } catch (Exception $exception) {
+                    Log::channel('different-balance')->error($exception->getMessage());
+                    Log::channel('different-balance')->error($exception->getTraceAsString());
+                }
             }
         }
 

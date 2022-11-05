@@ -10,10 +10,10 @@ class CommissionService
     /**
      * System commission
      *
-     * @param string $type
+     * @param int $type
      * @return string
      */
-    public static function getPercentCommission(int $type): string
+    public function getPercentCommission(int $type): string
     {
         $paymentType = PaymentType::find($type);
 
@@ -28,7 +28,7 @@ class CommissionService
     /**
      * @return string
      */
-    public static function getReferralCommission(): string
+    public function getReferralCommission(): string
     {
         $paymentType = PaymentType::whereName('referral_commission')->first();
 

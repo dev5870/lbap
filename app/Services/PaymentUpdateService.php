@@ -17,19 +17,18 @@ class PaymentUpdateService
      */
     private PaymentUpdateDto $dto;
 
-    /**
-     * @param PaymentUpdateDto $paymentUpdateDto
-     */
-    public function __construct(PaymentUpdateDto $paymentUpdateDto)
+    public function __construct(private TransactionCreateService $transactionCreateService)
     {
-        $this->dto = $paymentUpdateDto;
     }
 
     /**
+     * @param PaymentUpdateDto $paymentUpdateDto
      * @return bool
      */
-    public function handle(): bool
+    public function handle(PaymentUpdateDto $paymentUpdateDto): bool
     {
+        $this->dto = $paymentUpdateDto;
+
         Log::channel('payment')->info('update - trying payment update ' . $this->dto->payment->id);
 
         try {
@@ -76,7 +75,10 @@ class PaymentUpdateService
      */
     private function isEnoughMoney(): bool
     {
-        return bccomp($this->dto->user->balance, abs($this->dto->payment->full_amount)) >= 0;
+        return bccomp(
+            $this->dto->user->balance,
+            (string)abs((int)$this->dto->payment->full_amount)
+            ) >= 0;
     }
 
     /**
@@ -108,7 +110,7 @@ class PaymentUpdateService
 
             $transactionDto = new TransactionCreateDto();
             $transactionDto->payment = $this->dto->payment;
-            (new TransactionCreateService($transactionDto))->handle();
+            $this->transactionCreateService->handle($transactionDto);
 
             return true;
         }

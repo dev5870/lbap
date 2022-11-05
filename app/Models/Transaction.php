@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Services\CommissionService;
+use App\Services\PaymentService;
 use App\Services\ReferralPaymentService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
+use phpDocumentor\Reflection\Types\This;
 
 /**
  * App\Models\Transaction
@@ -63,7 +66,12 @@ class Transaction extends Model
             $model->payment->user->balance = $model->new_balance;
             $model->payment->user->save();
 
-            (new ReferralPaymentService($model))->handle();
+            $referralPaymentService = new ReferralPaymentService(
+                new CommissionService(),
+                new PaymentService(new CommissionService())
+            );
+
+            $referralPaymentService->handle($model);
         });
     }
 

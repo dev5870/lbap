@@ -16,11 +16,11 @@ class FileUploadService
      */
     public function handle($file, $model, $description): bool
     {
-        if (!$path = self::put($file)) {
+        if (!$path = $this->put($file)) {
             return false;
         }
 
-        if (self::save($path, $model, $description)) {
+        if ($this->save($path, $model, $description)) {
             return true;
         }
 
@@ -31,7 +31,7 @@ class FileUploadService
      * @param $file
      * @return string
      */
-    private static function put($file): string
+    private function put($file): string
     {
         $path = Storage::putFile(config('app.path.storage'), $file);
         $url = explode('/', $path);
@@ -44,7 +44,7 @@ class FileUploadService
      * @param $description
      * @return bool
      */
-    private static function save($url, $model, $description): bool
+    private function save($url, $model, $description): bool
     {
         $file = File::create([
             'file_name' => $url,

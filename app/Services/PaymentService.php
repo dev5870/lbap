@@ -7,7 +7,6 @@ use App\Dto\PaymentCreateDto;
 use App\Enums\PaymentMethod;
 use App\Models\Payment;
 use Exception;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class PaymentService
@@ -15,20 +14,19 @@ class PaymentService
     private PaymentCreateDto $dto;
     private string $commissionAmount;
 
-    /**
-     * @param PaymentCreateDto $paymentCreateDto
-     */
-    public function __construct(PaymentCreateDto $paymentCreateDto)
+    public function __construct(private CommissionService $commissionService)
     {
-        $this->dto = $paymentCreateDto;
-        $this->commissionAmount = $this->getCommissionAmount();
     }
 
     /**
+     * @param PaymentCreateDto $paymentCreateDto
      * @return Payment|bool
      */
-    public function handle(): Payment|bool
+    public function handle(PaymentCreateDto $paymentCreateDto): Payment|bool
     {
+        $this->dto = $paymentCreateDto;
+        $this->commissionAmount = $this->getCommissionAmount();
+
         Log::channel('payment')->info('create - trying create new payment');
         Log::channel('payment')->info('create - payment type: ' . $this->dto->type);
 
@@ -86,7 +84,7 @@ class PaymentService
     {
         return bcmul(
             $this->dto->fullAmount,
-            CommissionService::getPercentCommission($this->dto->type),
+            $this->commissionService->getPercentCommission($this->dto->type),
             8
         );
     }

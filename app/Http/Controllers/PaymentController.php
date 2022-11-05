@@ -21,6 +21,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PaymentController extends Controller
 {
+    public function __construct(private PaymentService $paymentService, private PaymentUpdateService $paymentUpdateService)
+    {
+    }
+
     /**
      * @param Request $request
      * @return View
@@ -57,7 +61,7 @@ class PaymentController extends Controller
         $paymentCreateDto->type = (int)$request->get('type');
         $paymentCreateDto->method = (int)$request->get('method');
 
-        if ((new PaymentService($paymentCreateDto))->handle()) {
+        if ($this->paymentService->handle($paymentCreateDto)) {
             return redirect()->route('admin.payment.index')->with([
                 'success-message' => __('title.success')
             ]);
@@ -99,7 +103,7 @@ class PaymentController extends Controller
             $paymentDto->status = PaymentStatus::PAID;
         }
 
-        if ((new PaymentUpdateService($paymentDto))->handle()) {
+        if ($this->paymentUpdateService->handle($paymentDto)) {
             return redirect()->route('admin.payment.edit', $payment)->with([
                 'success-message' => __('title.success')
             ]);

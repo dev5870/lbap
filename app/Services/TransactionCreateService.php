@@ -20,17 +20,12 @@ class TransactionCreateService
 
     /**
      * @param TransactionCreateDto $transactionCreateDto
-     */
-    public function __construct(TransactionCreateDto $transactionCreateDto)
-    {
-        $this->dto = $transactionCreateDto;
-    }
-
-    /**
      * @return Transaction|bool
      */
-    public function handle(): Transaction|bool
+    public function handle(TransactionCreateDto $transactionCreateDto): Transaction|bool
     {
+        $this->dto = $transactionCreateDto;
+
         Log::channel('transaction')->info($this->dto->payment->id . ' - trying create new transaction');
 
         try {
@@ -112,6 +107,6 @@ class TransactionCreateService
     {
         return $this->dto->payment->method === PaymentMethod::TOP_UP ?
             bcadd($this->getOldBalance(), $this->dto->payment->amount, 8) : // Top up amount without commission
-            bcsub($this->getOldBalance(), abs($this->dto->payment->full_amount), 8); // Withdraw full amount
+            bcsub($this->getOldBalance(), (string)abs((int)$this->dto->payment->full_amount), 8); // Withdraw full amount
     }
 }

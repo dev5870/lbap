@@ -15,17 +15,21 @@ use Illuminate\Support\Facades\Log;
 class ReferralPaymentService
 {
     private PaymentType $type;
+    private Transaction $transaction;
 
-    public function __construct(private Transaction $transaction)
+    public function __construct(private CommissionService $commissionService, private PaymentService $paymentService)
     {
-        $this->type = PaymentType::whereName('referral_commission')->first();
     }
 
     /**
+     * @param Transaction $transaction
      * @return void
      */
-    public function handle(): void
+    public function handle(Transaction $transaction): void
     {
+        $this->type = PaymentType::whereName('referral_commission')->first();
+        $this->transaction = $transaction;
+
         Log::channel('payment')->info('create (referral payment) - trying create new payment');
         Log::channel('payment')->info('create (referral payment) - transaction id: ' . $this->transaction->id);
 
@@ -99,7 +103,7 @@ class ReferralPaymentService
         $dto->fullAmount = $this->getReferrerCommissionFullAmount();
         $dto->parentId = $this->transaction->id;
 
-        if ((new PaymentService($dto))->handle()) {
+        if ($this->paymentService->handle($dto)) {
             return true;
         }
 
@@ -112,8 +116,8 @@ class ReferralPaymentService
     private function getReferrerCommissionFullAmount(): string
     {
         return bcmul(
-            abs($this->transaction->commission_amount),
-            CommissionService::getReferralCommission(),
+            (string)abs((int)$this->transaction->commission_amount),
+            $this->commissionService->getReferralCommission(),
             8
         );
     }

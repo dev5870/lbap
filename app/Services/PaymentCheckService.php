@@ -26,6 +26,10 @@ class PaymentCheckService
      */
     private string $url = 'https://chain.so/api/v2/get_tx_received/DOGE/';
 
+    public function __construct(private PaymentService $paymentService, private TransactionCreateService $transactionCreateService)
+    {
+    }
+
     /**
      * @return void
      */
@@ -107,14 +111,19 @@ class PaymentCheckService
                 if ($newTransaction instanceof Transaction) {
                     Log::channel('payment-check')->info('Success add new transaction!');
 
-                    $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
-                    $bot->sendMessage(
-                        env('TELEGRAM_CHAT_ID'),
-                        'User id: ' . $newTransaction->payment->user_id .
-                        ' Top up amount: ' . $newTransaction->amount .
-                        ' Old balance: ' . $newTransaction->old_balance .
-                        ' New balance: ' . $newTransaction->new_balance
-                    );
+                    try {
+                        $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
+                        $bot->sendMessage(
+                            env('TELEGRAM_CHAT_ID'),
+                            'User id: ' . $newTransaction->payment->user_id .
+                            ' Top up amount: ' . $newTransaction->amount .
+                            ' Old balance: ' . $newTransaction->old_balance .
+                            ' New balance: ' . $newTransaction->new_balance
+                        );
+                    } catch (Exception $exception) {
+                        Log::channel('payment-check')->error($exception->getMessage());
+                        Log::channel('payment-check')->error($exception->getTraceAsString());
+                    }
                 }
             }
         }
@@ -188,9 +197,7 @@ class PaymentCheckService
         $paymentCreateDto->txid = $transaction['txid'];
         $paymentCreateDto->paidAt = now();
 
-        $paymentService = new PaymentService($paymentCreateDto);
-
-        return $paymentService->handle();
+        return $this->paymentService->handle($paymentCreateDto);
     }
 
     /**
@@ -202,9 +209,7 @@ class PaymentCheckService
         $transactionDto = new TransactionCreateDto();
         $transactionDto->payment = $payment;
 
-        $transactionService = new TransactionCreateService($transactionDto);
-
-        return $transactionService->handle();
+        return $this->transactionCreateService->handle($transactionDto);
     }
 
     /**

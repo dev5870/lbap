@@ -13,6 +13,10 @@ use Illuminate\Http\RedirectResponse;
 
 class ContentController extends Controller
 {
+    public function __construct(private FileUploadService $fileUploadService)
+    {
+    }
+
     /**
      * @param Request $request
      * @return View
@@ -50,7 +54,11 @@ class ContentController extends Controller
 
         if (
             $request->file('file') &&
-            ((new FileUploadService())->handle($request->file('file'), $content, $request->get('description')) === false)
+            ($this->fileUploadService->handle(
+                $request->file('file'),
+                $content,
+                $request->get('description')) === false
+            )
         ) {
             return redirect()->route('admin.content.edit', $content)->with([
                 'error-message' => __('title.file_not_upload')

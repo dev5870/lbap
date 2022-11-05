@@ -17,6 +17,10 @@ use Illuminate\Http\RedirectResponse;
 
 class PaymentController extends Controller
 {
+    public function __construct(private PaymentService $paymentService)
+    {
+    }
+
     /**
      * @return View
      */
@@ -57,7 +61,7 @@ class PaymentController extends Controller
         $paymentCreateDto->address = $request->get('address');
         $paymentCreateDto->fullAmount = $request->get('full_amount');
 
-        if ((new PaymentService($paymentCreateDto))->handle()) {
+        if ($this->paymentService->handle($paymentCreateDto)) {
             return redirect()->route('cabinet.payment.index')->with([
                 'success-message' => __('title.success')
             ]);

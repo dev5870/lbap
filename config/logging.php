@@ -134,6 +134,11 @@ return [
             'driver' => 'single',
             'path' => storage_path('logs/payment-check.log'),
         ],
+
+        'different-balance' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/different-balance.log'),
+        ],
     ],
 
 ];
