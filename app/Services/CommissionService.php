@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -12,7 +13,7 @@ class CommissionService
      * @param string $type
      * @return string
      */
-    public static function getPercentCommission(string $type): string
+    public static function getPercentCommission(int $type): string
     {
         $paymentType = PaymentType::find($type);
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Console\Commands;
 
@@ -14,7 +15,7 @@ class CreateUserAdmin extends Command
      *
      * @var string
      */
-    protected $signature = 'command:create_user_admin {email} {password}';
+    protected $signature = 'create_user:admin {email} {password}';
 
     /**
      * The console command description.
@@ -28,11 +29,11 @@ class CreateUserAdmin extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
         if (User::where('email', '=', $this->argument('email'))->exists()) {
             $this->error('User already exists!');
-            return false;
+            return self::FAILURE;
         }
 
         $user = User::create([
@@ -43,11 +44,11 @@ class CreateUserAdmin extends Command
         if ($user && $user->assignRole(UserRole::ADMIN)) {
             $this->info('Success admin registration!');
 
-            return true;
+            return self::SUCCESS;
         }
 
         $this->error('Error user registration!');
 
-        return false;
+        return self::FAILURE;
     }
 }

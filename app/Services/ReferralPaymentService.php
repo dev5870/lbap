@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -30,7 +31,8 @@ class ReferralPaymentService
 
         try {
             // If transaction does not have commission
-            if (bccomp(abs($this->transaction->commission_amount), '0', 8) <= 0) {
+            $commissionAmount = abs((int)$this->transaction->commission_amount);
+            if (bccomp((string)$commissionAmount, '0', 8) <= 0) {
                 Log::channel('payment')->info('create (referral payment) - transaction does not have commission');
 
                 return;

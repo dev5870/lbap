@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -70,8 +71,8 @@ class StatisticController extends Controller
             ->sum('amount');
 
         $balanceDifference = bcsub(
-            $totalPaymentTopUpSum,
-            abs($totalPaymentWithdrawSum),
+            (string)$totalPaymentTopUpSum,
+            (string)abs($totalPaymentWithdrawSum),
             8
         );
 

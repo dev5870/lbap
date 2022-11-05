@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Dto;
 
@@ -10,8 +11,8 @@ class PaymentCreateDto
     public User $user;
     public ?User $userInitiator = null;
     public string $fullAmount;
-    public string $type;
-    public string $method;
+    public int $type;
+    public int $method;
     public ?int $parentId = null;
     public ?string $txid = null;
     public ?string $address = null;

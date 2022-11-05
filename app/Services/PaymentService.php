@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Services;
 
@@ -101,19 +102,19 @@ class PaymentService
 
         if ($this->dto->method == PaymentMethod::WITHDRAW) {
             $fullAmount = bcmul(
-                -1,
+                '-1',
                 $this->dto->fullAmount,
                 8
             );
 
             $amount = bcmul(
-                -1,
+                '-1',
                 bcsub($this->dto->fullAmount, $this->commissionAmount, 8),
                 8
             );
 
             $commission = bcmul(
-                -1,
+                '-1',
                 $this->commissionAmount,
                 8
             );

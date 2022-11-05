@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
@@ -53,8 +54,8 @@ class PaymentController extends Controller
         $paymentCreateDto->user = User::find($request->get('user_id'));
         $paymentCreateDto->userInitiator = User::find(Auth::id());
         $paymentCreateDto->fullAmount = $request->get('full_amount');
-        $paymentCreateDto->type = $request->get('type');
-        $paymentCreateDto->method = $request->get('method');
+        $paymentCreateDto->type = (int)$request->get('type');
+        $paymentCreateDto->method = (int)$request->get('method');
 
         if ((new PaymentService($paymentCreateDto))->handle()) {
             return redirect()->route('admin.payment.index')->with([
