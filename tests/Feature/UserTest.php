@@ -6,6 +6,7 @@ use App\Enums\RegistrationMethod;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserTelegramCode;
+use App\Models\UserUserAgent;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -314,5 +315,29 @@ class UserTest extends TestCase
         $response = $this->get(route('admin.dashboard'));
         $response->assertForbidden();
         $response->assertSeeText('User does not have the right roles.');
+    }
+
+    /**
+     * Check login history page (positive)
+     */
+    public function test_check_login_history_page()
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->refresh();
+
+        $this->actingAs($user);
+
+        /** @var UserUserAgent $log */
+        $log = UserUserAgent::factory()->create([
+            'user_id' => $user->id
+        ]);
+
+        $response = $this->get(route('cabinet.user.log'));
+
+        $response->assertStatus(200);
+        $response->assertSeeText('My login history');
+        $response->assertSeeText($log->ip);
+        $response->assertSeeText($log->user_agent);
     }
 }
