@@ -19,7 +19,7 @@ class AddressService
     {
         $freeAddress = self::getFreeAddress();
 
-        if ($freeAddress <= 5) {
+        if ($freeAddress <= config('address.minimal')) {
             SystemNoticeService::createNotice('Attention', 'Available address count: ' . $freeAddress);
 
             $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
