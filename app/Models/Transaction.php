@@ -1,15 +1,13 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Services\CommissionService;
-use App\Services\PaymentService;
 use App\Services\ReferralPaymentService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Kyslik\ColumnSortable\Sortable;
-use phpDocumentor\Reflection\Types\This;
 
 /**
  * App\Models\Transaction
@@ -38,6 +36,7 @@ use phpDocumentor\Reflection\Types\This;
  * @mixin \Eloquent
  * @property-read \App\Models\Payment|null $payment
  * @method static \Illuminate\Database\Eloquent\Builder|Transaction sortable($defaultParameters = null)
+ * @method static \Database\Factories\TransactionFactory factory(...$parameters)
  */
 class Transaction extends Model
 {
@@ -66,10 +65,7 @@ class Transaction extends Model
             $model->payment->user->balance = $model->new_balance;
             $model->payment->user->save();
 
-            $referralPaymentService = new ReferralPaymentService(
-                new CommissionService(),
-                new PaymentService(new CommissionService())
-            );
+            $referralPaymentService = app()->make(ReferralPaymentService::class);
 
             $referralPaymentService->handle($model);
         });

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -24,6 +25,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string $registration_method
  * @method static \Illuminate\Database\Eloquent\Builder|Setting whereRegistrationMethod($value)
+ * @property int|null $invitation_only Registration by invitation only
+ * @method static \Illuminate\Database\Eloquent\Builder|Setting whereInvitationOnly($value)
  */
 class Setting extends Model
 {

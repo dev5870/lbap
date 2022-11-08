@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.7",
         "laravelcollective/html": "^6.3",
         "spatie/laravel-permission": "^5.5",
-        "telegram-bot/api": "^2.3"
+        "telegram-bot/api": "^2.3",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",

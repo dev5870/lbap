@@ -23,7 +23,7 @@ class Kernel extends ConsoleKernel
     {
         // Check available (free) addresses
         $schedule->call(function () {
-            AddressService::checkFreeAddress();
+            AddressService::isFreeAddressExists();
         })->everyFifteenMinutes();
 
         // Check diff user balance with user transactions sum
@@ -33,10 +33,8 @@ class Kernel extends ConsoleKernel
 
         // Check new payment
         $schedule->call(function () {
-            (new PaymentCheckService(
-                new PaymentService(new CommissionService()),
-                new TransactionCreateService())
-            )->handle();
+            $paymentCheckService = $this->app->make(PaymentCheckService::class);
+            $paymentCheckService->handle();
         })->everyMinute();
     }
 

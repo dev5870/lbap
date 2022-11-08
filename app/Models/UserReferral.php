@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -28,6 +29,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|UserReferral whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserReferral whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\UserReferralFactory factory(...$parameters)
  */
 class UserReferral extends Model
 {

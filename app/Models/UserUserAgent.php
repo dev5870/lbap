@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -30,6 +31,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|UserUserAgent whereUserAgent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserUserAgent whereUserId($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\UserUserAgentFactory factory(...$parameters)
  */
 class UserUserAgent extends Model
 {

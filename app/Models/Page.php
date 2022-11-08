@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -29,6 +30,8 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Query\Builder|Page withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Page withoutTrashed()
  * @mixin \Eloquent
+ * @method static \Database\Factories\PageFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Page sortable($defaultParameters = null)
  */
 class Page extends Model
 {

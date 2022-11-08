@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -36,6 +37,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|File whereUserId($value)
  * @mixin \Eloquent
  * @property-read \App\Models\Content|null $content
+ * @method static \Database\Factories\FileFactory factory(...$parameters)
  */
 class File extends Model
 {

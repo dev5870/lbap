@@ -15,9 +15,9 @@ class AddressService
      * @throws Exception
      * @throws InvalidArgumentException
      */
-    public static function checkFreeAddress(): bool
+    public static function isFreeAddressExists(): bool
     {
-        $freeAddress = self::getFreeAddress();
+        $freeAddress = self::countFreeAddress();
 
         if ($freeAddress <= config('address.minimal')) {
             SystemNoticeService::createNotice('Attention', 'Available address count: ' . $freeAddress);
@@ -32,16 +32,16 @@ class AddressService
     /**
      * @return int
      */
-    public static function getFreeAddress(): int
+    public static function countFreeAddress(): int
     {
         return Address::whereNull('user_id')->count();
     }
 
     /**
-     * @return Address|bool
+     * @return Address|null
      */
-    public static function getAddress(): Address|bool
+    public static function getAddress(): Address|null
     {
-        return Address::whereNull('user_id')->first() ?? false;
+        return Address::whereNull('user_id')->first();
     }
 }

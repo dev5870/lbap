@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -32,6 +33,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Query\Builder|Notification withTrashed()
  * @method static \Illuminate\Database\Query\Builder|Notification withoutTrashed()
  * @mixin \Eloquent
+ * @method static \Database\Factories\NotificationFactory factory(...$parameters)
  */
 class Notification extends Model
 {

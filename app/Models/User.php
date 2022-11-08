@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -158,7 +159,8 @@ class User extends Authenticatable
             ]);
 
             // Assign address to user
-            if ($address = AddressService::getAddress()) {
+            $address = AddressService::getAddress();
+            if ($address !== null) {
                 $address->user_id = $model->id;
                 $address->save();
             }

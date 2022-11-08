@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
+            AddressSeeder::class,
             PaymentTypeSeeder::class,
             SettingSeeder::class,
             PaymentSystemSeeder::class,
@@ -22,7 +23,6 @@ class DatabaseSeeder extends Seeder
             UserAdminSeeder::class,
             UserSeeder::class,
             UserReferralSeeder::class,
-            AddressSeeder::class,
             PaymentSeeder::class,
             NotificationSeeder::class,
         ]);

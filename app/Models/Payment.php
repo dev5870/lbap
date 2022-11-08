@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -52,6 +53,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereMethod($value)
  * @property string|null $txid
  * @method static \Illuminate\Database\Eloquent\Builder|Payment whereTxid($value)
+ * @method static \Database\Factories\PaymentFactory factory(...$parameters)
  */
 class Payment extends Model
 {

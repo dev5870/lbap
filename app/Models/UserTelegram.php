@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|UserTelegram whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|UserTelegram whereUsername($value)
  * @mixin \Eloquent
+ * @method static \Database\Factories\UserTelegramFactory factory(...$parameters)
  */
 class UserTelegram extends Model
 {

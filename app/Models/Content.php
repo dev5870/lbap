@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -41,6 +42,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @method static \Illuminate\Database\Query\Builder|Content withoutTrashed()
  * @mixin \Eloquent
  * @property-read \App\Models\File|null $file
+ * @method static \Database\Factories\ContentFactory factory(...$parameters)
  */
 class Content extends Model
 {

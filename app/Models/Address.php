@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Models;
 
@@ -31,6 +32,7 @@ use Kyslik\ColumnSortable\Sortable;
  * @mixin \Eloquent
  * @method static \Illuminate\Database\Eloquent\Builder|Address filter(\App\Http\Filters\QueryFilter $filter)
  * @property-read \App\Models\User|null $user
+ * @method static \Database\Factories\AddressFactory factory(...$parameters)
  */
 class Address extends Model
 {
