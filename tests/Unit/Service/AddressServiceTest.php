@@ -72,4 +72,21 @@ class AddressServiceTest extends TestCase
 
         $this->assertTrue($addresses === $serviceCount);
     }
+
+    /**
+     * @description Can get free address
+     * @return void
+     */
+    public function test_get_free_address()
+    {
+        $addresses = Address::whereNull('user_id')->count();
+
+        if ($addresses <= config('address.minimal')) {
+            Address::factory(config('address.minimal') + 1)->create();
+        }
+
+        $address = AddressService::getFreeAddress();
+
+        $this->assertInstanceOf(Address::class, $address);
+    }
 }

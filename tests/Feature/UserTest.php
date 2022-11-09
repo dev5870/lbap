@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Enums\RegistrationMethod;
+use App\Models\Address;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\UserTelegramCode;
@@ -70,7 +71,36 @@ class UserTest extends TestCase
             'password_confirmation' => 'password',
         ]);
 
-        $this->assertDatabaseHas(User::class, ['email' => $email]);
+        $user = User::whereEmail($email)->first();
+        $this->assertDatabaseHas(User::class, ['id' => $user->id, 'email' => $email]);
+        $this->assertDatabaseHas(Address::class, ['user_id' => $user->id]);
+    }
+
+    /**
+     * Registration user default without free address (positive)
+     *
+     * @return void
+     */
+    public function test_registration_default_without_free_address_positive(): void
+    {
+        $addresses = Address::whereNull('user_id')->get();
+
+        foreach ($addresses as $address) {
+            $address->user_id = 10;
+            $address->save();
+        }
+
+        $email = $this->faker->email;
+
+        $this->post(route('registration.store'), [
+            'email' => $email,
+            'password' => 'password',
+            'password_confirmation' => 'password',
+        ]);
+
+        $user = User::whereEmail($email)->first();
+        $this->assertDatabaseHas(User::class, ['id' => $user->id, 'email' => $email]);
+        $this->assertDatabaseMissing(Address::class, ['user_id' => $user->id]);
     }
 
     /**

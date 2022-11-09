@@ -159,7 +159,7 @@ class User extends Authenticatable
             ]);
 
             // Assign address to user
-            $address = AddressService::getAddress();
+            $address = AddressService::getFreeAddress();
             if ($address !== null) {
                 $address->user_id = $model->id;
                 $address->save();

@@ -40,7 +40,7 @@ class AddressService
     /**
      * @return Address|null
      */
-    public static function getAddress(): Address|null
+    public static function getFreeAddress(): Address|null
     {
         return Address::whereNull('user_id')->first();
     }
