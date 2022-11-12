@@ -17,19 +17,31 @@ class SystemNoticeTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check system notice page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_system_notice_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
 
-        $this->actingAs($user);
+        return $admin;
+    }
+
+    /**
+     * @description View system notice page
+     * @return void
+     */
+    public function test_view_system_notice_page(): void
+    {
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
 
         SystemNoticeService::createNotice(
             'test notice title',
@@ -39,10 +51,12 @@ class SystemNoticeTest extends TestCase
         $response = $this->get(route('admin.notice'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('System notices');
-        $response->assertSeeText('Title');
-        $response->assertSeeText('Description');
-        $response->assertSeeText('test notice title');
-        $response->assertSeeText('test notice description');
+        $response->assertSeeText([
+            'System notices',
+            'Title',
+            'Description',
+            'test notice title',
+            'test notice description'
+        ]);
     }
 }

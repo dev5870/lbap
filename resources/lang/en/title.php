@@ -229,6 +229,7 @@ return [
 
     'error' => [
         'auth' => 'Auth error!',
+        'throttle' => 'Exceeded allowed number of login attempts! Try later.',
         '2fa' => 'Please, enter 2fa code!',
         'withdraw' => 'Can\'t create withdraw payment',
         'update_payment' => 'Can\'t update payment',

@@ -21,23 +21,31 @@ class PaymentTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check payments list page
+     * @description Create user admin
+     * @param int $balance
+     * @return User
      */
-    public function test_check_payments_list_page()
+    private function createAdmin(int $balance = 0): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $firstUser */
-        $firstUser = User::factory()->create();
-        $firstUser->roles()->sync($role->id);
-        $firstUser->save();
-        $firstUser->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create(['balance' => $balance]);
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
 
-        /** @var User $secondUser */
-        $secondUser = User::factory()->create();
-        $secondUser->roles()->sync($role->id);
-        $secondUser->save();
-        $secondUser->refresh();
+        return $admin;
+    }
+
+    /**
+     * @description View payments list page
+     * @return void
+     */
+    public function test_view_payments_list_page(): void
+    {
+        $firstUser = $this->createAdmin();
+        $secondUser = $this->createAdmin();
 
         Payment::factory()->create([
             'user_id' => $firstUser->id
@@ -51,93 +59,86 @@ class PaymentTest extends TestCase
         $firstResponse = $this->get(route('admin.payment.index'));
 
         $firstResponse->assertStatus(200);
-        $firstResponse->assertSeeText('Payments');
-        $firstResponse->assertSeeText('Create');
-        $firstResponse->assertSeeText($firstUser->id);
-        $firstResponse->assertSeeText($secondUser->id);
+        $firstResponse->assertSeeText([
+            'Payments',
+            'Create',
+            $firstUser->id,
+            $secondUser->id
+        ]);
 
         $secondResponse = $this->get(route('admin.payment.index') . '?user=' . $firstUser->id);
 
         $secondResponse->assertStatus(200);
-        $firstResponse->assertSeeText('Payments');
-        $firstResponse->assertSeeText('Create');
+        $firstResponse->assertSeeText([
+            'Payments',
+            'Create',
+        ]);
         $secondResponse->assertSeeText($firstUser->id);
         $secondResponse->assertDontSeeText($secondUser->id);
     }
 
     /**
-     * Check create payment
+     * @description View create payment page
+     * @return void
      */
-    public function test_check_payment_create_page()
+    public function test_view_create_payment_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.payment.create'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payment');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Create new payment');
-        $response->assertSeeText('User ID');
-        $response->assertSeeText('Full amount');
-        $response->assertSeeText('Type');
-        $response->assertSeeText('Method');
-        $response->assertSeeText('Create');
+        $response->assertSeeText([
+            'Payment',
+            'Return',
+            'Create new payment',
+            'User ID',
+            'Full amount',
+            'Type',
+            'Method',
+            'Create'
+        ]);
     }
 
     /**
-     * Check edit payment
+     * @description View edit payment page
+     * @return void
      */
-    public function test_check_payment_edit_page()
+    public function test_view_edit_payment_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
-
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        $admin = $this->createAdmin();
 
         $payment = Payment::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $admin->id
         ]);
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.payment.edit', $payment));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payments');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Payment information');
-        $response->assertSeeText('Update payment');
+        $response->assertSeeText([
+            'Payments',
+            'Return',
+            'Payment information',
+            'Update payment'
+        ]);
     }
 
     /**
-     * Create payment top up positive
+     * @description Create top up payment
+     * @return void
      */
-    public function test_payment_top_up_create()
+    public function test_create_top_up_payment(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'type' => (string)PaymentType::whereName('real_money')->first()->id,
             'method' => (string)PaymentMethod::TOP_UP,
             'full_amount' => '900',
@@ -160,24 +161,17 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * Create payment withdraw positive
+     * @description Create withdraw payment
+     * @return void
      */
-    public function test_payment_withdraw_create()
+    public function test_create_withdraw_payment(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin(1000);
 
-        /** @var User $user */
-        $user = User::factory()->create([
-            'balance' => 1000
-        ]);
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'type' => (string)PaymentType::whereName('real_money')->first()->id,
             'method' => (string)PaymentMethod::WITHDRAW,
             'full_amount' => '900',
@@ -200,22 +194,17 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * Create payment withdraw negative
+     * @description Create withdraw payment negative
+     * @return void
      */
-    public function test_payment_withdraw_create_negative()
+    public function test_create_withdraw_payment_negative(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'type' => (string)PaymentType::whereName('real_money')->first()->id,
             'method' => (string)PaymentMethod::WITHDRAW,
             'full_amount' => '900',
@@ -230,22 +219,17 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * Check update payment page
+     * @description View update payment page
+     * @return void
      */
-    public function test_check_payment_update_page()
+    public function test_view_update_payment_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $payment = Payment::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $admin->id
         ]);
 
         $response = $this->get(route('admin.payment.edit', [
@@ -253,29 +237,26 @@ class PaymentTest extends TestCase
         ]));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payments');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Payment information');
-        $response->assertSeeText('Update payment');
+        $response->assertSeeText([
+            'Payments',
+            'Return',
+            'Payment information',
+            'Update payment'
+        ]);
     }
 
     /**
-     * Update payment (confirm)
+     * @description Update payment (confirm)
+     * @return void
      */
-    public function test_payment_confirm()
+    public function test_update_payment_confirm(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $payment = Payment::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $admin->id
         ]);
 
         $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [
@@ -300,27 +281,21 @@ class PaymentTest extends TestCase
             'id' => $payment['user_id'],
             'balance' => $payment['amount'],
         ]);
+        $this->assertTrue($admin->transactions()->exists());
     }
 
     /**
-     * Update payment (cansel)
+     * @description Update payment (cansel)
+     * @return void
      */
-    public function test_payment_cansel()
+    public function test_update_payment_cansel(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin(1000);
 
-        /** @var User $user */
-        $user = User::factory()->create([
-            'balance' => 1000
-        ]);
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $payment = Payment::factory()->create([
-            'user_id' => $user->id
+            'user_id' => $admin->id
         ]);
 
         $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [

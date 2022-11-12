@@ -16,9 +16,10 @@ class SecurityTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Security (without tg - button disabled)
+     * @description View security page (without tg - button disabled)
+     * @return void
      */
-    public function test_security_check_page()
+    public function test_view_security_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -28,16 +29,19 @@ class SecurityTest extends TestCase
 
         $response = $this->get(route('cabinet.user.security'));
 
-        $response->assertSeeText('To configure, you need to subscribe to our telegram bot. Start the bot and send the secret code to the bot');
-        $response->assertSeeText('Your secret key:');
-        $response->assertSeeText($user->secret_key);
-        $response->assertSeeText('Update');
+        $response->assertSeeText([
+            'To configure, you need to subscribe to our telegram bot. Start the bot and send the secret code to the bot',
+            'Your secret key:',
+            $user->secret_key,
+            'Update'
+        ]);
     }
 
     /**
-     * Security update (negative without tg)
+     * @description Security update (negative without tg)
+     * @return void
      */
-    public function test_security_update_negative()
+    public function test_security_update_negative(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -58,9 +62,10 @@ class SecurityTest extends TestCase
     }
 
     /**
-     * Security update (with tg - create from factory then update security)
+     * @description Security update (with tg - create from factory then update security)
+     * @return void
      */
-    public function test_security_update_positive()
+    public function test_security_update_positive(): void
     {
         /** @var User $user */
         $user = User::factory()->create();

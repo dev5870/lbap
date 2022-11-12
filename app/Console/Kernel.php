@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
 
         // Check new payment
         $schedule->call(function () {
-            $paymentCheckService = $this->app->make(PaymentCheckService::class);
+            $paymentCheckService = app(PaymentCheckService::class);
             $paymentCheckService->handle();
         })->everyMinute();
     }

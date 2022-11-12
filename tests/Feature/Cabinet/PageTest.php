@@ -16,9 +16,10 @@ class PageTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check page
+     * @description View page
+     * @return void
      */
-    public function test_check_page()
+    public function test_view_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -32,7 +33,9 @@ class PageTest extends TestCase
         $response = $this->get(route('cabinet.page', ['page' => $page]));
 
         $response->assertStatus(200);
-        $response->assertSeeText($page->title);
-        $response->assertSeeText($page->text);
+        $response->assertSeeText([
+            $page->title,
+            $page->text
+        ]);
     }
 }

@@ -20,77 +20,106 @@ class ContentTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check content list page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_content_list_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
+
+        return $admin;
+    }
+
+    /**
+     * @description View content list page
+     * @return void
+     */
+    public function test_view_content_list_page(): void
+    {
+        $admin = $this->createAdmin();
 
         /** @var Content $content */
         $content = Content::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.content.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Contents');
-        $response->assertSeeText($content->title);
-        $response->assertSeeText($content->preview);
+        $response->assertSeeText([
+            'Contents',
+            $content->title,
+            $content->preview
+        ]);
     }
 
     /**
-     * Check content create page
+     * @description Content filter
+     * @return void
      */
-    public function test_check_content_create_page()
+    public function test_content_filter(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var Content $content */
+        $content = Content::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
+
+        $response = $this->get(route('admin.content.index', ['title' => $content->title]));
+
+        $response->assertStatus(200);
+        $response->assertSeeText([
+            'Contents',
+            $content->title,
+            $content->preview
+        ]);
+    }
+
+    /**
+     * @description View content create page
+     * @return void
+     */
+    public function test_view_content_create_page(): void
+    {
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.content.create'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Content');
-        $response->assertSeeText('Add new content');
-        $response->assertSeeText('Title');
-        $response->assertSeeText('Preview');
-        $response->assertSeeText('Text');
-        $response->assertSeeText('File (width 300, height 200 only)');
-        $response->assertSeeText('File description');
-        $response->assertSeeText('Delayed publication');
-        $response->assertSeeText('Create');
+        $response->assertSeeText([
+            'Content',
+            'Add new content',
+            'Title',
+            'Preview',
+            'Text',
+            'File (width 300, height 200 only)',
+            'File description',
+            'Delayed publication',
+            'Create'
+        ]);
     }
 
     /**
-     * Create content
+     * @description Create new content
+     * @return void
      */
-    public function test_content_create()
+    public function test_create_new_content(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
-
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        $admin = $this->createAdmin();
 
         Storage::fake('local');
         $file = UploadedFile::fake()->create('image.jpg');
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
             'title' => $this->faker->title,
@@ -113,25 +142,20 @@ class ContentTest extends TestCase
         ]);
         $this->assertDatabaseHas(File::class, [
             'description' => $params['description'],
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'fileable_type' => Content::class
         ]);
     }
 
     /**
-     * Check edit content page
+     * @description View edit content page
+     * @return void
      */
-    public function test_check_content_edit_page()
+    public function test_view_content_edit_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         /** @var Content $content */
         $content = Content::factory()->create();
@@ -139,32 +163,29 @@ class ContentTest extends TestCase
         $response = $this->get(route('admin.content.edit', $content));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Update content');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Title');
-        $response->assertSeeText('Preview');
-        $response->assertSeeText('Text');
-        $response->assertSeeText('Files');
-        $response->assertSeeText('Delayed publication');
-        $response->assertSeeText('Update');
-        $response->assertSeeText($content->text);
-        $response->assertSeeText($content->preview);
+        $response->assertSeeText([
+            'Update content',
+            'Return',
+            'Title',
+            'Preview',
+            'Text',
+            'Files',
+            'Delayed publication',
+            'Update',
+            $content->text,
+            $content->preview
+        ]);
     }
 
     /**
-     * Update content
+     * @description Update content
+     * @return void
      */
-    public function test_content_update()
+    public function test_content_update(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $content = Content::factory()->create();
 
@@ -192,19 +213,14 @@ class ContentTest extends TestCase
     }
 
     /**
-     * Delete content
+     * @description Delete content
+     * @return void
      */
-    public function test_content_delete()
+    public function test_content_delete(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $content = Content::factory()->create();
 

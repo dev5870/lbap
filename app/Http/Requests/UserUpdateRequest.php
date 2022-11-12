@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\UserStatus;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserUpdateRequest extends FormRequest
 {
@@ -24,7 +26,7 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'status' => ['required', 'numeric'],
+            'status' => ['required', 'numeric', Rule::in(array_keys(UserStatus::$list))],
             'roles' => ['required', 'exists:roles,id'],
             'file' => ['image', 'nullable', 'max:2400'],
             'description' => ['nullable', 'string', 'max:500'],

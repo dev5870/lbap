@@ -19,36 +19,50 @@ class TransactionTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check transactions list page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_transactions_list_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
+
+        return $admin;
+    }
+
+    /**
+     * @description View transactions list page
+     * @return void
+     */
+    public function test_view_transactions_list_page(): void
+    {
+        $admin = $this->createAdmin();
 
         $payment = Payment::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'status' => PaymentStatus::PAID
         ]);
         $transaction = Transaction::factory()->create([
             'payment_id' => $payment->id
         ]);
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.payment.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Transactions');
-        $response->assertSeeText('real_money');
-        $response->assertSeeText('top up');
-        $response->assertSeeText($transaction->id);
-        $response->assertSeeText($transaction->full_amount);
-        $response->assertSeeText($transaction->amount);
+        $response->assertSeeText([
+            'Transactions',
+            'real_money',
+            'top up',
+            $transaction->id,
+            $transaction->full_amount,
+            $transaction->amount
+        ]);
     }
 }

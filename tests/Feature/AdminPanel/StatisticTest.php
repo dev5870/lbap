@@ -16,50 +16,61 @@ class StatisticTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check user statistics list page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_user_statistic_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
 
-        $this->actingAs($user);
+        return $admin;
+    }
+
+    /**
+     * @description View user statistics list page
+     * @return void
+     */
+    public function test_view_user_statistic_page(): void
+    {
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.statistic.user'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('User');
-        $response->assertSeeText('Date');
-        $response->assertSeeText('Total');
-        $response->assertSeeText(now()->format('Y-m-d'));
+        $response->assertSeeText([
+            'User',
+            'Date',
+            'Total',
+            now()->format('Y-m-d')
+        ]);
     }
 
     /**
-     * Check user statistics finance page
+     * @description View user statistics finance page
+     * @return void
      */
-    public function test_check_finance_statistic_page()
+    public function test_view_finance_statistic_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.statistic.finance'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Finance');
-        $response->assertSeeText('General');
-        $response->assertSeeText('Commission');
-        $response->assertSeeText('Payments');
+        $response->assertSeeText([
+            'Finance',
+            'General',
+            'Commission',
+            'Payments'
+        ]);
     }
 }

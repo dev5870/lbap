@@ -24,7 +24,7 @@ class ProfileUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'username' => ['string', 'nullable', 'max:15'],
+            'username' => ['string', 'nullable', 'max:25'],
             'about' => ['string', 'nullable', 'max:25'],
             'skill' => ['string', 'nullable', 'max:300'],
             'city' => ['string', 'nullable', 'max:25'],

@@ -18,44 +18,53 @@ class SettingTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check settings general check page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_settings_general_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
 
-        $this->actingAs($user);
+        return $admin;
+    }
+
+    /**
+     * @description View settings general check page
+     * @return void
+     */
+    public function test_view_settings_general_page(): void
+    {
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.settings.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('General');
-        $response->assertSeeText('Site settings');
-        $response->assertSeeText('Site name');
-        $response->assertSeeText('Registration method');
-        $response->assertSeeText('Registration by invitation only');
+        $response->assertSeeText([
+            'General',
+            'Site settings',
+            'Site name',
+            'Registration method',
+            'Registration by invitation only'
+        ]);
     }
 
     /**
-     * Update settings general
+     * @description Update settings general
+     * @return void
      */
-    public function test_settings_general_update()
+    public function test_settings_general_update(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $this->assertDatabaseHas(Setting::class, [
             'site_name' => 'Site name',

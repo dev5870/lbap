@@ -19,13 +19,13 @@ class PaymentTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check payments list page
+     * @description View payments list page
+     * @return void
      */
-    public function test_check_payment_list_page()
+    public function test_check_payment_list_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         /** @var Payment $payment */
         $payment = Payment::factory()->create([
@@ -37,72 +37,78 @@ class PaymentTest extends TestCase
         $response = $this->get(route('cabinet.payment.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payments');
-        $response->assertSeeText($payment->full_amount);
-        $response->assertSeeText($payment->amount);
-        $response->assertSeeText($payment->commission_amount);
-        $response->assertSeeText('Top up');
-        $response->assertSeeText('Withdraw');
-        $response->assertSeeText('create');
-        $response->assertSeeText('top up');
+        $response->assertSeeText([
+            'Payments',
+            $payment->full_amount,
+            $payment->amount,
+            $payment->commission_amount,
+            'Top up',
+            'Withdraw',
+            'create',
+            'top up'
+        ]);
     }
 
     /**
-     * Check top up payment page
+     * @description View top up payment page
+     * @return void
      */
-    public function test_check_payment_top_up_page()
+    public function test_view_payment_top_up_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         $this->actingAs($user);
 
         $response = $this->get(route('cabinet.payment.create'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payment');
-        $response->assertSeeText($user->address->address);
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Create new payment');
-        $response->assertSeeText('How top up balance?');
-        $response->assertSeeText('Send coin on your Dogecoin address.');
-        $response->assertSeeText('Your address:');
-        $response->assertSeeText('Money will be credited to your balance automatically after replenishment of the address.');
+        $response->assertSeeText([
+            'Payment',
+            $user->address->address,
+            'Return',
+            'Create new payment',
+            'How top up balance?',
+            'Send coin on your Dogecoin address.',
+            'Your address:',
+            'Money will be credited to your balance automatically after replenishment of the address.'
+        ]);
     }
 
     /**
-     * Check withdraw payment page (positive)
+     * @description View withdraw payment page
+     * @return void
      */
-    public function test_check_payment_withdraw_page()
+    public function test_view_withdraw_payment_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         $this->actingAs($user);
 
         $response = $this->get(route('cabinet.payment.withdraw'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Payment');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Create new payment');
-        $response->assertSeeText('Full amount');
-        $response->assertSeeText('Dogecoin address (the wallet to which the money will be transferred)');
-        $response->assertSeeText('Withdraw');
+        $response->assertSeeText([
+            'Payment',
+            'Return',
+            'Create new payment',
+            'Full amount',
+            'Dogecoin address (the wallet to which the money will be transferred)',
+            'Withdraw'
+        ]);
     }
 
     /**
-     * Create withdraw payment (positive)
+     * @description Create withdraw payment
+     * @return void
      */
-    public function test_create_withdraw_payment_positive()
+    public function test_create_withdraw_payment(): void
     {
         /** @var User $user */
         $user = User::factory()->create([
             'balance' => '19000'
         ]);
-        $user->refresh();
 
         $paymentType = PaymentType::whereName('real_money')->first();
 
@@ -128,13 +134,13 @@ class PaymentTest extends TestCase
     }
 
     /**
-     * Create withdraw payment (negative: user not enough money)
+     * @description Create withdraw payment (negative: user not enough money)
+     * @return void
      */
-    public function test_create_withdraw_payment_negative()
+    public function test_create_withdraw_payment_negative(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         $this->actingAs($user);
 

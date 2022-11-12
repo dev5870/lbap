@@ -18,26 +18,38 @@ class FileTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check file page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_file_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
 
-        $this->actingAs($user);
+        return $admin;
+    }
+
+    /**
+     * @description View file page
+     * @return void
+     */
+    public function test_view_file_page(): void
+    {
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
 
         /** @var Content $content */
         $content = Content::factory()->create();
 
         /** @var File $file */
         $file = File::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'fileable_id' => $content->id,
             'file_name' => 'First file'
         ]);
@@ -47,7 +59,7 @@ class FileTest extends TestCase
 
         /** @var File $secondFile */
         $secondFile = File::factory()->create([
-            'user_id' => $user->id,
+            'user_id' => $admin->id,
             'fileable_id' => $secondContent->id,
             'file_name' => 'Second file'
         ]);
@@ -55,25 +67,29 @@ class FileTest extends TestCase
         $response = $this->get(route('admin.file'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Files');
-        $response->assertSeeText('Fileable id');
-        $response->assertSeeText('Fileable type');
-        $response->assertSeeText($file->file_name);
-        $response->assertSeeText($file->fileable_id);
-        $response->assertSeeText($file->fileable_type);
-        $response->assertSeeText($secondFile->file_name);
-        $response->assertSeeText($secondFile->fileable_id);
-        $response->assertSeeText($secondFile->fileable_type);
+        $response->assertSeeText([
+            'Files',
+            'Fileable id',
+            'Fileable type',
+            $file->file_name,
+            $file->fileable_id,
+            $file->fileable_type,
+            $secondFile->file_name,
+            $secondFile->fileable_id,
+            $secondFile->fileable_type
+        ]);
 
         $secondResponse = $this->get(route('admin.file') . '?id=' . $secondFile->fileable_id);
 
         $secondResponse->assertStatus(200);
-        $secondResponse->assertSeeText('Files');
-        $secondResponse->assertSeeText('Fileable id');
-        $secondResponse->assertSeeText('Fileable type');
+        $secondResponse->assertSeeText([
+            'Files',
+            'Fileable id',
+            'Fileable type',
+            $secondFile->file_name,
+            $secondFile->fileable_id,
+            $secondFile->fileable_type
+        ]);
         $secondResponse->assertDontSeeText($file->file_name);
-        $secondResponse->assertSeeText($secondFile->file_name);
-        $secondResponse->assertSeeText($secondFile->fileable_id);
-        $secondResponse->assertSeeText($secondFile->fileable_type);
     }
 }

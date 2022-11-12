@@ -65,7 +65,7 @@ class Transaction extends Model
             $model->payment->user->balance = $model->new_balance;
             $model->payment->user->save();
 
-            $referralPaymentService = app()->make(ReferralPaymentService::class);
+            $referralPaymentService = app(ReferralPaymentService::class);
 
             $referralPaymentService->handle($model);
         });

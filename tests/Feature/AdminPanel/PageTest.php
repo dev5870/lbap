@@ -17,99 +17,102 @@ class PageTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check pages list page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_pages_list_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
+
+        return $admin;
+    }
+
+    /**
+     * @description View pages list page
+     * @return void
+     */
+    public function test_view_pages_list(): void
+    {
+        $admin = $this->createAdmin();
 
         /** @var Page $page */
         $page = Page::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.page.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Pages');
-        $response->assertSeeText('Create');
-        $response->assertSeeText($page->title);
+        $response->assertSeeText([
+            'Pages',
+            'Create',
+            $page->title
+        ]);
     }
 
     /**
-     * Check create page
+     * @description View create page
+     * @return void
      */
-    public function test_check_page_create_page()
+    public function test_view_create_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.page.create'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Pages');
-        $response->assertSeeText('Create new page');
-        $response->assertSeeText('Title');
-        $response->assertSeeText('Text');
-        $response->assertSeeText('Create');
+        $response->assertSeeText([
+            'Return',
+            'Pages',
+            'Create new page',
+            'Title',
+            'Text',
+            'Create'
+        ]);
     }
 
     /**
-     * Check edit page
+     * @description View edit page
+     * @return void
      */
-    public function test_check_page_edit_page()
+    public function test_view_edit_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $page = Page::factory()->create();
 
         $response = $this->get(route('admin.page.edit', $page));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Pages');
-        $response->assertSeeText('Update');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Title');
-        $response->assertSeeText('Text');
-        $response->assertSeeText($page->text);
+        $response->assertSeeText([
+            'Pages',
+            'Update',
+            'Return',
+            'Title',
+            'Text',
+            $page->text
+        ]);
     }
 
     /**
-     * Create page
+     * @description Create page
+     * @return void
      */
-    public function test_page_create()
+    public function test_page_create(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
             'title' => $this->faker->title,
@@ -127,19 +130,14 @@ class PageTest extends TestCase
     }
 
     /**
-     * Update page
+     * @description Update page
+     * @return void
      */
-    public function test_page_update()
+    public function test_page_update(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $page = Page::factory()->create();
 
@@ -163,19 +161,14 @@ class PageTest extends TestCase
     }
 
     /**
-     * Delete page
+     * @description Delete page
+     * @return void
      */
-    public function test_page_delete()
+    public function test_page_delete(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $page = Page::factory()->create();
 

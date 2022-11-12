@@ -20,11 +20,10 @@ class UserTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check registration default page
-     *
+     * @description View registration default page
      * @return void
      */
-    public function test_check_registration_default_page(): void
+    public function test_view_registration_default_page(): void
     {
         $response = $this->get('/registration');
         $response->assertStatus(200);
@@ -38,11 +37,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Check registration telegram page
-     *
+     * @description View registration telegram page
      * @return void
      */
-    public function test_check_registration_telegram_page(): void
+    public function test_view_registration_telegram_page(): void
     {
         $setting = Setting::first();
         $setting->registration_method = RegistrationMethod::TELEGRAM;
@@ -57,8 +55,23 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration default user (positive)
-     *
+     * @description View registration page (when registration disabled)
+     * @return void
+     */
+    public function test_view_registration_disabled(): void
+    {
+        $setting = Setting::first();
+        $setting->update(['registration_method' => 100]);
+
+        $response = $this->get('/registration');
+        $response->assertStatus(200);
+        $response->assertSeeText([
+            'Registration disabled!'
+        ]);
+    }
+
+    /**
+     * @description Registration default user (positive)
      * @return void
      */
     public function test_registration_default_positive(): void
@@ -73,12 +86,14 @@ class UserTest extends TestCase
 
         $user = User::whereEmail($email)->first();
         $this->assertDatabaseHas(User::class, ['id' => $user->id, 'email' => $email]);
-        $this->assertDatabaseHas(Address::class, ['user_id' => $user->id]);
+
+        /** @var Address $address */
+        $address = Address::whereUserId($user->id)->first();
+        $this->assertTrue($address->user()->exists());
     }
 
     /**
-     * Registration user default without free address (positive)
-     *
+     * @description Registration user default without free address (positive)
      * @return void
      */
     public function test_registration_default_without_free_address_positive(): void
@@ -104,11 +119,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration referral user (positive)
-     *
+     * @description Registration referral user
      * @return void
      */
-    public function test_registration_referral_positive(): void
+    public function test_registration_referral(): void
     {
         $referrer = User::factory()->create();
         $referrer->refresh();
@@ -129,8 +143,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration invitation only
-     *
+     * @description Registration invitation only
      * @return void
      */
     public function test_registration_invitation_only(): void
@@ -151,8 +164,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration default user (negative #1)
-     *
+     * @description Registration default user (negative #1)
      * @return void
      */
     public function test_registration_default_negative1(): void
@@ -168,8 +180,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration default user (negative #2)
-     *
+     * @description Registration default user (negative #2)
      * @return void
      */
     public function test_registration_default_negative2(): void
@@ -185,8 +196,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Registration default user (negative #3)
-     *
+     * @description Registration default user (negative #3)
      * @return void
      */
     public function test_registration_default_negative3(): void
@@ -203,11 +213,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Check login page
-     *
+     * @description View login page
      * @return void
      */
-    public function test_check_login_page(): void
+    public function test_view_login_page(): void
     {
         $response = $this->get('/login');
         $response->assertStatus(200);
@@ -220,11 +229,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Login to cabinet (positive)
-     *
+     * @description Login to cabinet
      * @return void
      */
-    public function test_login_positive(): void
+    public function test_login(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -239,8 +247,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Login to cabinet (negative #1)
-     *
+     * @description Login to cabinet (negative #1)
      * @return void
      */
     public function test_login_negative1(): void
@@ -256,8 +263,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * Login to cabinet (negative #2)
-     *
+     * @description Login to cabinet (negative #2)
      * @return void
      */
     public function test_login_negative2(): void
@@ -276,8 +282,29 @@ class UserTest extends TestCase
     }
 
     /**
-     * Login to cabinet
-     *
+     * @description Login to cabinet (negative #3)
+     * @return void
+     */
+    public function test_login_rate_limiter_negative(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        for($i = 1; $i <= 6; $i++) {
+            $response = $this->post(route('login.store'), [
+                'email' => $user->email,
+                'password' => 'password' . $i,
+            ]);
+        }
+
+        $response->assertStatus(302);
+        $response->assertSessionHasErrors([
+            'email' => 'Exceeded allowed number of login attempts! Try later.',
+        ]);
+    }
+
+    /**
+     * @description Login to cabinet with mfa
      * @return void
      */
     public function test_login_with_mfa(): void
@@ -314,8 +341,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * User logout from cabinet
-     *
+     * @description User logout from cabinet
      * @return void
      */
     public function test_logout(): void
@@ -332,8 +358,7 @@ class UserTest extends TestCase
     }
 
     /**
-     * User trying go to admin panel
-     *
+     * @description User trying go to admin panel
      * @return void
      */
     public function test_user_go_to_admin_panel(): void
@@ -348,9 +373,10 @@ class UserTest extends TestCase
     }
 
     /**
-     * Check login history page (positive)
+     * @description View login history page
+     * @return void
      */
-    public function test_check_login_history_page()
+    public function test_view_login_history_page(): void
     {
         /** @var User $user */
         $user = User::factory()->create();
@@ -366,8 +392,12 @@ class UserTest extends TestCase
         $response = $this->get(route('cabinet.user.log'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('My login history');
-        $response->assertSeeText($log->ip);
-        $response->assertSeeText($log->user_agent);
+        $response->assertSeeText([
+            'My login history',
+            $log->ip,
+            $log->user_agent
+        ]);
+
+        $this->assertTrue($user->logs()->exists());
     }
 }

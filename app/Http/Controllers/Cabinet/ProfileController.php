@@ -11,6 +11,11 @@ use Illuminate\Http\RedirectResponse;
 
 class ProfileController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(UserParam::class, 'profile');
+    }
+
     /**
      * @param UserParam $profile
      * @return View
@@ -40,14 +45,14 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request, UserParam $profile): RedirectResponse
     {
-        if (!$profile->update($request->validated())) {
+        if ($profile->update($request->validated())) {
             return redirect()->route('cabinet.profile.edit', $profile)->with([
-                'error-message' => __('title.error')
+                'success-message' => __('title.success')
             ]);
         }
 
         return redirect()->route('cabinet.profile.edit', $profile)->with([
-            'success-message' => __('title.success')
+            'error-message' => __('title.error')
         ]);
     }
 }

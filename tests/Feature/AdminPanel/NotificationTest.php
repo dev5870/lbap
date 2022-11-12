@@ -19,73 +19,79 @@ class NotificationTest extends TestCase
     protected bool $seed = true;
 
     /**
-     * Check notification list page
+     * @description Create user admin
+     * @return User
      */
-    public function test_check_notification_list_page()
+    private function createAdmin(): User
     {
         $role = Role::where('name', '=', 'admin')->first();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        /** @var User $admin */
+        $admin = User::factory()->create();
+        $admin->roles()->sync($role->id);
+        $admin->save();
+        $admin->refresh();
+
+        return $admin;
+    }
+
+    /**
+     * @description View notification list page
+     * @return void
+     */
+    public function test_view_notification_list_page(): void
+    {
+        $admin = $this->createAdmin();
 
         /** @var Notification $notification */
         $notification = Notification::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.notification.index'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Notifications');
-        $response->assertSeeText('Create');
-        $response->assertSeeText('Message');
-        $response->assertSeeText('Status');
-        $response->assertSeeText($notification->text);
+        $response->assertSeeText([
+            'Notifications',
+            'Create',
+            'Message',
+            'Status',
+            $notification->text
+        ]);
     }
 
     /**
-     * Check create notification page
+     * @description View create notification page
+     * @return void
      */
-    public function test_check_notification_create_page()
+    public function test_view_notification_create_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.notification.create'));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Notification');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Add new notification');
-        $response->assertSeeText('Message');
-        $response->assertSeeText('Status');
-        $response->assertSeeText('Type');
+        $response->assertSeeText([
+            'Notification',
+            'Return',
+            'Add new notification',
+            'Message',
+            'Status',
+            'Type'
+        ]);
     }
 
     /**
-     * Create new notification
+     * @description Create new notification
+     * @return void
      */
-    public function test_create_notification()
+    public function test_create_new_notification(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
             'text' => 'Test notification',
@@ -105,52 +111,44 @@ class NotificationTest extends TestCase
     }
 
     /**
-     * Check edit notification page
+     * @description View edit notification page
+     * @return void
      */
-    public function test_check_notification_edit_page()
+    public function test_view_notification_edit_page(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
-
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        $admin = $this->createAdmin();
 
         /** @var Notification $notification */
         $notification = Notification::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $response = $this->get(route('admin.notification.edit', $notification));
 
         $response->assertStatus(200);
-        $response->assertSeeText('Notification');
-        $response->assertSeeText('Update notification');
-        $response->assertSeeText('Return');
-        $response->assertSeeText('Message');
-        $response->assertSeeText('Status');
-        $response->assertSeeText('Type');
-        $response->assertSeeText($notification->text);
+        $response->assertSeeText([
+            'Notification',
+            'Update notification',
+            'Return',
+            'Message',
+            'Status',
+            'Type',
+            $notification->text
+        ]);
     }
 
     /**
-     * Update notification page
+     * @description Update notification page
+     * @return void
      */
-    public function test_update_notification()
+    public function test_update_notification(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
-
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
+        $admin = $this->createAdmin();
 
         /** @var Notification $notification */
         $notification = Notification::factory()->create();
 
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         $params = [
             'text' => 'Test notification',
@@ -170,19 +168,14 @@ class NotificationTest extends TestCase
     }
 
     /**
-     * Destroy notification
+     * @description Destroy notification
+     * @return void
      */
-    public function test_notification_delete()
+    public function test_notification_delete(): void
     {
-        $role = Role::where('name', '=', 'admin')->first();
+        $admin = $this->createAdmin();
 
-        /** @var User $user */
-        $user = User::factory()->create();
-        $user->roles()->sync($role->id);
-        $user->save();
-        $user->refresh();
-
-        $this->actingAs($user);
+        $this->actingAs($admin);
 
         /** @var Notification $notification */
         $notification = Notification::factory()->create();
