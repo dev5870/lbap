@@ -3,21 +3,33 @@
 namespace Tests\Feature;
 
 use App\Enums\RegistrationMethod;
+use App\Jobs\SendTgMessageJob;
 use App\Models\Address;
 use App\Models\Setting;
 use App\Models\User;
+use App\Models\UserTelegram;
 use App\Models\UserTelegramCode;
 use App\Models\UserUserAgent;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
 
-    protected bool $seed = true;
+    /**
+     * @param int $method
+     * @param bool $invitationOnly
+     * @return void
+     */
+    private function setRegistrationMethod(int $method, bool $invitationOnly = false): void
+    {
+        $setting = Setting::first();
+        $setting->registration_method = $method;
+        $setting->invitation_only = $invitationOnly;
+        $setting->save();
+    }
 
     /**
      * @description View registration default page
@@ -25,6 +37,8 @@ class UserTest extends TestCase
      */
     public function test_view_registration_default_page(): void
     {
+        $this->setRegistrationMethod(RegistrationMethod::SITE);
+
         $response = $this->get('/registration');
         $response->assertStatus(200);
         $response->assertSeeText([
@@ -76,6 +90,8 @@ class UserTest extends TestCase
      */
     public function test_registration_default_positive(): void
     {
+        $this->setRegistrationMethod(RegistrationMethod::SITE);
+
         $email = $this->faker->email;
 
         $this->post(route('registration.store'), [
@@ -85,6 +101,8 @@ class UserTest extends TestCase
         ]);
 
         $user = User::whereEmail($email)->first();
+        Address::factory()->create(['user_id' => $user->id]);
+
         $this->assertDatabaseHas(User::class, ['id' => $user->id, 'email' => $email]);
 
         /** @var Address $address */
@@ -125,7 +143,6 @@ class UserTest extends TestCase
     public function test_registration_referral(): void
     {
         $referrer = User::factory()->create();
-        $referrer->refresh();
 
         $referralEmail = $this->faker->email;
 
@@ -247,6 +264,30 @@ class UserTest extends TestCase
     }
 
     /**
+     * @description Notify on telegram if login
+     * @return void
+     */
+    public function test_login_notify(): void
+    {
+        Queue::fake();
+
+        /** @var User $user */
+        $user = User::factory()->create();
+        $user->params()->update(['login_notify' => true]);
+        UserTelegram::factory()->create(['user_id' => $user->id]);
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        Queue::assertPushed(SendTgMessageJob::class);
+
+        $response->assertStatus(302);
+        $response->assertRedirect(route('cabinet.index'));
+    }
+
+    /**
      * @description Login to cabinet (negative #1)
      * @return void
      */
@@ -311,7 +352,6 @@ class UserTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         $user->params()->update([
             'mfa' => true
@@ -338,6 +378,42 @@ class UserTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect(route('cabinet.index'));
+    }
+
+    /**
+     * @description Login to cabinet with mfa (incorrect code)
+     * @return void
+     */
+    public function test_login_with_mfa_negative(): void
+    {
+        /** @var User $user */
+        $user = User::factory()->create();
+
+        $user->params()->update([
+            'mfa' => true
+        ]);
+
+        $responseMfa = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+        ]);
+
+        $responseMfa->assertStatus(302);
+        $responseMfa->assertRedirect(route('login.create') . '?mfa');
+        $responseMfa->assertSessionHas([
+            'error-message' => 'Please, enter 2fa code!',
+        ]);
+
+        $response = $this->post(route('login.store'), [
+            'email' => $user->email,
+            'password' => 'password',
+            'code' => 1111
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'error-message' => 'Please, enter 2fa code!',
+        ]);
     }
 
     /**
@@ -380,7 +456,6 @@ class UserTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
-        $user->refresh();
 
         $this->actingAs($user);
 

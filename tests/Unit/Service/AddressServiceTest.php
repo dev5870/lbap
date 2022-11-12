@@ -5,16 +5,12 @@ namespace Tests\Unit\Service;
 use App\Models\Address;
 use App\Models\SystemNotice;
 use App\Services\AddressService;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class AddressServiceTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description Check free address
@@ -22,7 +18,7 @@ class AddressServiceTest extends TestCase
      * @throws \TelegramBot\Api\Exception
      * @throws \TelegramBot\Api\InvalidArgumentException
      */
-    public function test_check_free_address()
+    public function test_check_free_address(): void
     {
         $addresses = Address::whereNull('user_id')->count();
 
@@ -33,6 +29,7 @@ class AddressServiceTest extends TestCase
         AddressService::isFreeAddressExists();
         $systemNotice = SystemNotice::where('title', '=', 'Attention')
             ->where('description', 'like', 'Available address count: %')
+            ->where('created_at', '=', now())
             ->exists();
 
         $this->assertFalse($systemNotice);
@@ -44,7 +41,7 @@ class AddressServiceTest extends TestCase
      * @throws \TelegramBot\Api\Exception
      * @throws \TelegramBot\Api\InvalidArgumentException
      */
-    public function test_check_free_address_notice()
+    public function test_check_free_address_notice(): void
     {
         $addresses = Address::whereNull('user_id')->get();
 
@@ -65,7 +62,7 @@ class AddressServiceTest extends TestCase
      * @description Check correct count free addresses
      * @return void
      */
-    public function test_count_free_address()
+    public function test_count_free_address(): void
     {
         $addresses = Address::whereNull('user_id')->count();
         $serviceCount = AddressService::countFreeAddress();
@@ -77,7 +74,7 @@ class AddressServiceTest extends TestCase
      * @description Can get free address
      * @return void
      */
-    public function test_get_free_address()
+    public function test_get_free_address(): void
     {
         $addresses = Address::whereNull('user_id')->count();
 

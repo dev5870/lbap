@@ -4,16 +4,12 @@ namespace Tests\Feature\Cabinet;
 
 use App\Models\Page;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PageTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description View page

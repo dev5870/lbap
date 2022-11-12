@@ -4,16 +4,12 @@ namespace Tests\Feature\Cabinet;
 
 use App\Models\User;
 use App\Models\UserParam;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class ProfileTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description Update profile

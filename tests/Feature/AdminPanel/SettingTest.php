@@ -5,7 +5,6 @@ namespace Tests\Feature\AdminPanel;
 use App\Enums\RegistrationMethod;
 use App\Models\Setting;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -13,9 +12,6 @@ use Tests\TestCase;
 class SettingTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description Create user admin
@@ -65,12 +61,6 @@ class SettingTest extends TestCase
         $admin = $this->createAdmin();
 
         $this->actingAs($admin);
-
-        $this->assertDatabaseHas(Setting::class, [
-            'site_name' => 'Site name',
-            'registration_method' => RegistrationMethod::SITE,
-            'invitation_only' => false,
-        ]);
 
         $params = [
             'site_name' => 'Best name',

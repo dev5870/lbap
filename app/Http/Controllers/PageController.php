@@ -38,14 +38,14 @@ class PageController extends Controller
         $page->title = $request->get('title');
         $page->text = $request->get('text');
 
-        if (!$page->save()) {
-            return redirect()->route('admin.page.edit', $page)->with([
-                'error-message' => __('title.error.create')
+        if ($page->save()) {
+            return redirect()->route('admin.page.index')->with([
+                'success-message' => __('title.success')
             ]);
         }
 
-        return redirect()->route('admin.page.index')->with([
-            'success-message' => __('title.success')
+        return redirect()->route('admin.page.edit', $page)->with([
+            'error-message' => __('title.error.create')
         ]);
     }
 

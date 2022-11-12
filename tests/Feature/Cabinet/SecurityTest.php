@@ -4,16 +4,12 @@ namespace Tests\Feature\Cabinet;
 
 use App\Models\User;
 use App\Models\UserTelegram;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class SecurityTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description View security page (without tg - button disabled)

@@ -3,20 +3,20 @@
 namespace Tests\Feature\AdminPanel;
 
 use App\Enums\UserStatus;
+use App\Models\Address;
+use App\Models\File;
 use App\Models\User;
 use App\Models\UserReferral;
 use App\Models\UserUserAgent;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Role;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class UserTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description Create user admin
@@ -130,13 +130,48 @@ class UserTest extends TestCase
             'comment' => $this->faker->text(50),
             'password' => 'password',
             'password_confirmation' => 'password',
+            'referrer' => $admin->id
         ];
 
         $response = $this->post(route('admin.user.store'), $params);
 
         $response->assertStatus(302);
         $response->assertRedirect(route('admin.user.index'));
-        $this->assertDatabaseHas(User::class, ['email' => $params['email']]);
+        $this->assertDatabaseHas(User::class, ['email' => $params['email'], 'referrer' => $admin->id]);
+    }
+
+    /**
+     * @description Remove file
+     * @return void
+     */
+    public function test_remove_file(): void
+    {
+        $admin = $this->createAdmin();
+        $user = User::factory()->create();
+        $fileName = $this->faker->uuid;
+
+        $this->actingAs($admin);
+
+        /** @var File $file */
+        $file = File::factory()->create([
+            'user_id' => $admin->id,
+            'fileable_id' => $user->id,
+            'file_name' => $fileName,
+            'fileable_type' => User::class
+        ]);
+
+        $this->assertDatabaseHas(File::class, [
+            'file_name' => $fileName
+        ]);
+
+        $response = $this->delete(route('admin.user.removeFile', $file));
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'success-message' => 'Success!',
+        ]);
+        $this->assertDatabaseMissing(File::class, [
+            'file_name' => $fileName
+        ]);
     }
 
     /**
@@ -146,6 +181,7 @@ class UserTest extends TestCase
     public function test_view_user_edit_page(): void
     {
         $admin = $this->createAdmin();
+        Address::factory()->create(['user_id' => $admin->id]);
 
         $this->actingAs($admin);
 
@@ -191,6 +227,9 @@ class UserTest extends TestCase
      */
     public function test_user_update(): void
     {
+        Storage::fake('local');
+        $file = UploadedFile::fake()->create('image.jpg');
+        $fileDescription = $this->faker->title;
         $role = Role::where('name', '=', 'admin')->first();
         $user = User::factory()->create();
         $admin = $this->createAdmin();
@@ -199,7 +238,9 @@ class UserTest extends TestCase
 
         $response = $this->put(route('admin.user.update', ['user' => $user]), [
             'status' => UserStatus::ACTIVE,
-            'roles' => $role->id
+            'roles' => $role->id,
+            'file' => $file,
+            'description' => $fileDescription
         ]);
 
         $user->refresh();
@@ -210,6 +251,11 @@ class UserTest extends TestCase
             'status' => UserStatus::ACTIVE,
         ]);
         $this->assertTrue($user->hasRole($role));
+        $this->assertDatabaseHas(File::class, [
+            'description' => $fileDescription,
+            'user_id' => $admin->id,
+            'fileable_type' => User::class
+        ]);
     }
 
     /**

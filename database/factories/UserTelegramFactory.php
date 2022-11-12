@@ -17,7 +17,7 @@ class UserTelegramFactory extends Factory
     public function definition()
     {
         return [
-            'chat_id' => 5556655,
+            'chat_id' => env('TELEGRAM_CHAT_ID'),
             'username' => 'tg_username',
             'firstName' => 'FirstName',
             'lastName' => 'LastName',

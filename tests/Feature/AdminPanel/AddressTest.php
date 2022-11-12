@@ -5,7 +5,6 @@ namespace Tests\Feature\AdminPanel;
 use App\Models\Address;
 use App\Models\PaymentSystem;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
@@ -13,9 +12,6 @@ use Tests\TestCase;
 class AddressTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description Create user admin

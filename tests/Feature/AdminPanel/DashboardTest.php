@@ -2,15 +2,15 @@
 
 namespace Tests\Feature\AdminPanel;
 
-use App\Enums\PaymentStatus;
+use App\Models\Address;
+use App\Models\Content;
 use App\Models\Payment;
-use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
-class TransactionTest extends TestCase
+class DashboardTest extends TestCase
 {
     use WithFaker;
 
@@ -32,33 +32,29 @@ class TransactionTest extends TestCase
     }
 
     /**
-     * @description View transactions list page
+     * @description View admin dashboard
      * @return void
      */
-    public function test_view_transactions_list_page(): void
+    public function test_view_dashboard(): void
     {
         $admin = $this->createAdmin();
 
-        $payment = Payment::factory()->create([
-            'user_id' => $admin->id,
-            'status' => PaymentStatus::PAID
-        ]);
-        $transaction = Transaction::factory()->create([
-            'payment_id' => $payment->id
-        ]);
-
         $this->actingAs($admin);
 
-        $response = $this->get(route('admin.transaction'));
+        $response = $this->get(route('admin.dashboard'));
 
         $response->assertStatus(200);
         $response->assertSeeText([
-            'Transactions',
-            'real_money',
-            'top up',
-            $transaction->id,
-            $transaction->full_amount,
-            $transaction->amount
+            'Dashboard',
+            'Total users',
+            User::all()->count(),
+            'Total addresses',
+            Address::all()->count(),
+            'Total payments',
+            Payment::all()->count(),
+            'Total contents',
+            Content::all()->count(),
+            User::latest()->first()->email
         ]);
     }
 }

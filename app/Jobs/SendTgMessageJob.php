@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Jobs;
 
@@ -30,7 +31,7 @@ class SendTgMessageJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         try {
             $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));

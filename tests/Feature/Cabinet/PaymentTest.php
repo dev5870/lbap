@@ -4,19 +4,16 @@ namespace Tests\Feature\Cabinet;
 
 use App\Enums\PaymentMethod;
 use App\Enums\PaymentStatus;
+use App\Models\Address;
 use App\Models\Payment;
 use App\Models\PaymentType;
 use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class PaymentTest extends TestCase
 {
     use WithFaker;
-    use RefreshDatabase;
-
-    protected bool $seed = true;
 
     /**
      * @description View payments list page
@@ -57,6 +54,7 @@ class PaymentTest extends TestCase
     {
         /** @var User $user */
         $user = User::factory()->create();
+        Address::factory()->create(['user_id' => $user->id]);
 
         $this->actingAs($user);
 
