@@ -2,12 +2,6 @@
 
 namespace App\Console;
 
-use App\Services\AddressService;
-use App\Services\CheckDiffBalanceService;
-use App\Services\CommissionService;
-use App\Services\PaymentCheckService;
-use App\Services\PaymentService;
-use App\Services\TransactionCreateService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -22,20 +16,13 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // Check available (free) addresses
-        $schedule->call(function () {
-            AddressService::isFreeAddressExists();
-        })->everyFifteenMinutes();
+        $schedule->command('check:free-address')->everyFifteenMinutes();
 
         // Check diff user balance with user transactions sum
-        $schedule->call(function () {
-            (new CheckDiffBalanceService())->handle();
-        })->everyThirtyMinutes();
+        $schedule->command('check:diff-user-balance')->everyThirtyMinutes();
 
         // Check new payment
-        $schedule->call(function () {
-            $paymentCheckService = app(PaymentCheckService::class);
-            $paymentCheckService->handle();
-        })->everyMinute();
+        $schedule->command('check:new-payment')->everyThirtyMinutes();
     }
 
     /**

@@ -20,7 +20,7 @@ class CreateUserAdminTest extends TestCase
         $role = Role::where('name', '=', 'admin')->first();
         $email = $this->faker->email;
 
-        $this->artisan('create_user:admin', [
+        $this->artisan('create:admin', [
             'email' => $email,
             'password' => 'password'
         ])->assertOk();
@@ -42,7 +42,7 @@ class CreateUserAdminTest extends TestCase
      */
     public function test_create_admin_negative(User $user): void
     {
-        $this->artisan('create_user:admin', [
+        $this->artisan('create:admin', [
             'email' => $user->email,
             'password' => 'password'
         ])->assertFailed();
