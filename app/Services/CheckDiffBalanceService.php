@@ -22,7 +22,7 @@ class CheckDiffBalanceService
                 try {
                     SystemNoticeService::createNotice(
                         'Diff balance',
-                        'User id: ' . $user->id . ', balance: ' . rtrim(rtrim($user->balance, '0'), '.') . ', transactions sum: ' . $user->transactions->sum('amount')
+                        'User id: ' . $user->id . ', balance: ' . $user->balance . ', transactions sum: ' . $user->transactions->sum('amount')
                     );
 
                     $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));

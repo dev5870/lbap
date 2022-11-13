@@ -62,7 +62,7 @@ class Transaction extends Model
         parent::boot();
 
         self::created(function ($model) {
-            $model->payment->user->balance = $model->new_balance;
+            $model->payment->user->balance = number_format((float)$model->new_balance, 8, '.', '');
             $model->payment->user->save();
 
             $referralPaymentService = app(ReferralPaymentService::class);

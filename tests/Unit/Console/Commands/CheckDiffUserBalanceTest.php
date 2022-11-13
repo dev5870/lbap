@@ -59,14 +59,14 @@ class CheckDiffUserBalanceTest extends TestCase
         ]);
 
         $userBalance = rand(1000, 9999);
-        $user->update(['balance' => $userBalance]);
+        $user->update(['balance' => number_format((float)$userBalance, 8, '.', '')]);
 
         $this->artisan('check:diff-user-balance')->assertOk();
 
         $notice = SystemNotice::latest()->first();
 
         $this->assertStringContainsString(
-            'User id: ' . $user->id . ', balance: ' . rtrim(rtrim($user->balance, '0'), '.') . ', transactions sum: 850',
+            'User id: ' . $user->id . ', balance: ' . $user->balance . ', transactions sum: 850',
             $notice->description
         );
     }
