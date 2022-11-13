@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Console;
+namespace Tests\Unit\Console\Commands;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -47,4 +47,6 @@ class CreateUserAdminTest extends TestCase
             'password' => 'password'
         ])->assertFailed();
     }
+
+
 }
