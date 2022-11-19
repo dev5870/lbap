@@ -31,4 +31,8 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'transaction_provider' => [
+        'chain_so' => 'https://chain.so/api/v2/get_tx_received/DOGE/'
+    ],
+
 ];

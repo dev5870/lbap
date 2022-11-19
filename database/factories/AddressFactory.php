@@ -20,7 +20,7 @@ class AddressFactory extends Factory
         $paymentSystem = PaymentSystem::all();
 
         return [
-            'address' => $this->faker->text(20),
+            'address' => $this->faker->uuid,
             'payment_system_id' => $paymentSystem->first(),
         ];
     }

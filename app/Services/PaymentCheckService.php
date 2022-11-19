@@ -21,13 +21,10 @@ use TelegramBot\Api\BotApi;
 
 class PaymentCheckService
 {
-    /**
-     * @var string
-     */
-    private string $url = 'https://chain.so/api/v2/get_tx_received/DOGE/';
-
-    public function __construct(private PaymentService $paymentService, private TransactionCreateService $transactionCreateService)
-    {
+    public function __construct(
+        private PaymentService $paymentService,
+        private TransactionCreateService $transactionCreateService
+    ) {
     }
 
     /**
@@ -86,7 +83,7 @@ class PaymentCheckService
      */
     private function getTransaction(string $address): array
     {
-        $response = Http::get($this->url . $address);
+        $response = Http::get(config('services.transaction_provider.chain_so') . $address);
 
         return $response->json();
     }
