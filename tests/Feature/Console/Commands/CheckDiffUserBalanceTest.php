@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Console\Commands;
+namespace Tests\Feature\Console\Commands;
 
 use App\Enums\PaymentStatus;
 use App\Models\Payment;

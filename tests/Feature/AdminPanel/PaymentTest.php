@@ -284,6 +284,86 @@ class PaymentTest extends TestCase
     }
 
     /**
+     * @description Confirm withdraw payment
+     * @return void
+     */
+    public function test_confirm_withdraw_payment(): void
+    {
+        $user = User::factory()->create(['balance' => 5000]);
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
+
+        $payment = Payment::factory()->create([
+            'user_id' => $user->id,
+            'method' => PaymentMethod::WITHDRAW
+        ]);
+
+        $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [
+            'confirm' => 'Confirm'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'success-message' => 'Success!',
+        ]);
+        $response->assertRedirect(route('admin.payment.edit', ['payment' => $payment]));
+        $this->assertDatabaseHas(Payment::class, [
+            'id' => $payment->id,
+            'user_id' => $payment['user_id'],
+            'status' => PaymentStatus::PAID,
+        ]);
+        $this->assertDatabaseHas(Transaction::class, [
+            'payment_id' => $payment->id,
+            'new_balance' => '4100',
+        ]);
+        $this->assertDatabaseHas(User::class, [
+            'id' => $payment['user_id'],
+            'balance' => '4100',
+        ]);
+    }
+
+    /**
+     * @description Confirm withdraw payment (negative)
+     * @return void
+     */
+    public function test_confirm_withdraw_payment_negative(): void
+    {
+        $user = User::factory()->create();
+        $admin = $this->createAdmin();
+
+        $this->actingAs($admin);
+
+        $payment = Payment::factory()->create([
+            'user_id' => $user->id,
+            'method' => PaymentMethod::WITHDRAW
+        ]);
+
+        $response = $this->put(route('admin.payment.update', ['payment' => $payment]), [
+            'confirm' => 'Confirm'
+        ]);
+
+        $response->assertStatus(302);
+        $response->assertSessionHas([
+            'error-message' => 'Can\'t update payment',
+        ]);
+        $response->assertRedirect(route('admin.payment.edit', ['payment' => $payment]));
+        $this->assertDatabaseMissing(Payment::class, [
+            'id' => $payment->id,
+            'user_id' => $payment['user_id'],
+            'status' => PaymentStatus::PAID,
+        ]);
+        $this->assertDatabaseMissing(Transaction::class, [
+            'payment_id' => $payment->id,
+            'new_balance' => $payment['amount'],
+        ]);
+        $this->assertDatabaseHas(User::class, [
+            'id' => $payment['user_id'],
+            'balance' => '0',
+        ]);
+    }
+
+    /**
      * @description Update payment (cansel)
      * @return void
      */
