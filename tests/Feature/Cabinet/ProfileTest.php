@@ -63,7 +63,7 @@ class ProfileTest extends TestCase
 
         /** @var User $secondUser */
         $secondUser = User::factory()->create();
-        $secondUserName = $this->faker->name;
+        $secondUserName = $this->faker->lastName;
 
         UserParam::factory()->create([
             'user_id' => $secondUser->id,

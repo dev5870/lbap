@@ -64,7 +64,7 @@ class StatisticController extends Controller
 
         $balanceDifference = bcsub(
             (string)$totalPaymentTopUpSum,
-            (string)abs($totalPaymentWithdrawSum),
+            (string)abs((float)$totalPaymentWithdrawSum),
             8
         );
 
