@@ -17,7 +17,7 @@ class CommissionService
     {
         $paymentType = PaymentType::find($type);
 
-        if ($paymentType->name == 'real_money') {
+        if ($paymentType?->name === 'real_money') {
 
             return $paymentType ? $paymentType->commission : config('balance.default_commission');
         }

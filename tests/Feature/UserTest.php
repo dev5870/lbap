@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Tests\Feature;
 
@@ -350,6 +351,8 @@ class UserTest extends TestCase
      */
     public function test_login_with_mfa(): void
     {
+        Queue::fake();
+
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -378,6 +381,8 @@ class UserTest extends TestCase
 
         $response->assertStatus(302);
         $response->assertRedirect(route('cabinet.index'));
+
+        Queue::assertPushed(SendTgMessageJob::class);
     }
 
     /**
@@ -386,6 +391,8 @@ class UserTest extends TestCase
      */
     public function test_login_with_mfa_negative(): void
     {
+        Queue::fake();
+
         /** @var User $user */
         $user = User::factory()->create();
 
@@ -414,6 +421,8 @@ class UserTest extends TestCase
         $response->assertSessionHas([
             'error-message' => 'Please, enter 2fa code!',
         ]);
+
+        Queue::assertPushed(SendTgMessageJob::class);
     }
 
     /**

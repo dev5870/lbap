@@ -31,7 +31,7 @@ class SendTgMessageJob implements ShouldQueue
      *
      * @return void
      */
-    public function handle(): void
+    public function handle(): bool
     {
         try {
             $bot = new BotApi(env('TELEGRAM_BOT_TOKEN'));
@@ -39,11 +39,15 @@ class SendTgMessageJob implements ShouldQueue
                 $this->user->telegram()->first()->chat_id,
                 $this->message
             );
+
+            return true;
         } catch (\Exception $exception) {
             SystemNoticeService::createNotice('Error send tg message', $this->message . ' for user_id: ' . $this->user->id);
             Log::channel()->error('Error send tg message: ' . $this->message . ' for user_id: ' . $this->user->id);
             Log::channel()->error($exception->getMessage());
             Log::channel()->error($exception->getTraceAsString());
         }
+
+        return false;
     }
 }
