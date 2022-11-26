@@ -16,6 +16,7 @@ class ReferralPaymentService
 {
     private PaymentType $type;
     private Transaction $transaction;
+    private string $commissionAmount;
 
     public function __construct(private CommissionService $commissionService, private PaymentService $paymentService)
     {
@@ -29,14 +30,16 @@ class ReferralPaymentService
     {
         $this->type = PaymentType::whereName('referral_commission')->first();
         $this->transaction = $transaction;
+        $this->commissionAmount = $transaction->commission_amount < 0
+            ? bcmul($transaction->commission_amount, '-1', 8)
+            : $transaction->commission_amount;
 
         Log::channel('payment')->info('create (referral payment) - trying create new payment');
         Log::channel('payment')->info('create (referral payment) - transaction id: ' . $this->transaction->id);
 
         try {
             // If transaction does not have commission
-            $commissionAmount = abs((int)$this->transaction->commission_amount);
-            if (bccomp((string)$commissionAmount, '0', 8) <= 0) {
+            if (bccomp($this->commissionAmount, '0', 8) <= 0) {
                 Log::channel('payment')->info('create (referral payment) - transaction does not have commission');
 
                 return;
@@ -56,8 +59,8 @@ class ReferralPaymentService
                 return;
             }
 
-            // If referrer commission more than 0.00000001
-            if (bccomp($this->getReferrerCommissionFullAmount(), '0.00000001', 8) < 0) {
+            // If referrer commission less than 0.00000001
+            if (bccomp($this->getReferrerCommissionFullAmount(), '0.00000001', 8) <= 0) {
                 Log::channel('payment')->info('create (referral payment) - referrer commission less than 0.00000001');
 
                 return;
@@ -116,7 +119,7 @@ class ReferralPaymentService
     private function getReferrerCommissionFullAmount(): string
     {
         return bcmul(
-            (string)abs((int)$this->transaction->commission_amount),
+            $this->commissionAmount,
             $this->commissionService->getReferralCommission(),
             8
         );
