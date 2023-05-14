@@ -28,7 +28,7 @@ $pages = \App\Models\Page::all();
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
     <link href="{{ asset('assets/css/app.css') }}" rel="stylesheet"/>
 </head>
-<body data-sidebar-behavior="sticky">
+<body data-sidebar-behavior="sticky" data-theme="light">
 <div class="wrapper">
     @include('cabinet.includes.nav')
     <div class="main">
